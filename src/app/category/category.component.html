@@ -1,0 +1,62 @@
+<div class="create-category">
+  <h2>Crear categoría</h2>
+  
+  <form (ngSubmit)="saveCategory()">
+    <div>
+      <label for="name">Nombre:</label>
+      <input type="text" [(ngModel)]="category.name" name="name" id="name" required>
+    </div>
+    <div>
+      <label for="description">Descripción:</label>
+      <textarea [(ngModel)]="category.description" name="description" id="description" required></textarea>
+    </div>
+    
+    <div class="button-container">
+      <button type="submit">Guardar categoría</button>
+      <div *ngIf="status === 'success'" class="status">
+        <span class="dot success"></span>
+      </div>
+      <div *ngIf="status === 'error'" class="status">
+        <span class="dot error"></span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="category-list">
+  <h2>Lista de Categoríes</h2>
+
+  <label for="size">Mostrar por página:</label>
+  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" placeholder="Número de elementos por página">
+
+  <label for="name">Buscar por nombre:</label>
+  <button (click)="toggleSort()"> ({{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }})</button>
+
+  <button (click)="searchByName()">Buscar</button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Descriptión</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.categoryId }}</td>
+        <td>{{ category.categoryName }}</td>
+        <td>{{ category.categoryDescription }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">Anterior</button>
+    Página {{ page + 1 }} de {{ totalPages }}
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1">Siguiente</button>
+  </div>
+</div>
+
+
+  
