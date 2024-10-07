@@ -1,24 +1,28 @@
-<nav class="navbar">
+<header>
+  <nav class="navbar">
     <div class="navbar-left">
       <div class="logo">
-        <img src="/assets/logo.png" alt="logo emazon" />
+        <img src="/assets/logo 2.png" alt="logo Emazon" />
       </div>
       <span class="navbar-title">Emazon</span>
     </div>
-  
+
     <div class="navbar-center">
-      <input type="text" class="search-bar" placeholder="Search here..." />
-      <button class="search-button">
-        <i class="fa fa-search"></i>
+      <input type="text" class="search-bar" placeholder="Search here..." aria-label="Search bar" />
+      <button class="search-button" aria-label="Search">
+        <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
-  
-    <div class="navbar-right">
-      <div class="navbar-icon">
-        <i class="fa fa-shopping-cart"></i>
-        <span class="cart-badge">perfil</span>
-      </div>
-    </div>
-</nav>
 
-<app-category></app-category>
+    <div class="navbar-right">
+      <a href="/profile" class="navbar-icon" aria-label="Profile">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-badge">Perfil</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<div class="app-content">
+  <app-category></app-category>
+</div>

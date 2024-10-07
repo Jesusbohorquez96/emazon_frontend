@@ -1,6 +1,6 @@
 <div class="create-category">
   <h2>Crear categoría</h2>
-  
+
   <form (ngSubmit)="saveCategory()">
     <div>
       <label for="name">Nombre:</label>
@@ -10,24 +10,28 @@
       <label for="description">Descripción:</label>
       <textarea [(ngModel)]="category.description" name="description" id="description" required></textarea>
     </div>
-    
+
     <div class="button-container">
       <button type="submit">Guardar categoría</button>
+
       <div *ngIf="status === 'success'" class="status">
         <span class="dot success"></span>
+        <span class="status-message">Category saved successfully.</span>
       </div>
       <div *ngIf="status === 'error'" class="status">
         <span class="dot error"></span>
+        <span class="status-message">{{ errorMessage }}</span>
       </div>
     </div>
   </form>
 </div>
 
 <div class="category-list">
-  <h2>Lista de Categoríes</h2>
+  <h2>Lista de Categorias</h2>
 
   <label for="size">Mostrar por página:</label>
-  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" placeholder="Número de elementos por página">
+  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1"
+    placeholder="Número de elementos por página">
 
   <label for="name">Buscar por nombre:</label>
   <button (click)="toggleSort()"> ({{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }})</button>
@@ -57,6 +61,3 @@
     <button (click)="nextPage()" [disabled]="page === totalPages - 1">Siguiente</button>
   </div>
 </div>
-
-
-  

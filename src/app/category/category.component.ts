@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit {
   searchName: string = '';
   status: string = '';
   statusTimeout: any;
+  errorMessage: string = '';
 
   constructor(private categoryService: CategoryService) { }
 
@@ -45,17 +46,46 @@ export class CategoryComponent implements OnInit {
   }
 
   saveCategory() {
+    if (!this.category.name.trim()) {
+      this.status = 'error';
+      this.errorMessage = 'Name is required.';
+      this.resetStatusAfterTimeout();
+      return;
+    }
+  
+    if (!this.category.description.trim()) {
+      this.status = 'error';
+      this.errorMessage = 'Description is required.';
+      this.resetStatusAfterTimeout();
+      return;
+    }
+  
     this.categoryService.saveCategory(this.category).subscribe(
       (response) => {
-        console.log('Categoría guardada:', response);
+        console.log('Saved Category:', response);
         this.status = 'success'; 
         this.getCategories();
         this.resetForm();
         this.resetStatusAfterTimeout(); 
       },
       (error) => {
-        console.error('Error al guardar la categoría:', error);
-        this.status = 'error'; 
+        console.error('Error al guardar la categoría:', error); 
+        let errorMessage = 'Ocurrió un error al guardar la categoría.';
+  
+        if (error.status === 500) {
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message; 
+          } else {
+            errorMessage = 'Error interno del servidor. Por favor, inténtalo más tarde.';
+          }
+        }
+  
+        if (error.status === 400) {
+          errorMessage = 'Hubo un problema con los datos ingresados.';
+        }
+  
+        this.status = 'error';
+        this.errorMessage = errorMessage;
         this.resetStatusAfterTimeout(); 
       }
     );
