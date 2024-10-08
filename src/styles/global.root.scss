@@ -1,0 +1,311 @@
+@import '/src/styles/variables.scss';
+@import '/src/styles/button.scss';
+.en {
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+.no-navbar .navbar {
+  display: none;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $white;
+  padding: 2px 20px;
+  box-shadow: 0 4px 6px $black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  height: 70px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar.hide {
+  transform: translateY(-100%);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo img {
+  width: 70px;
+  height: auto;
+  border-radius: 50%;
+  border: 2px solid $white;
+  margin: 0;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $black;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.search-bar {
+  width: 300px;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid $spacer-light;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.foorter-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::placeholder {
+  color: $hint-text;
+}
+
+:focus {
+  border-color: $purple;
+  outline: none;
+}
+
+:disabled {
+  background-color: $disabled;
+  color: $hint-text;
+  border-color: $disabled;
+  cursor: not-allowed;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icon {
+  margin-left: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -12px;
+  right: 50px;
+  background-color: $black;
+  color: $white;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+.app-content {
+  margin-top: 50px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.footer {
+  width: 100%;
+  background-color: $black;
+  color: $white;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+}
+
+.footer-container {
+  display: flex;
+  padding: 20px 50px;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-left img {
+  width: 80px;
+}
+
+.footer-menu {
+  flex: 2;
+}
+
+.footer-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-menu ul li {
+  margin: 10px 0;
+}
+
+.footer-menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-right {
+  text-align: right;
+  display: flex;
+  align-items: flex-end;
+}
+
+.footer-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  transform: translateX(-20px);
+}
+
+.footer-contact {
+  text-align: end;
+  color: $disabled;
+}
+
+.footer-contact p {
+  margin: 10px 0;
+  line-height: 1.0;
+  margin-bottom: 0px;
+}
+
+.footer-contact p:first-child {
+  font-size: 22px;
+  font-weight: bold;
+  color: $white;
+}
+
+.footer-contact p:nth-child(2) {
+  font-size: 14px;
+  color: $disabled;
+  margin-top: 1px;
+  margin-bottom: 10px;
+}
+
+.footer-contact p:nth-child(3) {
+  font-size: 16px;
+}
+
+.footer-contact a {
+  font-size: 16px;
+  color: $white;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+.footer-icons {
+  margin-top: 10px;
+}
+
+.footer-privacy {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 0;
+  border-top: 1px solid #444;
+  width: 100%;
+  font-size: 14px;
+
+  p {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    color: $white;
+  }
+
+  a {
+    position: absolute;
+    left: 90%;
+    transform: translateX(-120%);
+    margin: 0;
+    color: $white;
+    text-decoration: underline;
+    text-decoration-color: $white;
+    text-align: center;
+  }
+}
+
+@media (max-width: $tablet) {
+  .navbar {
+    width: 100%;
+    padding: 2px;
+    height: 70px;
+  }
+
+  .search-bar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .app-content {
+    padding-top: 80px;
+  }
+
+  .logo img {
+    width: 50px;
+    height: auto;
+  }
+}
+
+@media (max-width: $phone) {
+
+  .search-bar,
+  .button-container button,
+  .category-list button {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .category-list input[type="number"],
+  input[type="text"],
+  textarea {
+    font-size: 12px;
+    padding: 8px;
+    width: 55%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 600px;
+  }
+}

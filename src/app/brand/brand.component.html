@@ -1,0 +1,71 @@
+<div class="create-brand">
+  <h2>Crear Marca</h2>
+
+  <form [formGroup]="brandForm" (ngSubmit)="saveBrand()">
+    <div>
+      <label for="name">Nombre:</label>
+      <input id="name" type="text" formControlName="name" required>
+      <div *ngIf="brandForm?.get('name')?.invalid && brandForm?.get('name')?.touched">
+        <small *ngIf="brandForm?.get('name')?.hasError('required')">El nombre es requerido.</small>
+        <small *ngIf="brandForm?.get('name')?.hasError('maxlength')">El nombre no puede exceder los 50 caracteres.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="description">Descripción:</label>
+      <textarea id="description" formControlName="description" required></textarea>
+      <div *ngIf="brandForm?.get('description')?.invalid && brandForm?.get('description')?.touched">
+        <small *ngIf="brandForm?.get('description')?.hasError('required')">La descripción es requerida.</small>
+        <small *ngIf="brandForm?.get('description')?.hasError('maxlength')">La descripción no puede exceder los 90 caracteres.</small>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" [disabled]="brandForm.invalid">Guardar marca</button>
+
+      <div *ngIf="status === 'success'" class="status">
+        <span class="dot success"></span>
+        <span class="status-message">Marca guardada con éxito.</span>
+      </div>
+      <div *ngIf="status === 'error'" class="status">
+        <span class="dot error"></span>
+        <span class="status-message">{{ errorMessage }}</span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="brand-list">
+  <h2>Lista de Marcas</h2>
+
+  <label for="size">Mostrar por página:</label>
+  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" placeholder="Número de elementos por página">
+
+  <label for="name">Buscar por nombre:</label>
+  <button (click)="toggleSort()">{{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}</button>
+
+  <button (click)="searchByName()">Buscar</button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brand of brands">
+        <td>{{ brand.brandId }}</td>
+        <td>{{ brand.brandName }}</td>
+        <td>{{ brand.brandDescription }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pagination 
+    [page]="page" 
+    [totalPages]="totalPages" 
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>

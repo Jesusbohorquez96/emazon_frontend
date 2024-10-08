@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Category } from '../models/category.model';
+import { Category } from '../category/models/category.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8080/categories';
+  private readonly apiUrl = `${environment.apiBaseUrl}/categories`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getCategories(page: number, size: number, sortBy: string, sortDirection: string, name?: string): Observable<any> {
     let params = new HttpParams()

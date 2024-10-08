@@ -1,28 +1,83 @@
-<header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emazon</title>
+  <link rel="stylesheet" href="/path/to/your/styles.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
   <nav class="navbar">
     <div class="navbar-left">
-      <div class="logo">
-        <img src="/assets/logo 2.png" alt="logo Emazon" />
-      </div>
-      <span class="navbar-title">Emazon</span>
+      <a [routerLink]="['/welcome']" class="logo">
+        <img src="/assets/logo.png" alt="logo Emazon" />
+      </a>
+      <a [routerLink]="['/welcome']" class="navbar-title">Emazon</a>
     </div>
 
     <div class="navbar-center">
       <input type="text" class="search-bar" placeholder="Search here..." aria-label="Search bar" />
-      <button class="search-button" aria-label="Search">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </button>
     </div>
 
     <div class="navbar-right">
-      <a href="/profile" class="navbar-icon" aria-label="Profile">
+      <a [routerLink]="['/profile']" class="navbar-icon" aria-label="Profile">
         <i class="fa fa-shopping-cart"></i>
         <span class="cart-badge">Perfil</span>
       </a>
     </div>
   </nav>
-</header>
 
-<div class="app-content">
-  <app-category></app-category>
-</div>
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <section class="footer-container">
+      <div class="footer-left">
+        <a href="#" class="footer-logo">
+          <img src="/assets/logo.png" alt="logo Emazon" />
+        </a>
+      </div>
+
+      <nav class="footer-menu">
+        <ul>
+          <li><a [routerLink]="['/']">¡Emazon</a></li> <!-- Cerrar la etiqueta correctamente -->
+          <li><a [routerLink]="['/categorias']">Categorias</a></li>
+          <li><a [routerLink]="['/marcas']">Marcas</a></li>
+          <li><a [routerLink]="['/']">Menu 4</a></li>
+        </ul>
+      </nav>
+
+      <section class="footer-right">
+        <div class="footer-buttons">
+          <button class="btn">Button</button>
+          <button class="btn">Button 2</button>
+        </div>
+      </section>
+
+      <section class="footer-info"> <!-- corregir typo 'foorter-info' -->
+        <address class="footer-contact">
+          <p>+57 311 277 1310</p>
+          <p>Lun - Vie 9:00 - 18:00</p>
+          <p>Tame, Arauca</p>
+          <p>Colombia</p>
+          <p><a href="mailto:jesuspabon791&#64;gmail.com">jesuspabon791&#64;gmail.com</a></p>
+
+          <div class="footer-icons">
+            <a href="#"><i class="fa fa-vk"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a> <!-- Cambié el icono de Facebook -->
+          </div>
+        </address>
+      </section>
+    </section>
+
+    <div class="footer-privacy">
+      <p>&copy; 2021-2024 Company name. All rights reserved</p>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </footer>
+
+</body>
+</html>

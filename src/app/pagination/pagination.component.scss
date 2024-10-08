@@ -1,0 +1,38 @@
+@import '/src/styles/variables.scss';
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 16px;
+  
+  button {
+   background: transparent;
+    color: $black;
+    border: none;
+    padding: 18px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  
+    &:disabled {
+      background-color: #e0e0e0;
+      color: #888;
+      cursor: not-allowed;
+    }
+  
+    &.active {
+      color: $purple;
+    }
+  
+    &.arrow {
+      color: $purple; 
+    }
+  }
+  
+  span {
+    margin: 0 5px;
+    color: #6a0dad;
+  }
+  }

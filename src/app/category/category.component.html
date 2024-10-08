@@ -1,22 +1,31 @@
 <div class="create-category">
   <h2>Crear categoría</h2>
 
-  <form (ngSubmit)="saveCategory()">
+  <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
     <div>
       <label for="name">Nombre:</label>
-      <input type="text" [(ngModel)]="category.name" name="name" id="name" required>
+      <input id="name" type="text" formControlName="name" required>
+      <div *ngIf="categoryForm?.get('name')?.invalid && categoryForm?.get('name')?.touched">
+        <small *ngIf="categoryForm?.get('name')?.hasError('required')">El nombre es requerido.</small>
+        <small *ngIf="categoryForm?.get('name')?.hasError('maxlength')">El nombre no debe exceder los 50 caracteres.</small>
+      </div>
     </div>
+    
     <div>
       <label for="description">Descripción:</label>
-      <textarea [(ngModel)]="category.description" name="description" id="description" required></textarea>
+      <textarea id="description" formControlName="description" required></textarea>
+      <div *ngIf="categoryForm?.get('description')?.invalid && categoryForm?.get('description')?.touched">
+        <small *ngIf="categoryForm?.get('description')?.hasError('required')">La descripción es requerida.</small>
+        <small *ngIf="categoryForm?.get('description')?.hasError('maxlength')">La descripción no debe exceder los 120 caracteres.</small>
+      </div>
     </div>
 
     <div class="button-container">
-      <button type="submit">Guardar categoría</button>
+      <button type="submit" [disabled]="categoryForm.invalid">Guardar categoría</button>
 
       <div *ngIf="status === 'success'" class="status">
         <span class="dot success"></span>
-        <span class="status-message">Category saved successfully.</span>
+        <span class="status-message">Categoría guardada con éxito.</span>
       </div>
       <div *ngIf="status === 'error'" class="status">
         <span class="dot error"></span>
@@ -30,11 +39,12 @@
   <h2>Lista de Categorias</h2>
 
   <label for="size">Mostrar por página:</label>
-  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1"
-    placeholder="Número de elementos por página">
+  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" placeholder="Número de elementos por página">
 
   <label for="name">Buscar por nombre:</label>
-  <button (click)="toggleSort()"> ({{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }})</button>
+  <button (click)="toggleSort()">
+    {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
+  </button>
 
   <button (click)="searchByName()">Buscar</button>
 
@@ -42,8 +52,8 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Descriptión</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
       </tr>
     </thead>
     <tbody>
@@ -55,9 +65,9 @@
     </tbody>
   </table>
 
-  <div class="pagination">
-    <button (click)="prevPage()" [disabled]="page === 0">Anterior</button>
-    Página {{ page + 1 }} de {{ totalPages }}
-    <button (click)="nextPage()" [disabled]="page === totalPages - 1">Siguiente</button>
-  </div>
+  <app-pagination 
+    [page]="page" 
+    [totalPages]="totalPages" 
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 </div>

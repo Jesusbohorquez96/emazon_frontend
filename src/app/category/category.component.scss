@@ -1,4 +1,5 @@
 @import '/src/styles/variables.scss';
+@import '/src/styles/button.scss';
 
 .create-category, .category-list {
   margin-top: 20px;
@@ -40,34 +41,6 @@ input[type="text"], textarea {
   text-align: center;
 }
 
-.button-container button, .category-list button {
-  margin-bottom: 10px;
-  padding: 10px 20px; 
-  font-size: 14px;
-  border-radius: 5px;
-  background-color: $purple;
-  color: $white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-
-  &:hover {
-    background-color: $hover;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    background-color: $click;
-    transform: translateY(1px);
-  }
-
-  &:disabled {
-    background-color: $disabled;
-    cursor: not-allowed;
-    opacity: 0.6; 
-  }
-}
-
 .table-container {
   margin: 20px auto;
   width: 100%;
@@ -88,12 +61,6 @@ input[type="text"], textarea {
   background-color: #f9f9f9;
 }
 
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
 .dot {
   height: 15px;
   width: 15px;
@@ -108,86 +75,4 @@ input[type="text"], textarea {
 
 .error {
   background-color: #D51A52;
-}
-
-@media (max-width: 768px) {
-  .create-category,
-  .category-list,
-  .table-container {
-    width: 100%; 
-    padding: 10px;
-  }
-
-  .category-list input[type="number"],
-  .category-list button,
-  input[type="text"],
-  textarea {
-    width: 100%; 
-  }
-
-  .pagination {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .pagination button {
-    width: 100%; 
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .create-category,
-  .category-list,
-  .table-container {
-    width: 58%; 
-    padding: 10px;
-  }
-
-  .category-list input[type="number"],
-  .category-list button,
-  input[type="text"],
-  textarea {
-    width: 100%; 
-  }
-
-  .pagination {
-    flex-direction: column;
-    align-items: center; 
-  }
-
-  .pagination button {
-    width: 100%; 
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .button-container button, 
-  .category-list button {
-    font-size: 14px;
-    padding: 10px; 
-    width: 100%;
-  }
-
-  .category-list input[type="number"],
-  input[type="text"],
-  textarea {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .create-category {
-    max-width: 55%; 
-  }
-
-  .table-container {
-    max-width: 100%; 
-    padding: 10px;
-    overflow-x: auto; 
-  }
-
-  .table {
-    min-width: 250px; 
-  }
 }

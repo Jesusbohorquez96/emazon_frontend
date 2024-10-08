@@ -1,4 +1,5 @@
 export interface Category {
+get(arg0: string): unknown;
     id: number;
     name: string;
     description: string;

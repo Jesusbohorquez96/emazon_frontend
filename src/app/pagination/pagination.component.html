@@ -1,0 +1,21 @@
+<div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0" class="arrow">&larr;</button>
+  
+    <button *ngIf="page !== 0" (click)="goToPage(0)">1</button>
+
+    <button *ngIf="page === 0" class="active">1</button>
+  
+    <span *ngIf="page > 2">...</span>
+  
+    <button *ngIf="page > 1" (click)="goToPage(page - 1)">{{ page }}</button>
+
+    <button *ngIf="page > 0 && page < totalPages - 1" class="active">{{ page + 1 }}</button>
+
+    <button *ngIf="page < totalPages - 2" (click)="goToPage(page + 1)">{{ page + 2 }}</button>
+    
+    <span *ngIf="page < totalPages - 3">...</span>
+
+    <button (click)="goToPage(totalPages - 1)" [class.active]="page === totalPages - 1">{{ totalPages }}</button>
+  
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1" class="arrow">&rarr;</button>
+  </div>

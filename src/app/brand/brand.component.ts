@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CategoryResponse } from './models/category.model';
-import { CategoryService } from '../service/category.service';
+import { BrandResponse } from './models/brands.models';
+import { BrandService } from 'src/app/service/brand.service';
 import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-brand',
+  templateUrl: './brand.component.html',
+  styleUrls: ['./brand.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class BrandComponent implements OnInit {
 
-  categories: CategoryResponse[] = [];
-  categoryForm!: FormGroup;
+  brands: BrandResponse[] = [];
+  brandForm!: FormGroup;
 
   page: number = 0;
   size: number = 1;
@@ -24,61 +24,59 @@ export class CategoryComponent implements OnInit {
   statusTimeout: any;
   errorMessage: string = '';
 
-  constructor(private readonly categoryService: CategoryService) { }
+  constructor(private readonly brandService: BrandService) { }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getBrands();
 
-
-    this.categoryForm = new FormGroup({
+    this.brandForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(120)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(90)]),
     });
   }
 
-  getCategories() {
-    this.categoryService.getCategories(this.page, this.size, this.sortBy, this.sortDirection, this.searchName).subscribe(
+  getBrands() {
+    this.brandService.getBrands(this.page, this.size, this.sortBy, this.sortDirection, this.searchName).subscribe(
       (response) => {
         console.log('Respuesta de la API:', response);
-        this.categories = response.content || response;
+        this.brands = response.content || response;
         this.totalPages = response.totalPages || 0;
       },
       (error) => {
-        console.error('Error al obtener las categorías:', error);
+        console.error('Error al obtener las marcas:', error);
       }
     );
   }
 
-  saveCategory() {
-    if (this.categoryForm && this.categoryForm.invalid) {
+  saveBrand() {
+    if (this.brandForm && this.brandForm.invalid) {
       this.status = 'error';
-      this.errorMessage = 'Por favor corrige los errores del formulario.';
+      this.errorMessage = 'El formulario tiene errores. Por favor corrígelos.';
       this.resetStatusAfterTimeout();
       return;
     }
 
-    const categoryData = this.categoryForm ? this.categoryForm.value : {};
+    const brandData = this.brandForm.value;
 
-    this.categoryService.saveCategory(categoryData).subscribe(
+    this.brandService.saveBrand(brandData).subscribe(
       (response) => {
-        console.log('Saved Category:', response);
+        console.log('Saved Brand:', response);
         this.status = 'success';
-        this.getCategories();
+        this.getBrands();
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
       (error) => {
-        console.error('Error al guardar la categoría:', error);
-        let errorMessage = 'Ocurrió un error al guardar la categoría.';
+        console.error('Error al guardar la marca:', error);
+        let errorMessage = 'Ocurrió un error al guardar la marca.';
 
         if (error.status === HttpStatusCode.InternalServerError) {
           if (error.error && error.error.message) {
-            errorMessage = 'Ya existe una categoría con ese nombre.';
+            errorMessage = 'Hubo un problema con los datos ingresados.';
           } 
         } 
-       
         if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'Hubo un problema con los datos ingresados.';
+          errorMessage = 'Ya existe una marca con ese nombre.';
         }
 
         this.status = 'error';
@@ -89,9 +87,7 @@ export class CategoryComponent implements OnInit {
   }
 
   resetForm() {
-    if (this.categoryForm) {
-      this.categoryForm.reset();
-    }
+    this.brandForm.reset();
   }
 
   resetStatusAfterTimeout() {
@@ -105,42 +101,42 @@ export class CategoryComponent implements OnInit {
 
   updatePageSize() {
     this.page = 0;
-    this.getCategories();
+    this.getBrands();
   }
 
   toggleSort() {
     this.sortDirection = this.sortDirection === 'ASC' ? 'DESC' : 'ASC';
-    this.getCategories();
+    this.getBrands();
   }
 
   searchByName() {
     this.page = 0;
-    this.getCategories();
+    this.getBrands();
   }
 
   onPageChange(newPage: number) {
     this.page = newPage;
-    this.getCategories();
+    this.getBrands();
   }
 
   goToPage(page: number) {
     if (page >= 0 && page < this.totalPages) {
       this.page = page;
-      this.getCategories();
+      this.getBrands();
     }
   }
 
   nextPage() {
     if (this.page < this.totalPages - 1) {
       this.page++;
-      this.getCategories();
+      this.getBrands();
     }
   }
 
   prevPage() {
     if (this.page > 0) {
       this.page--;
-      this.getCategories();
+      this.getBrands();
     }
   }
 }

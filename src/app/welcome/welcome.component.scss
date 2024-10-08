@@ -1,0 +1,50 @@
+@import '/src/styles/variables.scss';
+@import '/src/styles/button.scss';
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+  }
+  
+  .welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh; 
+  }
+  
+  .welcome-box {
+    background-color: $white; 
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
+  }
+
+  .button-url{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .welcome-box h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-box p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: $hint-text; 
+  }
+  
