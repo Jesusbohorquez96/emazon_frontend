@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 export class CategoryService {
 
   private readonly apiUrl = `${environment.apiBaseUrl}/categories`;
+  createCategory: any;
 
   constructor(private readonly http: HttpClient) { }
 
@@ -29,7 +30,7 @@ export class CategoryService {
 
   saveCategory(category: Category): Observable<Category> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type' : 'application/json',
       // 'Authorization': '••••••' 
     });
 

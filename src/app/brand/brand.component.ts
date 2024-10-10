@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BrandResponse } from './models/brands.models';
-import { BrandService } from 'src/app/service/brand.service';
+import { BrandService } from '@/app/services/brand.service';
 import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
@@ -51,7 +51,7 @@ export class BrandComponent implements OnInit {
   saveBrand() {
     if (this.brandForm && this.brandForm.invalid) {
       this.status = 'error';
-      this.errorMessage = 'El formulario tiene errores. Por favor corrígelos.';
+      this.errorMessage = 'Corrige los errores del formulario.';
       this.resetStatusAfterTimeout();
       return;
     }
@@ -68,15 +68,15 @@ export class BrandComponent implements OnInit {
       },
       (error) => {
         console.error('Error al guardar la marca:', error);
-        let errorMessage = 'Ocurrió un error al guardar la marca.';
+        let errorMessage = 'Ocurrió un error al guardar.';
 
         if (error.status === HttpStatusCode.InternalServerError) {
           if (error.error && error.error.message) {
-            errorMessage = 'Hubo un problema con los datos ingresados.';
-          } 
-        } 
+            errorMessage = 'Error en los datos ingresados.';
+          }
+        }
         if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'Ya existe una marca con ese nombre.';
+          errorMessage = 'Nombre ya en uso, elige otro.';
         }
 
         this.status = 'error';

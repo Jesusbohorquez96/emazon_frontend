@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoryResponse } from './models/category.model';
-import { CategoryService } from '../service/category.service';
+import { CategoryService } from '../services/category.service';
 import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
@@ -23,6 +23,7 @@ export class CategoryComponent implements OnInit {
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';
+  search: any;
 
   constructor(private readonly categoryService: CategoryService) { }
 
@@ -32,7 +33,7 @@ export class CategoryComponent implements OnInit {
 
     this.categoryForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(120)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(90)]),
     });
   }
 
@@ -52,7 +53,7 @@ export class CategoryComponent implements OnInit {
   saveCategory() {
     if (this.categoryForm && this.categoryForm.invalid) {
       this.status = 'error';
-      this.errorMessage = 'Por favor corrige los errores del formulario.';
+      this.errorMessage = 'Corrige los errores del formulario.';
       this.resetStatusAfterTimeout();
       return;
     }
@@ -69,16 +70,16 @@ export class CategoryComponent implements OnInit {
       },
       (error) => {
         console.error('Error al guardar la categoría:', error);
-        let errorMessage = 'Ocurrió un error al guardar la categoría.';
+        let errorMessage = 'Ocurrió un error al guardar.';
 
         if (error.status === HttpStatusCode.InternalServerError) {
           if (error.error && error.error.message) {
-            errorMessage = 'Ya existe una categoría con ese nombre.';
-          } 
-        } 
-       
+            errorMessage = 'Error en los datos ingresados.';
+          }
+        }
+
         if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'Hubo un problema con los datos ingresados.';
+          errorMessage = 'Nombre ya en uso, elige otro.';
         }
 
         this.status = 'error';

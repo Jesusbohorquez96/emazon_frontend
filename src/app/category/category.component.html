@@ -14,7 +14,7 @@
     <div>
       <label for="description">Descripción:</label>
       <textarea id="description" formControlName="description" required></textarea>
-      <div *ngIf="categoryForm?.get('description')?.invalid && categoryForm?.get('description')?.touched">
+      <div class="required_description" *ngIf="categoryForm?.get('description')?.invalid && categoryForm?.get('description')?.touched">
         <small *ngIf="categoryForm?.get('description')?.hasError('required')">La descripción es requerida.</small>
         <small *ngIf="categoryForm?.get('description')?.hasError('maxlength')">La descripción no debe exceder los 120 caracteres.</small>
       </div>

@@ -1,8 +1,5 @@
 @import '/src/styles/variables.scss';
 @import '/src/styles/button.scss';
-.en {
-  margin: 0;
-}
 
 html,
 body {
@@ -10,6 +7,13 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  box-sizing: border-box; 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -20,7 +24,7 @@ body {
 
 main {
   flex: 1;
-  padding: 20px;
+  padding: 0; 
 }
 
 .no-navbar .navbar {
@@ -33,7 +37,7 @@ main {
   left: 0;
   width: 100%;
   background-color: $white;
-  padding: 2px 20px;
+  padding: 0 20px;  
   box-shadow: 0 4px 6px $black;
   display: flex;
   justify-content: space-between;
@@ -75,7 +79,7 @@ main {
 }
 
 .search-bar {
-  width: 300px;
+  width: 100%;  
   padding: 8px;
   border-radius: 20px;
   border: 1px solid $spacer-light;
@@ -128,7 +132,7 @@ main {
 }
 
 .app-content {
-  margin-top: 50px;
+  margin-top: 0px;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -144,7 +148,7 @@ main {
 
 .footer-container {
   display: flex;
-  padding: 20px 50px;
+  padding: 0px 10px; 
 }
 
 .footer-left {
@@ -165,7 +169,7 @@ main {
 }
 
 .footer-menu ul li {
-  margin: 10px 0;
+  margin: 0;
 }
 
 .footer-menu ul li a {

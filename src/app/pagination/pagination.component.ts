@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { APP_CONSTANTS } from 'src/styles/constants';
 
 @Component({
   selector: 'app-pagination',
@@ -6,20 +7,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
-  @Input() page: number = 0;
-  @Input() totalPages: number = 0; 
-
+  
+  @Input() page: number = APP_CONSTANTS.NUMBER.ZERO;
+  @Input() totalPages: number = APP_CONSTANTS.NUMBER.ZERO; 
   @Output() pageChange = new EventEmitter<number>(); 
 
   prevPage() {
-    if (this.page > 0) {
-      this.pageChange.emit(this.page - 1);
+    if (this.page > APP_CONSTANTS.NUMBER.ZERO) {
+      this.pageChange.emit(this.page - APP_CONSTANTS.NUMBER.ONE);
     }
   }
 
   nextPage() {
-    if (this.page < this.totalPages - 1) {
-      this.pageChange.emit(this.page + 1);
+    if (this.page < this.totalPages - APP_CONSTANTS.NUMBER.ONE) {
+      this.pageChange.emit(this.page + APP_CONSTANTS.NUMBER.ONE);
     }
   }
 

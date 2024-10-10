@@ -1,11 +1,11 @@
 export interface Category {
-get(arg0: string): unknown;
     id: number;
     name: string;
     description: string;
   }
 
 export interface CategoryResponse {
+  name: any;
   categoryId: number;
   categoryName: string;
   categoryDescription: string;

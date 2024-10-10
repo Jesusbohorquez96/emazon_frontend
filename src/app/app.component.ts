@@ -1,24 +1,27 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { APP_CONSTANTS } from 'src/styles/constants'; 
 
 @Component({
-  selector: APP_CONSTANTS.ROOT.SELECTOR,
-  templateUrl: APP_CONSTANTS.ROOT.TEMPLATE_URL,
-  styleUrls: APP_CONSTANTS.ROOT.STYLE_URLS
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = APP_CONSTANTS.APP_TITLE;
+  ngOnInit(): void {}
+  querySelector(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
+  title = 'emazon';
 showNavbar: any;
 
   constructor(private readonly router: Router, private readonly renderer: Renderer2) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
        
-        if (APP_CONSTANTS.HIDE_NAVBAR_ROUTES.includes(this.router.url)) {
-          this.renderer.addClass(document.body, APP_CONSTANTS.NO_NAVBAR);
+        if ('/other-page'.includes(this.router.url)) {
+          this.renderer.addClass(document.body, 'no-navbar');
         } else {
-          this.renderer.removeClass(document.body, APP_CONSTANTS.NO_NAVBAR);
+          this.renderer.removeClass(document.body, 'no-navbar');
         }
       }
     });
@@ -26,11 +29,11 @@ showNavbar: any;
 }
 
 export class ParentComponent {
-  currentPage = APP_CONSTANTS.PAGINATION.ZERO; 
-  totalPages = APP_CONSTANTS.PAGINATION.TOTAL_PAGES;
+  currentPage = 0; 
+  totalPages = 10;
 
   onPageChange(newPage: number) {
-    console.log(APP_CONSTANTS.PAGINATION.PAGE_CHANGE_MESSAGE(newPage));
+    console.log((newPage: number) => `Página cambiada a: ${newPage}`);
     this.currentPage = newPage;
   }
 }

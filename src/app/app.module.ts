@@ -16,7 +16,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     CategoryComponent,
     WelcomeComponent,
     BrandComponent,
-    PaginationComponent
+    PaginationComponent,
   ],
   
   imports: [
