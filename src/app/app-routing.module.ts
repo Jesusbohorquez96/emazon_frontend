@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { CategoryComponent } from './components/pages/category/category.component';
-import { BrandComponent } from './brand/brand.component';
+import { BrandComponent } from './components/pages/brand/brand.component';
 import { APP_CONSTANTS } from 'src/styles/constants';
 
 const routes: Routes = [
