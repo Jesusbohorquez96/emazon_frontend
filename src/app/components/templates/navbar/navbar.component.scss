@@ -1,0 +1,87 @@
+@import '/src/styles/variables.scss';
+
+.no-navbar .navbar {
+    display: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $white;
+    padding: 0 20px;
+    box-shadow: 0 4px 6px $black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    height: 70px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar.hide {
+    transform: translateY(-100%);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    width: 70px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid $white;
+    margin: 0;
+}
+
+.navbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $black;
+}
+
+.navbar-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-icon {
+    margin-left: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -12px;
+    right: 50px;
+    background-color: $black;
+    color: $white;
+    font-size: 0.8rem;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+@media (max-width: $tablet) {
+    .navbar {
+        width: 100%;
+        padding: 2px;
+        height: 70px;
+    }
+
+    .logo img {
+        width: 50px;
+        height: auto;
+    }
+}

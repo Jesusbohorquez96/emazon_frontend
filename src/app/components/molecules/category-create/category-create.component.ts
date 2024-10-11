@@ -1,53 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CategoryResponse } from './models/category.model';
-import { CategoryService } from '../services/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-category-create',
+  templateUrl: './category-create.component.html',
+  styleUrls: ['./category-create.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CategoryCreateComponent implements OnInit {
 
-  categories: CategoryResponse[] = [];
   categoryForm!: FormGroup;
-
-  page: number = 0;
-  size: number = 1;
-  sortBy: string = 'NAME';
-  sortDirection: string = 'ASC';
-  totalPages: number = 0;
-  searchName: string = '';
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';
-  search: any;
 
   constructor(private readonly categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.getCategories();
-
-
     this.categoryForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(90)]),
     });
-  }
-
-  getCategories() {
-    this.categoryService.getCategories(this.page, this.size, this.sortBy, this.sortDirection, this.searchName).subscribe(
-      (response) => {
-        console.log('Respuesta de la API:', response);
-        this.categories = response.content || response;
-        this.totalPages = response.totalPages || 0;
-      },
-      (error) => {
-        console.error('Error al obtener las categorías:', error);
-      }
-    );
   }
 
   saveCategory() {
@@ -64,7 +38,6 @@ export class CategoryComponent implements OnInit {
       (response) => {
         console.log('Saved Category:', response);
         this.status = 'success';
-        this.getCategories();
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
@@ -90,9 +63,7 @@ export class CategoryComponent implements OnInit {
   }
 
   resetForm() {
-    if (this.categoryForm) {
-      this.categoryForm.reset();
-    }
+    this.categoryForm.reset();
   }
 
   resetStatusAfterTimeout() {
@@ -102,46 +73,5 @@ export class CategoryComponent implements OnInit {
     this.statusTimeout = setTimeout(() => {
       this.status = '';
     }, 5000);
-  }
-
-  updatePageSize() {
-    this.page = 0;
-    this.getCategories();
-  }
-
-  toggleSort() {
-    this.sortDirection = this.sortDirection === 'ASC' ? 'DESC' : 'ASC';
-    this.getCategories();
-  }
-
-  searchByName() {
-    this.page = 0;
-    this.getCategories();
-  }
-
-  onPageChange(newPage: number) {
-    this.page = newPage;
-    this.getCategories();
-  }
-
-  goToPage(page: number) {
-    if (page >= 0 && page < this.totalPages) {
-      this.page = page;
-      this.getCategories();
-    }
-  }
-
-  nextPage() {
-    if (this.page < this.totalPages - 1) {
-      this.page++;
-      this.getCategories();
-    }
-  }
-
-  prevPage() {
-    if (this.page > 0) {
-      this.page--;
-      this.getCategories();
-    }
   }
 }

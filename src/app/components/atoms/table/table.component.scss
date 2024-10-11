@@ -1,0 +1,33 @@
+.table-container {
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed; 
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table td {
+  white-space: normal; 
+  overflow-wrap: anywhere; 
+}

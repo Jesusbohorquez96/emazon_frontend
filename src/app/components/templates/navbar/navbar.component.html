@@ -1,0 +1,19 @@
+<nav class="navbar">
+    <div class="navbar-left">
+      <a [routerLink]="['/home']" class="logo">
+        <img src="/assets/logo.png" alt="logo Emazon" />
+      </a>
+      <a [routerLink]="['/home']" class="navbar-title">Emazon</a>
+    </div>
+  
+    <div class="navbar-center">
+      <input type="text" class="search-bar" placeholder="Busca aqui..." aria-label="Search bar" />
+    </div>
+  
+    <div class="navbar-right">
+      <a [routerLink]="['/profile']" class="navbar-icon" aria-label="Profile">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-badge">Perfil</span>
+      </a>
+    </div>
+  </nav>

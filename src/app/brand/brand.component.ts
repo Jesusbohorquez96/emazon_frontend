@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BrandResponse } from './models/brands.models';
+import { BrandResponse } from '../models/brands.models';
 import { BrandService } from '@/app/services/brand.service';
 import { HttpStatusCode } from '@angular/common/http';
 

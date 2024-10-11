@@ -1,0 +1,19 @@
+<div class="category-list">
+    <h2>Lista de Categorias</h2>
+
+    <label for="size">Mostrar por página:</label>
+    <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
+        placeholder="Número de elementos por página">
+
+    <label for="name">Buscar por nombre:</label>
+    <button (click)="toggleSort()">
+        {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
+    </button>
+
+    <button (click)="searchByName()">Buscar</button>
+
+    <app-table [columns]="columns" [data]="categories"></app-table>
+
+    <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+    </app-pagination>
+</div>

@@ -1,0 +1,17 @@
+<div class="button-container">
+
+    <button type="submit" [disabled]="buttonForm.invalid || isDisabled">{{ label }}</button>
+
+    <div class="status-message">
+
+        <div *ngIf="status === 'success'" class="status">
+            <span class="dot success"></span>
+            <span class="status-success">Acción completada con éxito.</span>
+        </div>
+
+        <div *ngIf="status === 'error'" class="status">
+            <span class="dot error"></span>
+            <span class="status-error">{{ errorMessage }}</span>
+        </div>
+    </div>
+</div>

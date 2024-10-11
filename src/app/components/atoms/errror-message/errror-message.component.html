@@ -1,0 +1,11 @@
+<div *ngIf="control?.touched && control?.errors" class="error-message">
+    
+    <small *ngIf="control?.hasError('required')">{{ requiredMessage }}</small>
+  
+    <small *ngIf="control?.hasError('maxlength')">{{ maxLengthMessage }}</small>
+  
+    <small *ngIf="control?.hasError('minlength')">{{ minLengthMessage }}</small>
+
+    <small *ngIf="control?.hasError('pattern')">{{ patternMessage }}</small>
+  </div>
+  

@@ -5,7 +5,6 @@ export interface Category {
   }
 
 export interface CategoryResponse {
-  name: any;
   categoryId: number;
   categoryName: string;
   categoryDescription: string;

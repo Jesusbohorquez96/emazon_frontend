@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Category } from '../category/models/category.model';
+import { Category } from '../models/category.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class CategoryService {
 
   saveCategory(category: Category): Observable<Category> {
     let headers = new HttpHeaders({
-      'Content-Type' : 'application/json',
+      'Content-Type': 'application/json',
       // 'Authorization': '••••••' 
     });
 

@@ -1,5 +1,6 @@
 <div class="pagination">
-    <button (click)="prevPage()" [disabled]="page === 0" class="arrow">&larr;</button>
+
+    <button *ngIf="page > 0" (click)="prevPage()" [disabled]="page === 0" class="arrow">&larr;</button>
   
     <button *ngIf="page !== 0" (click)="goToPage(0)">1</button>
 
@@ -17,5 +18,6 @@
 
     <button (click)="goToPage(totalPages - 1)" [class.active]="page === totalPages - 1">{{ totalPages }}</button>
   
-    <button (click)="nextPage()" [disabled]="page === totalPages - 1" class="arrow">&rarr;</button>
+    <button *ngIf="page < totalPages - 1" (click)="nextPage()" [disabled]="page === totalPages - 1" class="arrow">&rarr;</button>
+
   </div>

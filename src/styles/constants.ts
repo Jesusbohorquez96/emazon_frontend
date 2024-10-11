@@ -5,7 +5,7 @@ const FULL: "full" | "prefix" = "full";
 export const APP_CONSTANTS = {
     FULL,
     NAME: 'name',
-    WELCOME: 'welcome',
+    HOME: 'home',
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
     DEFAULT: '',
@@ -38,10 +38,10 @@ export const APP_CONSTANTS = {
         STYLE_URLS: ['./app.component.scss'],
     },
 
-    APP_WELCOME: {
-        SELECTOR: 'app-welcome',
-        TEMPLATE_URL: './welcome.component.html',
-        STYLE_URLS: ['./welcome.component.scss'],
+    APP_HOME: {
+        SELECTOR: 'app-home',
+        TEMPLATE_URL: './home.component.html',
+        STYLE_URLS: ['./home.component.scss'],
     },
     HIDE_NAVBAR_ROUTES: ['/login', '/register', '/other-page'],
 
