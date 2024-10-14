@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BrandService } from 'src/app/services/brand.service';
-import { Brand } from '../models/brands.models';
+import { Brand } from '../models/brand.model';
 import { APP_CONSTANTS } from 'src/styles/constants';
 
 describe('BrandService', () => {

@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand } from '../models/brand.model';
+import { Article } from 'src/app/models/article.model'; 
 import { APP_CONSTANTS } from 'src/styles/constants';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BrandService {
+export class ArticleService {
 
-  private readonly baseUrl = `${APP_CONSTANTS.API.BASE_URL}${APP_CONSTANTS.API.BRANDS_ENDPOINT}`;
 
-  constructor(private readonly http: HttpClient) { }
+  private readonly apiUrl = `${APP_CONSTANTS.API.BASE_URL}${APP_CONSTANTS.API.ARTICLE_ENDPOINT}`;
 
-  getBrands(page: number, size: number, sortBy: string, sortDirection: string, name: string): Observable<any> {
+  constructor(
+    private readonly http: HttpClient, 
+  ) { }
+
+  getArticles(page: number, size: number, sortBy: string, sortDirection: string, name?: string): Observable<any> {
     let params = new HttpParams()
       .set(APP_CONSTANTS.PAGINATION.PAGE, page.toString())
       .set(APP_CONSTANTS.PAGINATION.SIZE, size.toString())
@@ -24,14 +27,15 @@ export class BrandService {
       params = params.set(APP_CONSTANTS.NAME, name);
     }
 
-    return this.http.get<any>(this.baseUrl, { params });
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
-  saveBrand(brand: Brand): Observable<Brand> {
-    let headers = new HttpHeaders({
+  saveArticle(article: Article): Observable<Article> {
+    const headers = new HttpHeaders({
       [APP_CONSTANTS.SAVE.TYPE]: [APP_CONSTANTS.SAVE.JSON],
-      // 'Authorization': '••••••' 
     });
-    return this.http.post<Brand>(this.baseUrl, brand, { headers });
+
+    return this.http.post<Article>(this.apiUrl, article, { headers });
   }
+
 }

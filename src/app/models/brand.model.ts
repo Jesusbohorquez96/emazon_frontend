@@ -5,7 +5,6 @@ export interface Brand {
 }
 
 export interface BrandResponse {
-  name: any;
   brandId: number;
   brandName: string;
   brandDescription: string;

@@ -12,7 +12,8 @@
 
     <button (click)="searchByName()">Buscar</button>
 
-    <app-table [columns]="columns" [data]="categories"></app-table>
+    <app-table [columns]="columns" [data]="categories" [selectedEnabled]="selectedEnabled"
+        (selectedChangue)="handleCategoryChange($event)" [selectedItems]="selectedCategories"></app-table>
 
     <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
     </app-pagination>

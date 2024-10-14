@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { BrandResponse } from 'src/app/models/brands.models';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Brand, BrandResponse } from '@/app/models/brand.model';
 import { BrandService } from '../../../services/brand.service';
+import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
   selector: 'app-brand-list',
@@ -8,78 +9,94 @@ import { BrandService } from '../../../services/brand.service';
   styleUrls: ['./brand-list.component.scss']
 })
 export class BrandListComponent implements OnInit {
-  fields: any;
 
-  brands: BrandResponse[] = []; 
+  @Input() selectedEnabled: boolean = false;
+  @Input() selectedBrands: BrandResponse[] = [];
+  @Output() brandsSelected = new EventEmitter<BrandResponse[]>();
+
+  brands: Brand[] = [];
   columns = [
-    { field: 'brandId', header: 'Id' },
-    { field: 'brandName', header: 'Nombre' },
-    { field: 'brandDescription', header: 'Descripción' }
+    { field: APP_CONSTANTS.BRAND.ID, header: APP_CONSTANTS.ID },
+    { field: APP_CONSTANTS.BRAND.NAME, header: APP_CONSTANTS.SPANISH.NAME },
+    { field: APP_CONSTANTS.BRAND.DESCRIPTION, header: APP_CONSTANTS.SPANISH.DESCRIPTION },
   ];
-  page: number = 0;
-  size: number = 4;
-  sortBy: string = 'NAME';
-  sortDirection: string = 'ASC';
-  totalPages: number = 0;
+  page: number = APP_CONSTANTS.PAGINATION.ZERO;
+  size: number = APP_CONSTANTS.NUMBER.THREE;
+  sortBy: string = APP_CONSTANTS.PAGINATION.NAME;
+  sortDirection: string = APP_CONSTANTS.PAGINATION.ASC;
+  totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;
   searchName: string = '';
 
   constructor(private readonly brandService: BrandService) { }
 
   ngOnInit(): void {
-    this.getBrands(); 
+    this.loadBrands();
+    this.getBrands();
   }
 
   getBrands() {
+    console.log('Parámetros enviados a la API:', this.page, this.size, this.sortBy, this.sortDirection, this.searchName);
+
     this.brandService.getBrands(this.page, this.size, this.sortBy, this.sortDirection, this.searchName).subscribe(
       (response) => {
-        console.log('Respuesta de la API:', response);
-        this.brands = response.content || response; 
-        this.totalPages = response.totalPages || 0;
+        console.log('Respuesta de marcas desde la API:', response);
+        this.brands = response.content || response;
+        this.totalPages = response.totalPages || APP_CONSTANTS.PAGINATION.ZERO;
       },
       (error) => {
-        console.error('Error al obtener las marcas:', error); 
+        console.error('Error al obtener marcas:', error);
       }
     );
   }
 
+  handleBrandChange(Brand: BrandResponse[]) {
+    this.brandsSelected.emit(Brand);
+  }
+
+  loadBrands(): void {
+    this.brandService.getBrands(0, 3, 'NAME', 'ASC', '').subscribe((response: any) => {
+      this.brands = response.content;
+    });
+  }
+
   toggleSort() {
-    this.sortDirection = this.sortDirection === 'ASC' ? 'DESC' : 'ASC';
-    this.getBrands(); 
+    this.sortDirection = this.sortDirection === APP_CONSTANTS.PAGINATION.ASC ? APP_CONSTANTS.PAGINATION.DESC : APP_CONSTANTS.PAGINATION.ASC;
+    this.getBrands();
   }
 
   updatePageSize() {
-    this.page = 0;
-    this.getBrands(); 
+    this.page = APP_CONSTANTS.PAGINATION.ZERO;
+    this.getBrands();
   }
 
   searchByName() {
-    this.page = 0;
-    this.getBrands(); 
+    this.page = APP_CONSTANTS.PAGINATION.ZERO;
+    this.getBrands();
   }
 
   onPageChange(newPage: number) {
     this.page = newPage;
-    this.getBrands(); 
+    this.getBrands();
   }
 
   goToPage(page: number) {
-    if (page >= 0 && page < this.totalPages) {
+    if (page >= APP_CONSTANTS.PAGINATION.ZERO && page < this.totalPages) {
       this.page = page;
-      this.getBrands(); 
+      this.getBrands();
     }
   }
 
   nextPage() {
-    if (this.page < this.totalPages - 1) {
+    if (this.page < this.totalPages - APP_CONSTANTS.NUMBER.ONE) {
       this.page++;
-      this.getBrands(); 
+      this.getBrands();
     }
   }
 
   prevPage() {
-    if (this.page > 0) {
+    if (this.page > APP_CONSTANTS.PAGINATION.ZERO) {
       this.page--;
-      this.getBrands(); 
+      this.getBrands();
     }
   }
 }
