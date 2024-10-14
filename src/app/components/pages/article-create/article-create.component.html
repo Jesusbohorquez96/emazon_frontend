@@ -1,0 +1,105 @@
+<div class="article-create-container">
+  <h2>Crear Artículo</h2>
+
+  <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+
+    <label for="name">Nombre</label>
+    <input id="name" type="text" formControlName="name" required>
+    <div class="error-message">
+      <app-error-message [control]="articleForm.get('name')" requiredMessage="El nombre es requerido."
+        maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
+      </app-error-message>
+    </div>
+
+
+    <div class="textarea-container">
+      <label for="description">Descripción:</label>
+      <textarea id="description" formControlName="description" required></textarea>
+      <div class="error-message">
+        <app-error-message [control]="articleForm.get('description')" requiredMessage="La descripción es requerida."
+          maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
+        </app-error-message>
+      </div>
+    </div>
+
+    <label for="stock">Cantidad en Stock</label>
+    <input id="stock" formControlName="stock" type="number" placeholder="Cantidad en stock" />
+    <div *ngIf="articleForm.get('stock')?.invalid && articleForm.get('stock')?.touched">
+      <app-error-message [control]="articleForm.get('stock')" requiredMessage="La cantidad en stock es requerida."
+        minMessage="La cantidad en stock debe ser positiva.">
+      </app-error-message>
+    </div>
+
+
+    <label for="price">Precio</label>
+    <input id="price" formControlName="price" type="number" placeholder="Precio del artículo" />
+    <div *ngIf="articleForm.get('price')?.invalid && articleForm.get('price')?.touched">
+      <small *ngIf="articleForm.get('price')?.hasError('required')">El precio es obligatorio.</small>
+      <small *ngIf="articleForm.get('price')?.hasError('min')">El precio debe ser positivo.</small>
+    </div>
+
+
+    <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
+
+    <div *ngIf="selectedCategories.length">
+      <h3>Categorias seleccionada:</h3>
+      <ul>
+        <li *ngFor="let category of selectedCategories">{{ getCategoryName(category.categoryId) }}</li>
+      </ul>
+    </div>
+
+
+    <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
+
+
+    <div *ngIf="selectedBrand">
+      <h3>Marca seleccionada:</h3>
+      <p>{{ getBrandName(selectedBrand.brandId) }}</p>
+    </div>
+
+    <app-button [buttonForm]="articleForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
+      [errorMessage]="errorMessage">
+    </app-button>
+
+  </form>
+</div>
+
+<div class="modal" [class.show]="showBrandModal" (click)="closeBrandModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Selecciona una 1 Marca</h2>
+
+    <app-brand-list [selectedBrands]="selectedBrands" [selectedEnabled]="true"
+      (brandsSelected)="handleBrandChange($event)">
+    </app-brand-list>
+
+    <div *ngIf="selectedBrands.length === 1">
+      <h3>Marcas seleccionadas:</h3>
+      <ul>
+        <li *ngFor="let brand of selectedBrands">{{ getBrandName(brandId) }}</li>
+      </ul>
+
+      <button type="button" (click)="closeBrandModal()">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="showCategoryModal" (click)="closeCategoryModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Selecciona hasta 3 Categorías</h2>
+
+    <app-category-list 
+  [selectedCategories]="selectedCategories" 
+  [selectedEnabled]="true"
+  (categoriesSelected)="handleCategoryChange($event)">
+</app-category-list>
+
+    <div *ngIf="selectedCategories.length <= 3 && selectedCategories.length >= 1">
+      <h3>Categorías seleccionadas:</h3>
+      <ul>
+        <li *ngFor="let category of selectedCategories">{{ getCategoryName(categoryId) }}</li>
+      </ul>
+
+      <button type="button" (click)="closeCategoryModal()">Aceptar</button>
+    </div>
+  </div>
+</div>

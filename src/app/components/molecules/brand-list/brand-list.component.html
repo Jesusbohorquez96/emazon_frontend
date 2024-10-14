@@ -12,7 +12,9 @@
 
     <button (click)="searchByName()">Buscar</button>
 
-    <app-table [columns]="columns" [data]="brands"></app-table>
+    <app-table [columns]="columns" [data]="brands" [selectedEnabled]="selectedEnabled"
+        (selectedChangue)="handleBrandChange($event)" [selectedItems]="selectedBrands"></app-table>
+
 
     <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
     </app-pagination>

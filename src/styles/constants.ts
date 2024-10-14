@@ -4,14 +4,60 @@ const FULL: "full" | "prefix" = "full";
 
 export const APP_CONSTANTS = {
     FULL,
+    ERROR: 'error',
+    ID: 'Id',
     NAME: 'name',
+    DESCRIPTION: 'description',
     HOME: 'home',
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
+    ARTICLES: 'articulos',
     DEFAULT: '',
     WILDCARD: '**',
     NO_NAVBAR: 'no-navbar',
     ROOT: 'root',
+    CHECKBOX: { 
+        FIELD: 'checkbox',
+        HEADER: 'Seleccionar',
+    },
+    
+
+    CATEGORY: {
+        ID: 'categoryId',
+        NAME: 'categoryName',
+        DESCRIPTION: 'categoryDescription',
+    },
+
+    BRAND: {
+        ID: 'brandId',
+        NAME: 'brandName',
+        DESCRIPTION: 'brandDescription',
+    },
+
+    SPANISH: {
+        NAME: 'Nombre',
+        DESCRIPTION: 'Descripción',
+    },
+
+    MESSAGE: {
+        FIELD: 'Este campo es requerido.',
+        MAX :'Excede el número máximo de caracteres.',
+    },
+
+    ERRORS: {
+        SUCCESS: 'success',
+        SAVED_MARCA: 'Saved Brand:',
+        SAVED: 'Saved Category:',
+        ANSWER: 'Respuesta de la API:',
+        USE: 'Nombre ya en uso, elige otro.',
+        DATA: 'Error en los datos ingresados.',
+        ERROR: 'Error al guardar la categoría:',
+        ERROR_MARCA: 'Error al guardar la marca:',
+        OCCURRED: 'Ocurrió un error al guardar.',
+        OBTAIN: 'Error al obtener las categorías:',
+        OBTAIN_BRAND: 'Error al obtener las marcas:',
+        CORRECT: 'Corrige los errores del formulario.',
+    },
 
     NUMBER: {
         ZERO: 0,
@@ -20,17 +66,19 @@ export const APP_CONSTANTS = {
         THREE: 3,
         MAX_RETRIES: 5,
         NAME_LENGTH: 50,
-        DESCRIPTION_LENGTH: 120,
+        DESCRIPTION_LENGTH: 90,
+        BRAND_LENGTH: 120,
         MAX_VALUE: 1000,
         TIMEOUT_MS: 5000,
     },
-   
-    API: {
-        BASE_URL: environment.apiBaseUrl,  
-        CATEGORIES_ENDPOINT: '/categories', 
-        BRANDS_ENDPOINT: '/brands',
 
-      },
+    API: {
+        BASE_URL: environment.apiBaseUrl,
+        CATEGORIES_ENDPOINT: '/categories',
+        BRANDS_ENDPOINT: '/brands',
+        ARTICLE_ENDPOINT: '/articles',
+
+    },
 
     APP_ROOT: {
         SELECTOR: 'app-root',
@@ -48,7 +96,7 @@ export const APP_CONSTANTS = {
     PAGINATION: {
         SPACE: '',
         ZERO: 0,
-        DEFAULT_NAME: 'NAME',
+        NAME: 'NAME',
         TOTAL_PAGES: 10,
         MIN_ASC: 'asc',
         ASC: 'ASC',
@@ -61,7 +109,7 @@ export const APP_CONSTANTS = {
     },
 
     SAVE: {
-        TYPE:'Content-Type',
+        TYPE: 'Content-Type',
         JSON: 'application/json',
     },
 

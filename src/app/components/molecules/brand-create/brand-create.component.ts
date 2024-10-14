@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BrandService } from '../../../services/brand.service'; 
 import { HttpStatusCode } from '@angular/common/http';
+import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
   selector: 'app-brand-create',
@@ -26,8 +27,8 @@ export class BrandCreateComponent implements OnInit {
 
   saveBrand() {
     if (this.brandForm && this.brandForm.invalid) {
-      this.status = 'error';
-      this.errorMessage = 'Corrige los errores del formulario.';
+      this.status = APP_CONSTANTS.ERROR;
+      this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
       this.resetStatusAfterTimeout();
       return;
     }
@@ -36,26 +37,26 @@ export class BrandCreateComponent implements OnInit {
 
     this.brandService.saveBrand(brandData).subscribe( 
       (response) => {
-        console.log('Saved Brand:', response);
-        this.status = 'success';
+        console.log(APP_CONSTANTS.ERRORS.SAVED_MARCA, response);
+        this.status = APP_CONSTANTS.ERRORS.SUCCESS;
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
       (error) => {
-        console.error('Error al guardar la marca:', error);
-        let errorMessage = 'Ocurrió un error al guardar.';
+        console.error(APP_CONSTANTS.ERRORS.ERROR_MARCA, error);
+        let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED;
 
         if (error.status === HttpStatusCode.InternalServerError) {
           if (error.error && error.error.message) {
-            errorMessage = 'Error en los datos ingresados.';
+            errorMessage = APP_CONSTANTS.ERRORS.DATA;
           }
         }
 
         if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'Nombre ya en uso, elige otro.';
+          errorMessage = APP_CONSTANTS.ERRORS.USE;
         }
 
-        this.status = 'error';
+        this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
         this.resetStatusAfterTimeout();
       }
@@ -72,6 +73,6 @@ export class BrandCreateComponent implements OnInit {
     }
     this.statusTimeout = setTimeout(() => {
       this.status = '';
-    }, 5000);
+    }, APP_CONSTANTS.NUMBER.TIMEOUT_MS);
   }
 }

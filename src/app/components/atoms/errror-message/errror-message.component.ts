@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
   selector: 'app-error-message',
@@ -12,6 +13,6 @@ import { AbstractControl } from '@angular/forms';
 })
 export class ErrorMessageComponent {
   @Input() control: AbstractControl | null = null;
-  @Input() requiredMessage: string = 'Este campo es requerido.'; 
-  @Input() maxLengthMessage: string = 'Excede el número máximo de caracteres.'; 
+  @Input() requiredMessage: string = APP_CONSTANTS.MESSAGE.FIELD; 
+  @Input() maxLengthMessage: string = APP_CONSTANTS.MESSAGE.MAX; 
 }

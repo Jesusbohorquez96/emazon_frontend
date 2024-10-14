@@ -18,6 +18,7 @@ import { NavbarComponent } from './components/templates/navbar/navbar.component'
 import { ErrorMessageComponent } from './components/atoms/errror-message/errror-message.component';
 import { BrandCreateComponent } from './components/molecules/brand-create/brand-create.component';
 import { BrandListComponent } from './components/molecules/brand-list/brand-list.component';
+import { ArticleCreateComponent } from './components/pages/article-create/article-create.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { BrandListComponent } from './components/molecules/brand-list/brand-list
     ErrorMessageComponent,
     BrandCreateComponent,
     BrandListComponent,
+    ArticleCreateComponent,
   ],
 
   imports: [
