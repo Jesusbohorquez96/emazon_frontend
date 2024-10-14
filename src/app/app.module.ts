@@ -14,11 +14,15 @@ import { CategoryCreateComponent } from './components/molecules/category-create/
 import { CategoryListComponent } from './components/molecules/category-list/category-list.component';
 import { ButtonComponent } from './components/atoms/button/button.component';
 import { FooterComponent } from './components/organisms/footer/footer.component';
-import { NavbarComponent } from './components/templates/navbar/navbar.component';
+import { NavbarComponent } from './components/organisms/navbar/navbar.component';
 import { ErrorMessageComponent } from './components/atoms/errror-message/errror-message.component';
 import { BrandCreateComponent } from './components/molecules/brand-create/brand-create.component';
 import { BrandListComponent } from './components/molecules/brand-list/brand-list.component';
-import { ArticleCreateComponent } from './components/pages/article-create/article-create.component';
+import { ArticleCreateComponent } from './components/molecules/article-create/article-create.component';
+import { ArticleComponent } from './components/pages/article/article.component';
+import { ArticleListComponent } from './components/molecules/article-list/article-list.component';
+import { BrandModalComponent } from './components/molecules/brand-modal/brand-modal.component';
+import { CategoryModalComponent } from './components/molecules/category-modal/category-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,10 @@ import { ArticleCreateComponent } from './components/pages/article-create/articl
     BrandCreateComponent,
     BrandListComponent,
     ArticleCreateComponent,
+    ArticleComponent,
+    ArticleListComponent,
+    BrandModalComponent,
+    CategoryModalComponent,
   ],
 
   imports: [

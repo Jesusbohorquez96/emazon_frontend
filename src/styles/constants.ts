@@ -16,11 +16,11 @@ export const APP_CONSTANTS = {
     WILDCARD: '**',
     NO_NAVBAR: 'no-navbar',
     ROOT: 'root',
-    CHECKBOX: { 
+    CHECKBOX: {
         FIELD: 'checkbox',
         HEADER: 'Seleccionar',
     },
-    
+
 
     CATEGORY: {
         ID: 'categoryId',
@@ -41,7 +41,9 @@ export const APP_CONSTANTS = {
 
     MESSAGE: {
         FIELD: 'Este campo es requerido.',
-        MAX :'Excede el número máximo de caracteres.',
+        MAX: 'Excede el número máximo de caracteres.',
+        MIN: 'El campo no cumple con la longitud mínima requerida.',
+        PATTERN: 'El formato del campo no es correcto.'
     },
 
     ERRORS: {

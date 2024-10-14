@@ -1,0 +1,23 @@
+<div class="modal" [class.show]="show" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Selecciona hasta 3 Categorías</h2>
+  
+      <app-category-list [selectedCategories]="selectedCategories" [selectedEnabled]="true"
+        (categoriesSelected)="handleCategoryChange($event)">
+      </app-category-list>
+  
+      <div *ngIf="errorMessage" class="error-message-modal">
+        {{ errorMessage }}
+      </div>
+  
+      <div *ngIf="selectedCategories.length <= 3 && selectedCategories.length >= 1">
+        <h3>Categorías seleccionadas:</h3>
+        <ul>
+          <li *ngFor="let category of selectedCategories">{{ getCategoryName(category.categoryId) }}</li>
+        </ul>
+  
+        <button type="button" (click)="acceptSelection()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  

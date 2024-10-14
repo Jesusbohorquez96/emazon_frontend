@@ -5,6 +5,8 @@ import { ArticleService } from 'src/app/services/article.service';
 import { BrandService } from 'src/app/services/brand.service';
 import { CategoryResponse } from 'src/app/models/category.model';
 import { BrandResponse } from 'src/app/models/brand.model';
+import { APP_CONSTANTS } from '@/styles/constants';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-article-create',
@@ -21,9 +23,7 @@ export class ArticleCreateComponent implements OnInit {
 
   showCategoryModal = false;
   showBrandModal = false;
-  categoryId: number = 0;
-  brandId: number = 0;
-  status!: string;
+  status: string = '';
   errorMessage!: string;
 
   constructor(
@@ -34,9 +34,9 @@ export class ArticleCreateComponent implements OnInit {
   ) {
     this.articleForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(120)]],
-      stock: [0, [Validators.required, Validators.min(1)]],
-      price: [0, [Validators.required, Validators.min(1000)]],
+      description: ['', [Validators.required, Validators.maxLength(90)]],
+      stock: [null, [Validators.required, Validators.min(1)]],
+      price: [null, [Validators.required, Validators.min(1000)]],
       categories: [[], [Validators.required]],
       brand: ['', [Validators.required]]
     });
@@ -95,10 +95,11 @@ export class ArticleCreateComponent implements OnInit {
 
     if (selectedCategories.length > 3) {
       this.selectedCategories = this.selectedCategories.slice(0, 3);
-      alert('Solo puedes seleccionar hasta 3 categorías');
+      this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
       return;
     }
 
+    this.errorMessage = '';
     this.selectedCategories = selectedCategories;
     console.log('Categorías seleccionadas:', this.selectedCategories);
   }
@@ -110,7 +111,7 @@ export class ArticleCreateComponent implements OnInit {
       const selectedBrands = this.selectedBrands.slice(0);
       this.selectedBrands = selectedBrands;
   
-      alert('Solo puedes seleccionar hasta 1 marcas');
+     this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
       return;
     }
     this.selectedBrands = selectedBrands;
@@ -118,22 +119,6 @@ export class ArticleCreateComponent implements OnInit {
     this.selectedBrand = this.selectedBrands[0];
   }
   
-
-  onCategoryChange( categoryId: number): void {
-    const category = this.categories.find(cat => cat.categoryId === categoryId);
-    if (category) {
-      this.selectedCategories.push(category);
-    }
-  }
-
-  onBrandChange(brandId: number): void {
-    const brand = this.selectedBrands.find(b => b.brandId === brandId);
-    if (brand) {
-      this.selectedBrand = brand;
-    }
-  }
-  
-
   getCategoryName(categoryId: number): string {
     let category = this.categories.find(cat => cat.categoryId === categoryId);
     return category ? category.categoryName : 'Categoría ';
@@ -145,30 +130,55 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   createArticle(): void {
-    if (this.articleForm.valid) {
-      const articleData = {
-        ...this.articleForm.value,
-        categories: this.selectedCategories.map(category => category.categoryId),
-        brand: this.selectedBrand?.brandId
-      };
-  
-      console.log('Datos del artículo a enviar:', articleData);
-  
-      this.articleService.saveArticle(articleData).subscribe({
-        next: (response) => {
-          alert('Artículo creado con éxito');
-          this.articleForm.reset();
-          this.selectedCategories = [];
-          this.selectedBrand = null;
-        },
-        error: (error) => {
-          alert('Error al crear el artículo');
-          console.error('Error al crear el artículo:', error);
-        }
-      });
-    } else {
-      alert('El formulario contiene errores. Por favor revisa los campos.');
+
+    if (this.articleForm && this.articleForm.invalid) {
+      this.status = APP_CONSTANTS.ERROR;
+      this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT; 
+      this.resetStatusAfterTimeout();
+      return;
     }
-  }
   
+    const articleData = {
+      ...this.articleForm.value,
+      categories: this.selectedCategories.map(category => category.categoryId),
+      brand: this.selectedBrand?.brandId
+    };
+  
+    this.articleService.saveArticle(articleData).subscribe({
+      next: (response) => {
+        console.log(APP_CONSTANTS.ERRORS.SAVED, response);
+        this.status = APP_CONSTANTS.ERRORS.SUCCESS; 
+        this.resetForm(); 
+        this.resetStatusAfterTimeout(); 
+      },
+      error: (error) => {
+        console.error(APP_CONSTANTS.ERRORS.ERROR, error);
+        let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED; 
+  
+        if (error.status === HttpStatusCode.InternalServerError) {
+          if (error.error && error.error.message) {
+            errorMessage = APP_CONSTANTS.ERRORS.DATA;
+          }
+        }
+  
+        if (error.status === HttpStatusCode.Conflict) {
+          errorMessage = APP_CONSTANTS.ERRORS.USE; 
+        }
+  
+       
+        this.status = APP_CONSTANTS.ERROR;
+        this.errorMessage = errorMessage;
+        this.resetStatusAfterTimeout(); 
+      }
+    });
+  }
+  resetForm() {
+    throw new Error('Method not implemented.');
+  }
+  resetStatusAfterTimeout() {
+    setTimeout(() => {
+      this.status = ''; 
+      this.errorMessage = ''; 
+    }, 5000);
+  }
 }

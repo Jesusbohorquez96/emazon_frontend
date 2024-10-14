@@ -1,8 +1,6 @@
 @import '/src/styles/variables.scss';
 @import '/src/styles/button.scss';
 
-
-  
   .home-container {
     display: flex;
     justify-content: center;
@@ -35,4 +33,6 @@
     margin-bottom: 20px;
     color: $hint-text; 
   }
+
+  
   
