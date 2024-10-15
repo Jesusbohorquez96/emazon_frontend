@@ -9,7 +9,7 @@ import { CategoryComponent } from './components/pages/category/category.componen
 import { HomeComponent } from './components/pages/home/home.component';
 import { BrandComponent } from './components/pages/brand/brand.component';
 import { PaginationComponent } from './components/atoms/pagination/pagination.component';
-import { TableComponent } from './components/atoms/table/table.component';
+import { TableComponent } from './components/molecules/table/table.component';
 import { CategoryCreateComponent } from './components/molecules/category-create/category-create.component';
 import { CategoryListComponent } from './components/molecules/category-list/category-list.component';
 import { ButtonComponent } from './components/atoms/button/button.component';

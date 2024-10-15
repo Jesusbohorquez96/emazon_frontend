@@ -1,0 +1,9 @@
+@import '/src/styles/variables.scss';
+
+.lista {
+    color: $purple;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}

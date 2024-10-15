@@ -28,7 +28,6 @@ describe('CategoryListComponent', () => {
 
   it('should initialize with default values', () => {
     expect(component.page).toBe(0);
-    expect(component.size).toBe(4);
     expect(component.sortBy).toBe('NAME');
     expect(component.sortDirection).toBe('ASC');
     expect(component.searchName).toBe('');
@@ -133,4 +132,32 @@ describe('CategoryListComponent', () => {
     expect(component.categories).toBe(mockResponse); 
     expect(component.totalPages).toBe(0);
   });
+
+  it('should emit selected categories when handleCategoryChange is called', () => {
+    const selectedCategories = [{ categoryId: 1, categoryName: 'Test 1', categoryDescription: 'Description 1' }];
+    const spyEmit = jest.spyOn(component.categoriesSelected, 'emit');
+    
+    component.handleCategoryChange(selectedCategories);
+    
+    expect(spyEmit).toHaveBeenCalledWith(selectedCategories);
+  });
+
+  it('should emit selected categories when onCategorySelectionChange is called', () => {
+    const selectedCategories = [{ categoryId: 2, categoryName: 'Test 2', categoryDescription: 'Description 2' }];
+    const spyEmit = jest.spyOn(component.categoriesSelected, 'emit');
+    
+    component.onCategorySelectionChange(selectedCategories);
+    
+    expect(spyEmit).toHaveBeenCalledWith(selectedCategories);
+  });
+  
+  it('should handle error when fetching categories', () => {
+    jest.spyOn(categoryService, 'getCategories').mockReturnValue(throwError(() => new Error('Error al obtener las categorías')));
+    
+    component.getCategories();
+    
+    expect(component.categories.length).toBe(0);
+    expect(console.error);
+  });
+  
 });

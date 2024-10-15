@@ -1,1 +1,52 @@
-<p>article-list works!</p>
+<div class="article-list">
+
+  <label for="size">Mostrar por página:</label>
+  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
+    placeholder="Número de elementos por página">
+
+  <label for="searchBy">Ordenar por:</label>
+  <select id="searchBy" [(ngModel)]="sortBy">
+    <option value="NAME">Nombre</option>
+    <option value="CATEGORY">Categoría</option>
+    <option value="BRAND">Marca</option>
+  </select>
+
+  <label for="sortOrder">Ordenar:</label>
+  <select id="sortOrder" [(ngModel)]="sortDirection">
+    <option value="ASC">Ascendente</option>
+    <option value="DESC">Descendente</option>
+  </select>
+
+  <div class="button-container">
+    <button (click)="search()">Buscar</button>
+  </div>
+
+
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Stock</th>
+      <th>Precio</th>
+      <th>Marca</th>
+      <th>Categorías</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let article of articles">
+      <td>{{ article.articleId }}</td>
+      <td>{{ article.articleName }}</td>
+      <td>{{ article.articleDescription }}</td>
+      <td>{{ article.articleStock }}</td>
+      <td>{{ article.articlePrice | currency }}</td>
+      <td>{{ article.articleBrand.brandName }}</td>
+      <td>{{ article.categoryNames }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+</app-pagination>

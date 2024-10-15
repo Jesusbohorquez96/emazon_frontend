@@ -1,4 +1,4 @@
-import { APP_CONSTANTS } from 'src/styles/constants'; 
+import { APP_CONSTANTS } from 'src/styles/constants';
 
 describe('APP_CONSTANTS', () => {
 
@@ -7,7 +7,7 @@ describe('APP_CONSTANTS', () => {
   });
 
   it('should have the correct API endpoints', () => {
-    expect(APP_CONSTANTS.API.BASE_URL).toBe('http://localhost:8080'); 
+    expect(APP_CONSTANTS.API.BASE_URL).toBe('http://localhost:8080');
     expect(APP_CONSTANTS.API.CATEGORIES_ENDPOINT).toBe('/categories');
     expect(APP_CONSTANTS.API.BRANDS_ENDPOINT).toBe('/brands');
   });
@@ -40,11 +40,13 @@ describe('APP_CONSTANTS', () => {
 
   it('should have the correct NAME and DESCRIPTION length constraints', () => {
     expect(APP_CONSTANTS.NUMBER.NAME_LENGTH).toBe(50);
-    expect(APP_CONSTANTS.NUMBER.DESCRIPTION_LENGTH).toBe(120);
+    expect(APP_CONSTANTS.NUMBER.DESCRIPTION_LENGTH).toBe(90);
   });
 
   it('should have the correct SAVE headers', () => {
     expect(APP_CONSTANTS.SAVE.TYPE).toBe('Content-Type');
     expect(APP_CONSTANTS.SAVE.JSON).toBe('application/json');
   });
+
+ 
 });

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Article } from 'src/app/models/article.model'; 
+import { Article, ArticleResponse } from 'src/app/models/article.model';
 import { APP_CONSTANTS } from 'src/styles/constants';
 
 @Injectable({
@@ -12,11 +12,9 @@ export class ArticleService {
 
   private readonly apiUrl = `${APP_CONSTANTS.API.BASE_URL}${APP_CONSTANTS.API.ARTICLE_ENDPOINT}`;
 
-  constructor(
-    private readonly http: HttpClient, 
-  ) { }
+  constructor(private readonly http: HttpClient,) { }
 
-  getArticles(page: number, size: number, sortBy: string, sortDirection: string, name?: string): Observable<any> {
+  getArticles(page: number, size: number, sortBy: string, sortDirection: string, name?: string, category?: string, brand?: string): Observable<any> {
     let params = new HttpParams()
       .set(APP_CONSTANTS.PAGINATION.PAGE, page.toString())
       .set(APP_CONSTANTS.PAGINATION.SIZE, size.toString())
@@ -25,6 +23,12 @@ export class ArticleService {
 
     if (name) {
       params = params.set(APP_CONSTANTS.NAME, name);
+    }
+    if (category) {
+      params = params.set('category', category);
+    }
+    if (brand) {
+      params = params.set('brand', brand);
     }
 
     return this.http.get<any>(this.apiUrl, { params });

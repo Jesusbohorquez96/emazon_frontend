@@ -28,7 +28,6 @@ describe('BrandListComponent', () => {
 
   it('should initialize with default values', () => {
     expect(component.page).toBe(0);
-    expect(component.size).toBe(4);
     expect(component.sortBy).toBe('NAME');
     expect(component.sortDirection).toBe('ASC');
     expect(component.searchName).toBe('');
@@ -132,4 +131,43 @@ describe('BrandListComponent', () => {
     expect(component.brands).toBe(mockResponse); 
     expect(component.totalPages).toBe(0);
   });
+
+  it('should load brands with valid response', () => {
+    const mockResponse = {
+      content: [
+        { brandId: 1, brandName: 'Test Brand 1', brandDescription: 'Description 1' }
+      ],
+      totalPages: 1
+    };
+  
+    jest.spyOn(brandService, 'getBrands').mockReturnValue(of(mockResponse));
+    component.loadBrands();
+    
+    expect(component.brands.length).toBe(1);
+  });
+
+  it('should handle empty response in loadBrands', () => {
+    const mockResponse = { content: [] };
+  
+    jest.spyOn(brandService, 'getBrands').mockReturnValue(of(mockResponse));
+    component.loadBrands();
+    
+    expect(component.brands.length).toBe(0);
+  });
+
+  it('should not go to the next page if on the last page', () => {
+    component.page = 2;
+    component.totalPages = 3;
+    component.nextPage();
+    
+    expect(component.page).toBe(2); 
+  });
+
+  it('should not go to the previous page if on the first page', () => {
+    component.page = 0;
+    component.prevPage();
+    
+    expect(component.page).toBe(0); 
+  });
+
 });

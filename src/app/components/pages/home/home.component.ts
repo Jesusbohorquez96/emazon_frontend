@@ -7,4 +7,5 @@ import { APP_CONSTANTS } from 'src/styles/constants';
   styleUrls: APP_CONSTANTS.APP_HOME.STYLE_URLS
 })
 export class HomeComponent  {
+  
 }

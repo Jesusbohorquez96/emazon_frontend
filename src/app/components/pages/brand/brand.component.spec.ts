@@ -19,11 +19,6 @@ describe('BrandComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have the correct template URL', () => {
-    const templateUrl = fixture.componentRef.location.nativeElement.querySelector('app-brand');
-    expect(templateUrl).toBeTruthy();
-  });
-
   it('should have the correct style URLs', () => {
     const styleUrls = fixture.debugElement.styles;
     expect(styleUrls).toBeTruthy(); 

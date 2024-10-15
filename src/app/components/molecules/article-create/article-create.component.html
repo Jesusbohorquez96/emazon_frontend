@@ -11,7 +11,6 @@
       </app-error-message>
     </div>
 
-
     <div class="textarea-container">
       <label for="description">Descripción:</label>
       <textarea id="description" formControlName="description" required></textarea>
@@ -30,15 +29,13 @@
       </app-error-message>
     </div>
 
-
     <label for="price">Precio</label>
     <input id="price" formControlName="price" type="number" placeholder="Precio del artículo" />
     <div class="error-message">
       <app-error-message [control]="articleForm.get('price')" requiredMessage="El precio es obligatorio."
-      minMessage="El precio mínimo permitido es de 1000 pesos.">">
+      minMessage="El precio mínimo permitido es de 1.000 pesos.">">
       </app-error-message>
     </div>
-
 
     <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
 
@@ -49,9 +46,7 @@
       </ul>
     </div>
 
-
     <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
-
 
     <div *ngIf="selectedBrand">
       <h3>Marca seleccionada:</h3>
@@ -67,7 +62,7 @@
 
 <app-brand-modal 
   [show]="showBrandModal" 
-  [selectedBrands]="selectedBrands"
+  [selectedBrands]="brands"
   (closeModalEvent)="closeBrandModal()"
   (brandSelectedEvent)="handleBrandChange($event)">
 </app-brand-modal>

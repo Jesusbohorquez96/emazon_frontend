@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent<T> implements OnChanges {
+  
   @Input() selectedEnabled: boolean = false;
   @Input() columns: { field: string, header: string }[] = [];
   @Input() data: any[] = [];

@@ -17,7 +17,7 @@ export class ArticleCreateComponent implements OnInit {
 
   articleForm: FormGroup;
   categories: CategoryResponse[] = [];
-  selectedBrands: BrandResponse[] = [];
+  brands: BrandResponse[] = [];
   selectedCategories: CategoryResponse[] = [];
   selectedBrand: BrandResponse | null = null;
 
@@ -62,8 +62,8 @@ export class ArticleCreateComponent implements OnInit {
   loadBrands(): void {
     this.brandService.getBrands(0, 0, 'NAME', 'ASC', '').subscribe({
       next: (response: any) => {
-        this.selectedBrands = response.content || [];
-        console.log('Marcas cargadas:', this.selectedBrands);
+        this.brands = response.content || [];
+        console.log('Marcas cargadas:', this.brands);
       },
       error: (error) => {
         console.error('Error al cargar marcas:', error);
@@ -91,41 +91,21 @@ export class ArticleCreateComponent implements OnInit {
 
 
   handleCategoryChange(selectedCategories: CategoryResponse[]): void {
-    console.log('Categorías seleccionadas:', selectedCategories);
-
-    if (selectedCategories.length > 3) {
-      this.selectedCategories = this.selectedCategories.slice(0, 3);
-      this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
-      return;
-    }
-
-    this.errorMessage = '';
     this.selectedCategories = selectedCategories;
-    console.log('Categorías seleccionadas:', this.selectedCategories);
   }
 
   handleBrandChange(selectedBrands: BrandResponse[]): void {
-    console.log('Marcas seleccionadas:', selectedBrands);
-  
-    if (selectedBrands.length > 1) {
-      const selectedBrands = this.selectedBrands.slice(0);
-      this.selectedBrands = selectedBrands;
-  
-     this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
-      return;
-    }
-    this.selectedBrands = selectedBrands;
-    console.log('Marcas seleccionadas:', this.selectedBrands);
-    this.selectedBrand = this.selectedBrands[0];
+    this.brands = selectedBrands;
+    this.selectedBrand = this.brands[0];
   }
   
   getCategoryName(categoryId: number): string {
-    let category = this.categories.find(cat => cat.categoryId === categoryId);
+    const category = this.categories.find(cat => cat.categoryId === categoryId);
     return category ? category.categoryName : 'Categoría ';
   }
 
   getBrandName(brandId: number): string {
-    const brand = this.selectedBrands.find(b => b.brandId === brandId);
+    const brand = this.brands.find(b => b.brandId === brandId);
     return brand ? brand.brandName : 'Marca ';
   }
 
@@ -172,9 +152,20 @@ export class ArticleCreateComponent implements OnInit {
       }
     });
   }
-  resetForm() {
-    throw new Error('Method not implemented.');
+
+  resetForm(): void {
+    this.articleForm.reset({
+      name: '',
+      description: '',
+      stock: null,
+      price: null,
+      categories: [],
+      brand: ''
+    });
+    this.selectedCategories = [];
+    this.selectedBrand = null;
   }
+
   resetStatusAfterTimeout() {
     setTimeout(() => {
       this.status = ''; 
