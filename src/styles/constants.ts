@@ -41,6 +41,7 @@ export const APP_CONSTANTS = {
 
     MESSAGE: {
         FIELD: 'Este campo es requerido.',
+        PRICE: 'El precio mínimo permitido es de 1000 pesos.',
         MAX: 'Excede el número máximo de caracteres.',
         MIN: 'El campo no cumple con la longitud mínima requerida.',
         PATTERN: 'El formato del campo no es correcto.'

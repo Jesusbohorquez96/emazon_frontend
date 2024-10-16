@@ -6,8 +6,10 @@
             <label for="name">Nombre:</label>
             <input id="name" type="text" formControlName="name" required>
             <div class="error-message">
-                <app-error-message [control]="categoryForm.get('name')" requiredMessage="El nombre es requerido."
-                    maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
+                <app-error-message 
+                [control]="categoryForm.get('name')" 
+                requiredMessage="El nombre es requerido."
+                maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
                 </app-error-message>
             </div>
         </div>
@@ -16,15 +18,20 @@
             <label for="description">Descripción:</label>
             <textarea id="description" formControlName="description" required></textarea>
             <div class="error-message">
-                <app-error-message [control]="categoryForm.get('description')"
-                    requiredMessage="La descripción es requerida."
-                    maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
+                <app-error-message 
+                [control]="categoryForm.get('description')"
+                requiredMessage="La descripción es requerida."
+                maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
                 </app-error-message>
             </div>
         </div>
 
-        <app-button [buttonForm]="categoryForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
-            [errorMessage]="errorMessage">
+        <app-button 
+        [buttonForm]="categoryForm" 
+        [isDisabled]="false" [label]="'Guardar'" 
+        [status]="status"
+        [errorMessage]="messageError">
         </app-button>
+
     </form>
 </div>

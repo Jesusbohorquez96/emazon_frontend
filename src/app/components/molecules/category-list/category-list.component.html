@@ -6,12 +6,13 @@
         placeholder="Número de elementos por página" *ngIf="showPageSizeControl">
 
     <label for="name">Buscar por nombre:</label>
-    <button (click)="toggleSort()">
-        {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
-    </button>
+    <div class="duble">
+        <button (click)="toggleSort()">
+            {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
+        </button>
 
-    <button (click)="searchByName()">Buscar</button>
-
+        <button (click)="searchByName()">Buscar</button>
+    </div>
     <app-table [columns]="columns" [data]="categories" [selectedEnabled]="selectedEnabled"
         (selectedChangue)="handleCategoryChange($event)" [selectedItems]="selectedCategories"></app-table>
 

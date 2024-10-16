@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BrandService } from '../../../services/brand.service'; 
 import { HttpStatusCode } from '@angular/common/http';
 import { APP_CONSTANTS } from '@/styles/constants';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-brand-create',
@@ -16,7 +17,10 @@ export class BrandCreateComponent implements OnInit {
   statusTimeout: any;
   errorMessage: string = '';
 
-  constructor(private readonly brandService: BrandService) { } 
+  constructor(
+    private readonly brandService: BrandService,
+    private readonly toastr: ToastrService
+  ) { } 
 
   ngOnInit(): void {
     this.brandForm = new FormGroup({
@@ -29,6 +33,7 @@ export class BrandCreateComponent implements OnInit {
     if (this.brandForm && this.brandForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
       this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
+      this.toastr.error(this.errorMessage);
       this.resetStatusAfterTimeout();
       return;
     }
@@ -39,6 +44,7 @@ export class BrandCreateComponent implements OnInit {
       (response) => {
         console.log(APP_CONSTANTS.ERRORS.SAVED_MARCA, response);
         this.status = APP_CONSTANTS.ERRORS.SUCCESS;
+        this.toastr.success('Marca creada con éxito.');
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
@@ -58,6 +64,7 @@ export class BrandCreateComponent implements OnInit {
 
         this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
+        this.toastr.error(this.errorMessage);
         this.resetStatusAfterTimeout();
       }
     );

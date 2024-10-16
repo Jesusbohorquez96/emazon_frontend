@@ -1,3 +1,35 @@
-body {
+
+html, body {
     margin: 0;
-}
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4; 
+  }
+  
+  app-root {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+  }
+  

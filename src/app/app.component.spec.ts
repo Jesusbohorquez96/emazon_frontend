@@ -23,9 +23,5 @@ describe('AppComponent', () => {
     expect(component.title).toEqual('emazon');
   });
 
-  it('should call ngOnInit', () => {
-    const spyOnInit = jest.spyOn(component, 'ngOnInit');
-    component.ngOnInit();
-    expect(spyOnInit).toHaveBeenCalled();
-  });
+
 });

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CategoryService } from '../../../services/category.service';
 import { HttpStatusCode } from '@angular/common/http';
 import { APP_CONSTANTS } from '@/styles/constants';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-create',
@@ -16,8 +16,12 @@ export class CategoryCreateComponent implements OnInit {
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';
+  messageError?: string;
 
-  constructor(private readonly categoryService: CategoryService) { }
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.categoryForm = new FormGroup({
@@ -30,6 +34,7 @@ export class CategoryCreateComponent implements OnInit {
     if (this.categoryForm && this.categoryForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
       this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
+      this.toastr.error(this.errorMessage);
       this.resetStatusAfterTimeout();
       return;
     }
@@ -40,6 +45,7 @@ export class CategoryCreateComponent implements OnInit {
       (response) => {
         console.log(APP_CONSTANTS.ERRORS.SAVED, response);
         this.status = APP_CONSTANTS.ERRORS.SUCCESS;
+        this.toastr.success('Categoría creada con éxito.');
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
@@ -59,6 +65,7 @@ export class CategoryCreateComponent implements OnInit {
 
         this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
+        this.toastr.error(this.errorMessage);
         this.resetStatusAfterTimeout();
       }
     );
@@ -74,6 +81,7 @@ export class CategoryCreateComponent implements OnInit {
     }
     this.statusTimeout = setTimeout(() => {
       this.status = '';
+      this.errorMessage = '';
     }, APP_CONSTANTS.NUMBER.TIMEOUT_MS);
   }
 }

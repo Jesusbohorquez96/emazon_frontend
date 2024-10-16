@@ -5,12 +5,11 @@
     <app-category-list 
     [selectedCategories]="selectedCategories" 
     [selectedEnabled]="true"
-    [columns]="[{ field: 'categoryName', header: 'Nombre' }]"
+    [columns]="[{ field: 'categoryName', header: 'Nombre' }]" 
     [showTitle]="false" 
     [showLabel]="false"
-    [showPageSizeControl]="false"
-    (categoriesSelected)="handleCategoryChange($event)">
-  </app-category-list>
+    [showPageSizeControl]="false" (categoriesSelected)="handleCategoryChange($event)">
+    </app-category-list>
 
     <div *ngIf="errorMessage" class="error-message-modal">
       {{ errorMessage }}

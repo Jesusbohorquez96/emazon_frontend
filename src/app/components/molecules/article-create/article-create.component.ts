@@ -7,6 +7,7 @@ import { CategoryResponse } from 'src/app/models/category.model';
 import { BrandResponse } from 'src/app/models/brand.model';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { HttpStatusCode } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-article-create',
@@ -30,7 +31,8 @@ export class ArticleCreateComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly articleService: ArticleService,
     private readonly categoryService: CategoryService,
-    private readonly brandService: BrandService
+    private readonly brandService: BrandService,
+    private readonly toastr: ToastrService
   ) {
     this.articleForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -114,6 +116,7 @@ export class ArticleCreateComponent implements OnInit {
     if (this.articleForm && this.articleForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
       this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT; 
+      this.toastr.error(this.errorMessage);
       this.resetStatusAfterTimeout();
       return;
     }
@@ -128,6 +131,7 @@ export class ArticleCreateComponent implements OnInit {
       next: (response) => {
         console.log(APP_CONSTANTS.ERRORS.SAVED, response);
         this.status = APP_CONSTANTS.ERRORS.SUCCESS; 
+        this.toastr.success('Article creada con éxito.');
         this.resetForm(); 
         this.resetStatusAfterTimeout(); 
       },
@@ -148,6 +152,7 @@ export class ArticleCreateComponent implements OnInit {
        
         this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
+        this.toastr.error(this.errorMessage);
         this.resetStatusAfterTimeout(); 
       }
     });

@@ -40,10 +40,17 @@ input[type="text"] {
 }
 
 .table th, .table td {
-  padding: 12px;
+  padding: 6px;
   border: 1px solid #ddd;
 }
 
 .table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.duble {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }

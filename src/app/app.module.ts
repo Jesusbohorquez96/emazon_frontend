@@ -4,6 +4,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/pages/category/category.component';
 import { HomeComponent } from './components/pages/home/home.component';
@@ -52,7 +55,14 @@ import { CategoryModalComponent } from './components/molecules/category-modal/ca
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      timeOut: 5000,
+      progressBar: true,}
+    ),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
