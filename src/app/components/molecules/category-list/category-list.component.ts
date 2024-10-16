@@ -11,18 +11,22 @@ import { APP_CONSTANTS } from '@/styles/constants';
 export class CategoryListComponent implements OnInit {
 
   @Input() selectedEnabled: boolean = false;
+  @Input() showTitle: boolean = true;
+  @Input() showLabel: boolean = true;
+  @Input() pageSize: number = 5; 
+  @Input() showPageSizeControl: boolean = true;
   @Input() selectedCategories: CategoryResponse[] = [];
-  @Output() categoriesSelected = new EventEmitter<CategoryResponse[]>();
-
-  categories: Category[] = [];
-  columns = [
+  @Input() columns: { field: string, header: string }[] = [
     { field: APP_CONSTANTS.CATEGORY.ID, header: APP_CONSTANTS.ID },
     { field: APP_CONSTANTS.CATEGORY.NAME, header: APP_CONSTANTS.SPANISH.NAME },
     { field: APP_CONSTANTS.CATEGORY.DESCRIPTION, header: APP_CONSTANTS.SPANISH.DESCRIPTION },
   ];
+  @Output() categoriesSelected = new EventEmitter<CategoryResponse[]>();
 
+  categories: Category[] = [];
+ 
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
-  size: number = APP_CONSTANTS.NUMBER.THREE;
+  size: number = APP_CONSTANTS.NUMBER.MAX_RETRIES;
   sortBy: string = APP_CONSTANTS.PAGINATION.NAME;
   sortDirection: string = APP_CONSTANTS.PAGINATION.ASC;
   totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;

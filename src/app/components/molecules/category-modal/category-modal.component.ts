@@ -19,15 +19,20 @@ export class CategoryModalComponent {
     this.closeModalEvent.emit();
   }
 
-  handleCategoryChange(event: CategoryResponse[]): void {
-    if (event.length > 3) {
+  handleCategoryChange(selectedCategories: CategoryResponse[]): void {
+    console.log('Categorías seleccionadas:', selectedCategories);
+
+    if (selectedCategories.length > 3) {
+      this.selectedCategories = selectedCategories.slice(0, 3);
+
       this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
       return;
     }
 
     this.errorMessage = '';
-    this.categorySelectedEvent.emit(event);
-  }
+    this.selectedCategories = selectedCategories; 
+    this.categorySelectedEvent.emit(this.selectedCategories); 
+}
 
   acceptSelection(): void {
     if (this.selectedCategories.length >= 1 && this.selectedCategories.length <= 3) {

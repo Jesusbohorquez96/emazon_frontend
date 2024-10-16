@@ -1,9 +1,9 @@
 <div class="category-list">
-    <h2>Lista de Categorias</h2>
+    <h2 *ngIf="showTitle">Lista de Categorías</h2>
 
-    <label for="size">Mostrar por página:</label>
+    <label *ngIf="showLabel" for="size">Mostrar por página:</label>
     <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
-        placeholder="Número de elementos por página">
+        placeholder="Número de elementos por página" *ngIf="showPageSizeControl">
 
     <label for="name">Buscar por nombre:</label>
     <button (click)="toggleSort()">

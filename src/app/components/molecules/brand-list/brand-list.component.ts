@@ -11,17 +11,21 @@ import { APP_CONSTANTS } from '@/styles/constants';
 export class BrandListComponent implements OnInit {
 
   @Input() selectedEnabled: boolean = false;
+  @Input() showTitle: boolean = true;
+  @Input() showLabel: boolean = true;
+  @Input() showPageSizeControl: boolean = true;
   @Input() selectedBrands: BrandResponse[] = [];
-  @Output() brandsSelected = new EventEmitter<BrandResponse[]>();
-
-  brands: Brand[] = [];
-  columns = [
+  @Input() columns: { field: string, header: string }[] = [
     { field: APP_CONSTANTS.BRAND.ID, header: APP_CONSTANTS.ID },
     { field: APP_CONSTANTS.BRAND.NAME, header: APP_CONSTANTS.SPANISH.NAME },
     { field: APP_CONSTANTS.BRAND.DESCRIPTION, header: APP_CONSTANTS.SPANISH.DESCRIPTION },
   ];
+  @Output() brandsSelected = new EventEmitter<BrandResponse[]>();
+
+  brands: Brand[] = [];
+ 
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
-  size: number = APP_CONSTANTS.NUMBER.THREE;
+  size: number = APP_CONSTANTS.NUMBER.MAX_RETRIES;
   sortBy: string = APP_CONSTANTS.PAGINATION.NAME;
   sortDirection: string = APP_CONSTANTS.PAGINATION.ASC;
   totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;
