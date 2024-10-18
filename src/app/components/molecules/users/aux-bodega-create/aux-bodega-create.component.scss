@@ -1,0 +1,51 @@
+@import '/src/styles/variables.scss';
+@import '/src/styles/button.scss';
+
+.register-container {
+  max-width: 400px; 
+  margin: 50px auto;
+  padding: 20px;
+  background-color: $spacer-light;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  h2 {
+    color: $purple; 
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+      width: 100%;
+      text-align: left;
+      color: $black;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid $border;
+      border-radius: 5px;
+      background-color: $white;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: $purple;
+        outline: none;
+      }
+    }
+
+  }
+}
+

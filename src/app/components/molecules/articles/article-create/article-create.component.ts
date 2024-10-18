@@ -91,7 +91,6 @@ export class ArticleCreateComponent implements OnInit {
     this.articleForm.patchValue({ brand: this.selectedBrand });
   }
 
-
   handleCategoryChange(selectedCategories: CategoryResponse[]): void {
     this.selectedCategories = selectedCategories;
   }

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category, CategoryResponse } from '@/app/models/category.model';
-import { CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../../services/category.service';
 import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
@@ -13,7 +13,7 @@ export class CategoryListComponent implements OnInit {
   @Input() selectedEnabled: boolean = false;
   @Input() showTitle: boolean = true;
   @Input() showLabel: boolean = true;
-  @Input() pageSize: number = 5; 
+  @Input() pageSize: number = 5;
   @Input() showPageSizeControl: boolean = true;
   @Input() selectedCategories: CategoryResponse[] = [];
   @Input() columns: { field: string, header: string }[] = [
@@ -24,7 +24,7 @@ export class CategoryListComponent implements OnInit {
   @Output() categoriesSelected = new EventEmitter<CategoryResponse[]>();
 
   categories: Category[] = [];
- 
+
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.MAX_RETRIES;
   sortBy: string = APP_CONSTANTS.PAGINATION.NAME;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrandListComponent } from './brand-list.component';
-import { BrandService } from '../../../services/brand.service';
+import { BrandService } from '../../../../services/brand.service';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -74,13 +74,13 @@ describe('BrandListComponent', () => {
   it('should update page size and fetch brands', () => {
     component.size = 10;
     component.updatePageSize();
-    expect(component.page).toBe(0); 
+    expect(component.page).toBe(0);
   });
 
   it('should search by name and fetch brands', () => {
     component.searchName = 'Test Brand';
     component.searchByName();
-    expect(component.page).toBe(0); 
+    expect(component.page).toBe(0);
   });
 
   it('should change to the next page', () => {
@@ -110,8 +110,8 @@ describe('BrandListComponent', () => {
 
   it('should not go to an invalid page', () => {
     component.totalPages = 3;
-    component.goToPage(5); 
-    expect(component.page).not.toBe(5); 
+    component.goToPage(5);
+    expect(component.page).not.toBe(5);
   });
 
   it('should call onPageChange and get brands', () => {
@@ -122,13 +122,13 @@ describe('BrandListComponent', () => {
   });
 
   it('should handle response without content or totalPages', () => {
-    const mockResponse = {}; 
-    
+    const mockResponse = {};
+
     jest.spyOn(brandService, 'getBrands').mockReturnValue(of(mockResponse));
-    
+
     component.getBrands();
-  
-    expect(component.brands).toBe(mockResponse); 
+
+    expect(component.brands).toBe(mockResponse);
     expect(component.totalPages).toBe(0);
   });
 
@@ -139,19 +139,19 @@ describe('BrandListComponent', () => {
       ],
       totalPages: 1
     };
-  
+
     jest.spyOn(brandService, 'getBrands').mockReturnValue(of(mockResponse));
     component.loadBrands();
-    
+
     expect(component.brands.length).toBe(1);
   });
 
   it('should handle empty response in loadBrands', () => {
     const mockResponse = { content: [] };
-  
+
     jest.spyOn(brandService, 'getBrands').mockReturnValue(of(mockResponse));
     component.loadBrands();
-    
+
     expect(component.brands.length).toBe(0);
   });
 
@@ -159,15 +159,15 @@ describe('BrandListComponent', () => {
     component.page = 2;
     component.totalPages = 3;
     component.nextPage();
-    
-    expect(component.page).toBe(2); 
+
+    expect(component.page).toBe(2);
   });
 
   it('should not go to the previous page if on the first page', () => {
     component.page = 0;
     component.prevPage();
-    
-    expect(component.page).toBe(0); 
+
+    expect(component.page).toBe(0);
   });
 
 });

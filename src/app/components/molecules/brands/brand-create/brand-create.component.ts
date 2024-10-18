@@ -1,37 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CategoryService } from '../../../services/category.service';
+import { BrandService } from '../../../../services/brand.service';
 import { HttpStatusCode } from '@angular/common/http';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-category-create',
-  templateUrl: './category-create.component.html',
-  styleUrls: ['./category-create.component.scss']
+  selector: 'app-brand-create',
+  templateUrl: './brand-create.component.html',
+  styleUrls: ['./brand-create.component.scss']
 })
-export class CategoryCreateComponent implements OnInit {
+export class BrandCreateComponent implements OnInit {
 
-  categoryForm!: FormGroup;
+  brandForm!: FormGroup;
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';
-  messageError?: string;
 
   constructor(
-    private readonly categoryService: CategoryService,
+    private readonly brandService: BrandService,
     private readonly toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
-    this.categoryForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(APP_CONSTANTS.NUMBER.NAME_LENGTH)]),
-      description: new FormControl('', [Validators.required, Validators.maxLength(APP_CONSTANTS.NUMBER.DESCRIPTION_LENGTH)]),
+    this.brandForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(90)]),
     });
   }
 
-  saveCategory() {
-    if (this.categoryForm && this.categoryForm.invalid) {
+  saveBrand() {
+    if (this.brandForm && this.brandForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
       this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
       this.toastr.error(this.errorMessage);
@@ -39,18 +38,18 @@ export class CategoryCreateComponent implements OnInit {
       return;
     }
 
-    const categoryData = this.categoryForm ? this.categoryForm.value : {};
+    const brandData = this.brandForm ? this.brandForm.value : {};
 
-    this.categoryService.saveCategory(categoryData).subscribe(
+    this.brandService.saveBrand(brandData).subscribe(
       (response) => {
-        console.log(APP_CONSTANTS.ERRORS.SAVED, response);
+        console.log(APP_CONSTANTS.ERRORS.SAVED_MARCA, response);
         this.status = APP_CONSTANTS.ERRORS.SUCCESS;
-        this.toastr.success('Categoría creada con éxito.');
+        this.toastr.success('Marca creada con éxito.');
         this.resetForm();
         this.resetStatusAfterTimeout();
       },
       (error) => {
-        console.error(APP_CONSTANTS.ERRORS.ERROR, error);
+        console.error(APP_CONSTANTS.ERRORS.ERROR_MARCA, error);
         let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED;
 
         if (error.status === HttpStatusCode.InternalServerError) {
@@ -72,7 +71,7 @@ export class CategoryCreateComponent implements OnInit {
   }
 
   resetForm() {
-    this.categoryForm.reset();
+    this.brandForm.reset();
   }
 
   resetStatusAfterTimeout() {
@@ -81,7 +80,6 @@ export class CategoryCreateComponent implements OnInit {
     }
     this.statusTimeout = setTimeout(() => {
       this.status = '';
-      this.errorMessage = '';
     }, APP_CONSTANTS.NUMBER.TIMEOUT_MS);
   }
 }

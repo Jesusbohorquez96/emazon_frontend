@@ -12,6 +12,7 @@ export const APP_CONSTANTS = {
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
     ARTICLES: 'articulos',
+    AUXBODEGA: 'auxbodega',
     DEFAULT: '',
     WILDCARD: '**',
     NO_NAVBAR: 'no-navbar',

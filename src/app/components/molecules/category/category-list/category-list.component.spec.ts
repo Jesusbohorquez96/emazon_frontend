@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoryListComponent } from './category-list.component';
-import { CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../../services/category.service';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -75,13 +75,13 @@ describe('CategoryListComponent', () => {
   it('should update page size and fetch categories', () => {
     component.size = 10;
     component.updatePageSize();
-    expect(component.page).toBe(0); 
+    expect(component.page).toBe(0);
   });
 
   it('should search by name and fetch categories', () => {
     component.searchName = 'Test Category';
     component.searchByName();
-    expect(component.page).toBe(0); 
+    expect(component.page).toBe(0);
   });
 
   it('should change to the next page', () => {
@@ -111,8 +111,8 @@ describe('CategoryListComponent', () => {
 
   it('should not go to an invalid page', () => {
     component.totalPages = 3;
-    component.goToPage(5); 
-    expect(component.page).not.toBe(5); 
+    component.goToPage(5);
+    expect(component.page).not.toBe(5);
   });
 
   it('should call onPageChange and get categories', () => {
@@ -123,41 +123,41 @@ describe('CategoryListComponent', () => {
   });
 
   it('should handle response without content or totalPages', () => {
-    const mockResponse = {}; 
-    
+    const mockResponse = {};
+
     jest.spyOn(categoryService, 'getCategories').mockReturnValue(of(mockResponse));
-    
+
     component.getCategories();
-  
-    expect(component.categories).toBe(mockResponse); 
+
+    expect(component.categories).toBe(mockResponse);
     expect(component.totalPages).toBe(0);
   });
 
   it('should emit selected categories when handleCategoryChange is called', () => {
     const selectedCategories = [{ categoryId: 1, categoryName: 'Test 1', categoryDescription: 'Description 1' }];
     const spyEmit = jest.spyOn(component.categoriesSelected, 'emit');
-    
+
     component.handleCategoryChange(selectedCategories);
-    
+
     expect(spyEmit).toHaveBeenCalledWith(selectedCategories);
   });
 
   it('should emit selected categories when onCategorySelectionChange is called', () => {
     const selectedCategories = [{ categoryId: 2, categoryName: 'Test 2', categoryDescription: 'Description 2' }];
     const spyEmit = jest.spyOn(component.categoriesSelected, 'emit');
-    
+
     component.onCategorySelectionChange(selectedCategories);
-    
+
     expect(spyEmit).toHaveBeenCalledWith(selectedCategories);
   });
-  
+
   it('should handle error when fetching categories', () => {
     jest.spyOn(categoryService, 'getCategories').mockReturnValue(throwError(() => new Error('Error al obtener las categorías')));
-    
+
     component.getCategories();
-    
+
     expect(component.categories.length).toBe(0);
     expect(console.error);
   });
-  
+
 });

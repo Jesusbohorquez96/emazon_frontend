@@ -1,0 +1,56 @@
+<div class="register-container">
+  <h2>Registrar User</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+    <label for="name">Nombre</label>
+    <input type="text" id="name" formControlName="name">
+    <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+      El nombre es obligatorio
+    </div>
+
+    <label for="lastName">Apellido</label>
+    <input type="text" id="lastName" formControlName="lastName">
+    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+      El apellido es obligatorio
+    </div>
+
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" formControlName="password">
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      Contraseña: mínimo 8 caracteres, con mayúscula, número y símbolo.
+    </div>
+
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" formControlName="email">
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      Debes ingresar un correo válido.
+    </div>
+
+    <label for="idDocument">Documento de Identidad</label>
+    <input type="number" id="idDocument" formControlName="idDocument">
+    <div *ngIf="registerForm.get('idDocument')?.invalid && registerForm.get('idDocument')?.touched">
+      El documento de identidad es obligatorio y debe ser numérico.
+    </div>
+
+    <label for="phone">Teléfono</label>
+    <input type="tel" id="phone" formControlName="phone">
+    <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+      Ingresa un número de teléfono válido (ej: +123456789).
+    </div>
+
+    <label for="birthdate">Fecha de nacimiento</label>
+    <input type="date" id="birthdate" formControlName="birthdate">
+    <div *ngIf="registerForm.get('birthdate')?.invalid && registerForm.get('birthdate')?.touched">
+      Debes ser mayor de 18 años.
+    </div>
+
+    <label for="rol">Rol</label>
+    <select id="rol" formControlName="rol">
+      <option value="1">Admin</option>
+      <option value="2">Aux bodega</option>
+    </select>
+
+    <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
+  </form>
+</div>

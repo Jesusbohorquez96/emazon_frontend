@@ -68,11 +68,10 @@
   .footer-contact {
     text-align: right;
     color: $disabled;
-    font-family: 'Arial', sans-serif; 
 
     p {
       margin: 10px 0;
-      line-height: 1.2; 
+      line-height: 1.4; 
 
       &:first-child {
         font-size: 19px; 
@@ -84,7 +83,6 @@
         font-size: 14px; 
         color: $disabled;
         margin-top: 1px;
-        margin-bottom: 10px;
       }
 
       &:nth-child(3),
@@ -114,8 +112,8 @@
 
   .footer-privacy {
     display: flex;
-    padding-top: 10px;
-    height: 25px;
+    padding-top: 6px;
+    height: 30px;
     border-top: 1px solid #444;
     width: 100%;
     font-size: 14px;

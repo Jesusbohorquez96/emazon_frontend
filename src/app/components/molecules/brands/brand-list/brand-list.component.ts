@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Brand, BrandResponse } from '@/app/models/brand.model';
-import { BrandService } from '../../../services/brand.service';
+import { BrandService } from '../../../../services/brand.service';
 import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
@@ -23,7 +23,7 @@ export class BrandListComponent implements OnInit {
   @Output() brandsSelected = new EventEmitter<BrandResponse[]>();
 
   brands: Brand[] = [];
- 
+
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.MAX_RETRIES;
   sortBy: string = APP_CONSTANTS.PAGINATION.NAME;
