@@ -16,7 +16,6 @@ export class ArticleListComponent implements OnInit {
 
   articles: ArticleResponse[] = [];
 
-
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.THREE;
   sortBy: string = APP_CONSTANTS.PAGINATION.NAME;

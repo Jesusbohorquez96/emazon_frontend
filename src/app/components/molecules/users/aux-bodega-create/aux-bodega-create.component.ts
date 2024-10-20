@@ -13,8 +13,8 @@ export class AuxBodegaCreateComponent {
   errorMessage!: string;
 
   constructor(
-    private fb: FormBuilder,
-    private auxBodegaService: auxBodegaService
+    private readonly fb: FormBuilder,
+    private readonly auxBodegaService: auxBodegaService
   ) {
     this.registerForm = this.fb.group({
       name: ['', [

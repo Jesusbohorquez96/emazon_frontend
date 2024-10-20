@@ -7,8 +7,8 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let routerMock = {
-    events: of(new NavigationEnd(0, '/home', '/home')),
-    url: '/home',
+    events: of(new NavigationEnd(0, '/', '/')),
+    url: '/',
     navigate: jest.fn()
   };
 

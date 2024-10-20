@@ -1,19 +1,21 @@
 <nav class="navbar">
     <div class="navbar-left">
-      <a [routerLink]="['/home']" class="logo">
+      <a [routerLink]="['/']" class="logo">
         <img src="/assets/logo.png" alt="logo Emazon" />
       </a>
-      <a [routerLink]="['/home']" class="navbar-title">Emazon</a>
+      <a [routerLink]="['/']" class="navbar-title">Emazon</a>
     </div>
   
-    <div class="navbar-center">
-      <input type="text" class="search-bar" placeholder="Busca aqui..." aria-label="Search bar" />
-    </div>
+    <nav class="navbar-menu">
+      <ul>
+        <li class="a"><a [routerLink]="['/']">¡Emazon</a></li>
+        <li class="b"><a [routerLink]="['/categorias']">Categorias</a></li>
+        <li class="c"><a [routerLink]="['/marcas']">Marcas</a></li>
+        <li class="d"><a [routerLink]="['/articulos']">Articulos</a></li>
+        <li class="e"><a [routerLink]="['/auxbodega']">Registro</a></li>
+      </ul>
+    </nav>
   
-    <div class="navbar-right">
-      <a [routerLink]="['/profile']" class="navbar-icon" aria-label="Profile">
-        <i class="fa fa-shopping-cart"></i>
-        <span class="cart-badge">Perfil</span>
-      </a>
+    <div>
     </div>
   </nav>

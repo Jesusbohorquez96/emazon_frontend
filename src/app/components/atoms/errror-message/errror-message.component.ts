@@ -15,6 +15,7 @@ import { APP_CONSTANTS } from '@/styles/constants';
   `
 })
 export class ErrorMessageComponent {
+  
   @Input() control: AbstractControl | null = null;
   @Input() requiredMessage: string = APP_CONSTANTS.MESSAGE.FIELD; 
   @Input() minMessage: string = 'El precio mínimo permitido es de 1000 pesos.';

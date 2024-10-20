@@ -15,7 +15,7 @@ export class ButtonComponent {
   @Input() status: string = '';
   @Input() buttonForm!: FormGroup;
 
-  constructor( private toastr: ToastrService ) { }
+  constructor( private readonly toastr: ToastrService ) { }
 
   onClick() {
     if (this.buttonForm.invalid) {

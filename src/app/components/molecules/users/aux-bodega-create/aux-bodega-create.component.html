@@ -5,50 +5,41 @@
 
     <label for="name">Nombre</label>
     <input type="text" id="name" formControlName="name">
-    <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-      El nombre es obligatorio
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('name')" requiredMessage="El nombre es requerido."
+      maxLengthMessage="El nombre no debe exceder los 50 caracteres."></app-error-message>
 
     <label for="lastName">Apellido</label>
     <input type="text" id="lastName" formControlName="lastName">
-    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
-      El apellido es obligatorio
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('lastName')" requiredMessage="El apellido es requerido."
+    maxLengthMessage="El apellido no puede exeder los 50 catacteres"></app-error-message>
 
     <label for="password">Contraseña</label>
     <input type="password" id="password" formControlName="password">
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-      Contraseña: mínimo 8 caracteres, con mayúscula, número y símbolo.
-    </div>
-
+    <app-error-message class="error-message" [control]="registerForm.get('password')" requiredMessage="Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo."></app-error-message>
+    
     <label for="email">Correo electrónico</label>
     <input type="email" id="email" formControlName="email">
-    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-      Debes ingresar un correo válido.
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('email')" requiredMessage="El correo electrónico es requerido."
+      patternMessage="Correo electrónico inválido."></app-error-message>
 
     <label for="idDocument">Documento de Identidad</label>
     <input type="number" id="idDocument" formControlName="idDocument">
-    <div *ngIf="registerForm.get('idDocument')?.invalid && registerForm.get('idDocument')?.touched">
-      El documento de identidad es obligatorio y debe ser numérico.
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('idDocument')" requiredMessage="El documento de identidad es obligatorio y debe ser numérico."
+      ></app-error-message>
 
     <label for="phone">Teléfono</label>
     <input type="tel" id="phone" formControlName="phone">
-    <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-      Ingresa un número de teléfono válido (ej: +123456789).
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('phone')" requiredMessage="El teléfono es requerido."></app-error-message>
 
     <label for="birthdate">Fecha de nacimiento</label>
     <input type="date" id="birthdate" formControlName="birthdate">
-    <div *ngIf="registerForm.get('birthdate')?.invalid && registerForm.get('birthdate')?.touched">
-      Debes ser mayor de 18 años.
-    </div>
+    <app-error-message class="error-message" [control]="registerForm.get('birthdate')" requiredMessage="Debes ser mayor de 18 años."></app-error-message>
 
     <label for="rol">Rol</label>
     <select id="rol" formControlName="rol">
       <option value="1">Admin</option>
       <option value="2">Aux bodega</option>
+      <app-error-message class="error-message" [control]="registerForm.get('rol')" requiredMessage="El rol es requerido."></app-error-message>
     </select>
 
     <button type="submit" [disabled]="registerForm.invalid">Registrar</button>

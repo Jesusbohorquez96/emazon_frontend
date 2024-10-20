@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { APP_CONSTANTS } from 'src/styles/constants';
+import { VisibilityService } from '@/app/services/visibility.service';
 
 @Component({
   selector: APP_CONSTANTS.APP_HOME.SELECTOR,
@@ -8,4 +9,15 @@ import { APP_CONSTANTS } from 'src/styles/constants';
 })
 export class HomeComponent  {
   
+  constructor(private readonly visibilityService: VisibilityService) {}
+
+  ngOnInit(): void {
+    this.visibilityService.hideNavbar();
+    this.visibilityService.hideFooter();
+  }
+
+  ngOnDestroy(): void {
+    this.visibilityService.showNavbar();
+    this.visibilityService.showFooter();
+  }
 }

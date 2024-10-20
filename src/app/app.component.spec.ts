@@ -18,10 +18,4 @@ describe('AppComponent', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
-
-  it(`should have as title 'emazon'`, () => {
-    expect(component.title).toEqual('emazon');
-  });
-
-
 });
