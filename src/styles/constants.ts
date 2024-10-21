@@ -4,6 +4,7 @@ const FULL: "full" | "prefix" = "full";
 
 export const APP_CONSTANTS = {
     FULL,
+    URl: '/',
     ERROR: 'error',
     ID: 'Id',
     NAME: 'name',

@@ -1,20 +1,20 @@
 <div class="category-list">
     <h2 *ngIf="showTitle">Lista de Categorías</h2>
 
-    <label *ngIf="showLabel" for="size">Mostrar por página:</label>
+    <label class="label" *ngIf="showLabel" for="size">Mostrar por página:</label>
     <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
         placeholder="Número de elementos por página" *ngIf="showPageSizeControl">
 
-    <label for="name">Buscar por nombre:</label>
     <div class="duble">
         <button (click)="toggleSort()">
             {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
         </button>
-
-        <button (click)="searchByName()">Buscar</button>
     </div>
-    <app-table [columns]="columns" [data]="categories" [selectedEnabled]="selectedEnabled"
-        (selectedChangue)="handleCategoryChange($event)" [selectedItems]="selectedCategories"></app-table>
+
+    <div class="table-background">
+        <app-table [columns]="columns" [data]="categories" [selectedEnabled]="selectedEnabled"
+            (selectedChangue)="handleCategoryChange($event)" [selectedItems]="selectedCategories"></app-table>
+    </div>
 
     <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
     </app-pagination>

@@ -6,7 +6,7 @@
       <a [routerLink]="['/']" class="navbar-title">Emazon</a>
     </div>
   
-    <nav class="navbar-menu">
+    <nav class="navbar-menu" [class.show]="menuOpen">
       <ul>
         <li class="a"><a [routerLink]="['/']">¡Emazon</a></li>
         <li class="b"><a [routerLink]="['/categorias']">Categorias</a></li>
@@ -16,6 +16,4 @@
       </ul>
     </nav>
   
-    <div>
-    </div>
   </nav>

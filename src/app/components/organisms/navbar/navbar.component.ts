@@ -8,6 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   showNavbar = true;
+  menuOpen = false;
 
   constructor(private readonly router: Router) { }
 
@@ -18,5 +19,9 @@ export class NavbarComponent implements OnInit {
         this.showNavbar = !noNavbarRoutes.includes(this.router.url);
       }
     });
+  }
+
+  oggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }

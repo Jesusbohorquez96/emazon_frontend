@@ -2,36 +2,50 @@
 @import '/src/styles/button.scss';
 
 .create-category {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 500px;
+    max-width: 340px;
     margin: 0 auto;
-    margin-top: 44px;
-    padding: 10px;
-    text-align: center;
+    padding: 20px;
+    border: 1px solid $border;
+    border-radius: 8px;
+    background-color: $bg-light-grey;
 }
 
-input[type="text"],
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: $purple;
+}
+
+.label {
+    font-weight: bold;
+    color: $black;
+    margin-bottom: 5px;
+  }
+
+input,
 textarea {
+    width: 100%;
+    max-width: 390px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
-    font-size: 14px;
-    width: 100%;
-}
+    border: 1px solid $border;
+    font-size: 1rem;
+    box-sizing: border-box;
+    resize: vertical;
+    margin-bottom: 10px;
 
-.textarea-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    &:focus {
+        border-color: $purple;
+        outline: none;
+    }
 }
 
 .error-message {
     min-height: 20px;
     color: $error;
 }
+
 
 .textarea-container textarea {
     min-width: 200px;

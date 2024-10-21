@@ -1,5 +1,5 @@
 .table-container {
-  margin: 20px auto;
+  margin: 30px auto;
   width: 100%;
   max-width: 1000px;
 }
@@ -12,22 +12,8 @@
 
 .table th, .table td {
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 0.5px solid #e5e0eb;
   text-align: left;
-  word-wrap: break-word; 
   overflow-wrap: break-word; 
 }
 
-.table th {
-  background-color: #f4f4f4;
-  font-weight: bold;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.table td {
-  white-space: normal; 
-  overflow-wrap: anywhere; 
-}

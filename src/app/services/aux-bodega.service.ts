@@ -9,11 +9,11 @@ import { Users } from '../models/aux-bodega.model';
 })
 export class auxBodegaService {
 
-  private apiUrl = 'http://localhost:8081/users/register_aux_bodega';  
+  private readonly apiUrl = 'http://localhost:8081/users/register_aux_bodega';  
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
-  saveUsers(users: Users, lastName?: any, password?: any, email?: any, idDocument?: any, phone?: any, birthdate?: any, rol?: any): Observable<Users> {
+  saveUsers(users: Users, _lastName: any, _password: any, _email: any, _idDocument: any, _phone: any, _birthdate: any, _rol: any): Observable<Users> {
     const headers = new HttpHeaders({
       [APP_CONSTANTS.SAVE.TYPE]: [APP_CONSTANTS.SAVE.JSON],
 

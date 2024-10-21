@@ -3,7 +3,7 @@
 
     <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
         <div>
-            <label for="name">Nombre:</label>
+            <label class="label" for="name">Nombre:</label>
             <input id="name" type="text" formControlName="name" required>
             <div class="error-message">
                 <app-error-message 
@@ -15,7 +15,7 @@
         </div>
 
         <div class="textarea-container">
-            <label for="description">Descripción:</label>
+            <label class="label" for="description">Descripción:</label>
             <textarea id="description" formControlName="description" required></textarea>
             <div class="error-message">
                 <app-error-message 
