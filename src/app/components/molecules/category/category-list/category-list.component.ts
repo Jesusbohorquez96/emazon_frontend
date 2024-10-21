@@ -74,9 +74,17 @@ export class CategoryListComponent implements OnInit {
     this.getCategories();
   }
 
-  updatePageSize() {
-    this.page = APP_CONSTANTS.PAGINATION.ZERO;
-    this.getCategories();
+  updatePageSize(): void {
+    if (this.size < 1) {
+      this.size = 1;  
+    } else if (this.size > 10) {
+      this.size = 10;  
+    }
+    this.page = 0;
+    this.search();
+  }
+  search() {
+    throw new Error('Method not implemented.');
   }
 
   searchByName() {

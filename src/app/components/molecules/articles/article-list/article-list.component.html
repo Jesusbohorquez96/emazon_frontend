@@ -5,14 +5,14 @@
     placeholder="Número de elementos por página">
 
   <label for="searchBy">Ordenar por:</label>
-  <select id="searchBy" [(ngModel)]="sortBy">
+  <select class="input" id="searchBy" [(ngModel)]="sortBy">
     <option value="NAME">Nombre</option>
     <option value="CATEGORY">Categoría</option>
     <option value="BRAND">Marca</option>
   </select>
 
   <label for="sortOrder">Ordenar:</label>
-  <select id="sortOrder" [(ngModel)]="sortDirection">
+  <select class="input" id="sortOrder" [(ngModel)]="sortDirection">
     <option value="ASC">Ascendente</option>
     <option value="DESC">Descendente</option>
   </select>
@@ -21,30 +21,12 @@
     <button (click)="search()">Buscar</button>
   </div>
 
-
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Stock</th>
-      <th>Precio</th>
-      <th>Marca</th>
-      <th>Categorías</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let article of articles">
-      <td>{{ article.articleName }}</td>
-      <td>{{ article.articleDescription }}</td>
-      <td>{{ article.articleStock }}</td>
-      <td>{{ article.articlePrice | currency }}</td>
-      <td>{{ article.articleBrand.brandName }}</td>
-      <td>{{ article.categoryNames }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-background">
+  <app-table [columns]="columns" [data]="articles" [selectedEnabled]="selectedEnabled"
+      (selectedChangue)="handleArticleChange($event)" [selectedItems]="selectedArticles">
+    </app-table>
+</div>
 
 <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
 </app-pagination>

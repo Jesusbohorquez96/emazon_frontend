@@ -57,19 +57,19 @@ h2 {
 
 .error-message-modal {
     min-height: 20px;
-    color: $error; 
+    color: $error;
     font-size: 1rem;
     margin-top: 10px;
     text-align: left;
-    
+
     &::before {
-      content: "•"; 
-      color: $error; 
-      font-size: 1.5rem; 
-      margin-right: 5px; 
-      vertical-align: middle; 
+        content: "•";
+        color: $error;
+        font-size: 1.5rem;
+        margin-right: 5px;
+        vertical-align: middle;
     }
-  }
+}
 
 .modal {
     display: none;
@@ -110,20 +110,25 @@ ul {
 
 @media (max-width: 768px) {
     .article-create-container {
-        max-width: 100%;  
+        max-width: 100%;
         padding: 10px;
-        margin: 0 10px; 
+        margin: 0 10px;
     }
 
     .modal-content {
-        width: 95%;  
+        width: 95%;
         max-width: none;
     }
 
     ul {
         padding: 0;
+
         li {
-            font-size: 0.9rem; 
+            font-size: 0.9rem;
         }
     }
+}
+
+.large-symbol {
+    font-size: 18px;
 }

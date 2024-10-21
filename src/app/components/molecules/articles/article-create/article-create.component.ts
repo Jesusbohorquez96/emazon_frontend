@@ -92,7 +92,8 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   handleCategoryChange(selectedCategories: CategoryResponse[]): void {
-    this.selectedCategories = selectedCategories;
+    this.categories = selectedCategories;
+    this.selectedCategories = this.categories;
   }
 
   handleBrandChange(selectedBrands: BrandResponse[]): void {
@@ -106,7 +107,7 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   getBrandName(brandId: number): string {
-    const brand = this.brands.find(b => b.brandId === brandId);
+    const brand = this.brands.find(bra => bra.brandId === brandId);
     return brand ? brand.brandName : 'Marca ';
   }
 

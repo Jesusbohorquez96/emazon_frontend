@@ -17,6 +17,7 @@ export interface ArticleResponse {
     articleCategories: ArticleCategoryResponse[]; 
     categoryNames?: string;
     articleBrand: ArticleBrandResponse;
+    brandNames?: string;
   }
   
   export interface ArticleCategoryResponse {

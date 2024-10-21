@@ -1,19 +1,28 @@
 .table-container {
-  margin: 30px auto;
+  margin: auto;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1240px;  
+  max-height: 300px;   
+  overflow-y: auto;   
+}
+
+.app-table {
+  width: auto; 
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  table-layout: auto; 
 }
 
 .table {
   width: 100%;
-  table-layout: fixed; 
+  table-layout: fixed;  
   border-collapse: collapse;
 }
 
 .table th, .table td {
-  padding: 8px;
-  border: 0.5px solid #e5e0eb;
+  padding: 10px;
+  border: 1px solid #e5e0eb;
   text-align: left;
-  overflow-wrap: break-word; 
+  overflow-wrap: break-word;  
 }
-

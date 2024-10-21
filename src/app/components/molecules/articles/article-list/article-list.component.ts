@@ -13,6 +13,14 @@ export class ArticleListComponent implements OnInit {
   @Input() selectedEnabled: boolean = false;
   @Input() selectedArticles: ArticleResponse[] = [];
   @Output() articlesSelected = new EventEmitter<ArticleResponse[]>();
+  @Input() columns: { field: string, header: string }[] = [
+    { field: 'articleName', header: 'Nombre' },
+    { field: 'articleDescription', header: 'Descripción' },
+    { field: 'articleStock', header: 'Stock' },
+    { field: 'articlePrice', header: 'Precio' },
+    { field: 'brandNames', header: 'Marca' },
+    { field: 'categoryNames', header: 'Categorías' }
+  ];
 
   articles: ArticleResponse[] = [];
 
@@ -37,11 +45,11 @@ export class ArticleListComponent implements OnInit {
     let searchByBrand = '';
 
     if (this.searchBy.includes('NAME')) {
-        searchByName = this.searchValue;
+      searchByName = this.searchValue;
     } else if (this.searchBy.includes('CATEGORY')) {
-        searchByCategory = this.searchValue;
+      searchByCategory = this.searchValue;
     } else if (this.searchBy.includes('BRAND')) {
-        searchByBrand = this.searchValue;
+      searchByBrand = this.searchValue;
     }
 
     this.articleService.getArticles(this.page, this.size, this.sortBy, this.sortDirection, searchByName, searchByCategory, searchByBrand)
@@ -49,6 +57,7 @@ export class ArticleListComponent implements OnInit {
         next: (response) => {
           this.articles = response.content.map((article: ArticleResponse) => {
             article['categoryNames'] = this.getCategoryNames(article);
+            article['brandNames'] = article.articleBrand?.brandName || 'Sin Marca';
             return article;
           });
           this.totalPages = response.totalPages || 0;
@@ -57,16 +66,24 @@ export class ArticleListComponent implements OnInit {
           console.error('Error al cargar artículos:', error);
         }
       });
-}
-
+  }
 
   getCategoryNames(article: ArticleResponse): string {
     return article.articleCategories.map(category => category.categoryName).join(', ');
   }
 
+  handleArticleChange(article: ArticleResponse[]): void {
+    this.articlesSelected.emit(article);
+  }
+
   updatePageSize(): void {
+    if (this.size < 1) {
+      this.size = 1; 
+    } else if (this.size > 10) {
+      this.size = 10;  
+    }
     this.page = 0;
-    this.search(); 
+    this.search();
   }
 
   onPageChange(newPage: number): void {

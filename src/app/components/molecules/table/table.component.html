@@ -1,24 +1,26 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th *ngIf="selectedEnabled">
-        {{ columnCheckbox.header }}
-      </th>
-      <th *ngFor="let column of columns">{{ column.header }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of data; let index = index">
-      <td *ngIf="selectedEnabled">
-        <input type="checkbox" [checked]="dataSelected[index]" (change)="onRowSelectionChange(row, $event)">
-      </td>
-
-      <ng-container *ngFor="let column of columns">
-        <td>
-          {{ row[column.field] }}
+<div class="table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngIf="selectedEnabled">
+          {{ columnCheckbox.header }}
+        </th>
+        <th *ngFor="let column of columns">{{ column.header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data; let index = index">
+        <td *ngIf="selectedEnabled">
+          <input type="checkbox" [checked]="dataSelected[index]" (change)="onRowSelectionChange(row, $event)">
         </td>
-      </ng-container>
-    </tr>
 
-  </tbody>
-</table>
+        <ng-container *ngFor="let column of columns">
+          <td>
+            {{ row[column.field] }}
+          </td>
+        </ng-container>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

@@ -39,18 +39,16 @@
 
     <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
 
-    <div *ngIf="selectedCategories.length">
+    <div *ngIf="selectedCategories">
       <h3>Categorias seleccionada:</h3>
-      <ul>
-        <li *ngFor="let category of selectedCategories">{{ getCategoryName(category.categoryId) }}</li>
-      </ul>
+        <p *ngFor="let category of selectedCategories"> <span class="large-symbol">&#8226;</span> {{ getCategoryName(category.categoryId) }}</p>
     </div>
 
     <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
 
     <div *ngIf="selectedBrand">
       <h3>Marca seleccionada:</h3>
-      <p>{{ getBrandName(selectedBrand.brandId) }}</p>
+      <p> <span class="large-symbol">&#8226;</span> {{ getBrandName(selectedBrand.brandId) }}</p>
     </div>
 
     <app-button [buttonForm]="articleForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
