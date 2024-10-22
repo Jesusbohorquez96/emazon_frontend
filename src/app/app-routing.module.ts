@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: APP_CONSTANTS.HOME,
     loadChildren: () => import('./pages/home-page/home-page.module').then(m => m.HomePageModule)
+  },
+  {
+    path: APP_CONSTANTS.DEFAULT,
+    loadChildren: () => import('./pages/home-page/home-page.module').then(m => m.HomePageModule)
   }
   // { path: APP_CONSTANTS.DEFAULT, redirectTo: `/${APP_CONSTANTS.HOME}`, pathMatch: 'full' },
   // { path: APP_CONSTANTS.WILDCARD, redirectTo: `/${APP_CONSTANTS.HOME}`, pathMatch: 'full' }

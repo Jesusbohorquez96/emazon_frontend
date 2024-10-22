@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryModalComponent } from './category-modal/category-modal.component';
-import { CategoryComponent } from '@/app/components/pages/category/category.component';
-import { SharedModule } from '@/app/components/atoms/shared.module';
+import { CategoryComponent } from '@/app/pages/category-page/category/category.component';
+import { AtomsModule } from '@/app/components/atoms/atoms.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -17,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    AtomsModule,
     FormsModule,
     ReactiveFormsModule,
   ],

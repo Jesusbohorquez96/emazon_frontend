@@ -1,4 +1,4 @@
-import { BrandComponent } from '@/app/components/pages/brand/brand.component';
+import { BrandComponent } from '@/app/pages/brand-page/brand/brand.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

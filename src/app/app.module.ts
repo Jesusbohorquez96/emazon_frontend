@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './components/organisms/footer/footer.component';
 import { NavbarComponent } from './components/organisms/navbar/navbar.component';
 
-import { HomeComponent } from './components/pages/home/home.component';
+import { HomeComponent } from './pages/home-page/home/home.component';
 
 @NgModule({
   declarations: [

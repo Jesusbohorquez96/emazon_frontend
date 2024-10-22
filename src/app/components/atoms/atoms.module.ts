@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PaginationComponent } from '../atoms/pagination/pagination.component';
-import { ButtonComponent } from '../atoms/button/button.component';
-import { ErrorMessageComponent } from '../atoms/errror-message/errror-message.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { ButtonComponent } from './button/button.component';
+import { ErrorMessageComponent } from './errror-message/errror-message.component';
 import { TableComponent } from '../molecules/table/table.component';
 
 @NgModule({
@@ -23,4 +23,4 @@ import { TableComponent } from '../molecules/table/table.component';
     TableComponent,
   ]
 })
-export class SharedModule { }
+export class AtomsModule { }

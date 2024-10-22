@@ -1,4 +1,4 @@
-import { AuxBodegaComponent } from '@/app/components/pages/aux-bodega/aux-bodega.component';
+import { AuxBodegaComponent } from '@/app/pages/user-page/aux-bodega/aux-bodega.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
