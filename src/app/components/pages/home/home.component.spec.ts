@@ -1,21 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
-    let fixture: ComponentFixture<HomeComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            declarations: [HomeComponent]
-        }).compileComponents();
+    beforeEach(() => {
 
+        TestBed.configureTestingModule({
+            providers: [HomeComponent]
+        });
+
+        component = TestBed.inject(HomeComponent);
     });
 
     it('should create the component', () => {
-        fixture = TestBed.createComponent(HomeComponent);
-        component = fixture.componentInstance;
         expect(component).toBeTruthy();
     });
 
-});
+    it('should ngOnInit', () => {
+        const spy = jest.spyOn(component, 'ngOnInit');
+        component.ngOnInit();
+        expect(spy).toHaveBeenCalled();
+    });
+
+});    

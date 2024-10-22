@@ -7,11 +7,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/pages/home/home.component';
 import { FooterComponent } from './components/organisms/footer/footer.component';
 import { NavbarComponent } from './components/organisms/navbar/navbar.component';
 
-import { IndexModule } from './components/molecules/index.module';
+import { HomeComponent } from './components/pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { IndexModule } from './components/molecules/index.module';
   ],
 
   imports: [
-    IndexModule,
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,

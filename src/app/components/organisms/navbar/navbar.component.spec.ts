@@ -64,4 +64,17 @@ describe('NavbarComponent', () => {
     component.ngOnInit();
     expect(component.showNavbar).toBe(true);
   });
+
+  it('should toggle menuOpen state', () => {
+    component.menuOpen = false;
+  
+    component.oggleMenu();
+  
+    expect(component.menuOpen).toBe(true);
+  
+    component.oggleMenu();
+  
+    expect(component.menuOpen).toBe(false);
+  });
+  
 });

@@ -8,7 +8,6 @@ import { VisibilityService } from '@/app/services/visibility.service';
   styleUrls: APP_CONSTANTS.APP_HOME.STYLE_URLS
 })
 export class HomeComponent  {
-  
   constructor(private readonly visibilityService: VisibilityService) {}
 
   ngOnInit(): void {

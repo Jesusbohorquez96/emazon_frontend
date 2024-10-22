@@ -48,5 +48,10 @@ describe('APP_CONSTANTS', () => {
     expect(APP_CONSTANTS.SAVE.JSON).toBe('application/json');
   });
 
+  it('should generate the correct pagination message', () => {
+    const newPage = 3;
+    const expectedMessage = `Página cambiada a: ${newPage}`; 
+    expect(APP_CONSTANTS.PAGINATION.PAGE_CHANGE_MESSAGE(newPage)).toBe(expectedMessage); 
+});
  
 });

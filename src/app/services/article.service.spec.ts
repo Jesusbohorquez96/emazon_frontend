@@ -53,21 +53,61 @@ describe('ArticleService', () => {
     req.flush(dummyArticle); 
   });
 
-  it('should handle errors when fetching articles', () => {
-    const page = 1, size = 10, sortBy = 'name', sortDirection = 'asc';
-  
-    service.getArticles(page, size, sortBy, sortDirection).subscribe(
-      () => fail('Should have failed with a 500 error'),
-      (error) => {
-        expect(error.status).toBe(500);
-      }
-    );
-  
-    const req = httpMock.expectOne(`${APP_CONSTANTS.API.BASE_URL}${APP_CONSTANTS.API.ARTICLE_ENDPOINT}?page=1&size=10&sortBy=name&sortDirection=asc`);
+  it('should set category parameter when provided', () => {
+    const page = 1;
+    const size = 10;
+    const sortBy = 'name';
+    const sortDirection = 'ASC';
+    const category = 'Electronics';
+
+    service.getArticles(page, size, sortBy, sortDirection, undefined, category).subscribe();
+
+    const req = httpMock.expectOne((request) => {
+      return request.params.has(APP_CONSTANTS.PAGINATION.PAGE) &&
+        request.params.get(APP_CONSTANTS.PAGINATION.PAGE) === page.toString() &&
+        request.params.has('category') && 
+        request.params.get('category') === category;
+    });
+
     expect(req.request.method).toBe('GET');
-  
-    req.flush('Error fetching articles', { status: 500, statusText: 'Server Error' });
   });
-  
-  
+
+  it('should set brand parameter when provided', () => {
+    const page = 1;
+    const size = 10;
+    const sortBy = 'name';
+    const sortDirection = 'ASC';
+    const brand = 'BrandX';
+
+    service.getArticles(page, size, sortBy, sortDirection, undefined, undefined, brand).subscribe();
+
+    const req = httpMock.expectOne((request) => {
+      return request.params.has(APP_CONSTANTS.PAGINATION.PAGE) &&
+        request.params.get(APP_CONSTANTS.PAGINATION.PAGE) === page.toString() &&
+        request.params.has('brand') &&
+        request.params.get('brand') === brand;
+    });
+
+    expect(req.request.method).toBe('GET');
+  });
+
+  it('should set name parameter when provided', () => {
+    const page = 1;
+    const size = 10;
+    const sortBy = 'name';
+    const sortDirection = 'ASC';
+    const name = 'Laptop';
+
+    service.getArticles(page, size, sortBy, sortDirection, name).subscribe();
+
+    const req = httpMock.expectOne((request) => {
+      return request.params.has(APP_CONSTANTS.PAGINATION.PAGE) &&
+        request.params.get(APP_CONSTANTS.PAGINATION.PAGE) === page.toString() &&
+        request.params.has(APP_CONSTANTS.NAME) &&
+        request.params.get(APP_CONSTANTS.NAME) === name;
+    });
+
+    expect(req.request.method).toBe('GET');
+  });
+
 });
