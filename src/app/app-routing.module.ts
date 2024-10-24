@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { HomeComponent } from './components/pages/home/home.component';
-
 import { APP_CONSTANTS } from 'src/styles/constants';
 
 const routes: Routes = [
@@ -27,10 +25,21 @@ const routes: Routes = [
   },
   {
     path: APP_CONSTANTS.DEFAULT,
-    loadChildren: () => import('./pages/home-page/home-page.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: APP_CONSTANTS.lOGIN,
+    loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: '',
+    redirectTo: APP_CONSTANTS.lOGIN,
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: APP_CONSTANTS.lOGIN,
   }
-  // { path: APP_CONSTANTS.DEFAULT, redirectTo: `/${APP_CONSTANTS.HOME}`, pathMatch: 'full' },
-  // { path: APP_CONSTANTS.WILDCARD, redirectTo: `/${APP_CONSTANTS.HOME}`, pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuxBodegaComponent } from '@/app/pages/user-page/aux-bodega/aux-bodega.component';
+import { AuxBodegaComponent } from '@/app/modules/user/aux-bodega.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AtomsModule } from '@/app/components/atoms/atoms.module';

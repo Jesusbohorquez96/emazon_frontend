@@ -105,4 +105,62 @@ describe('ArticleListComponent', () => {
     expect(component.articlesSelected);
   });
 
+  it('should set searchByName when searchBy includes "NAME"', () => {
+    component.searchBy = ['NAME'];
+    component.searchValue = 'Article 1';
+  
+    jest.spyOn(articleService, 'getArticles').mockReturnValue(of(mockArticlesResponse));
+    
+    component.search();
+  
+    expect(articleService.getArticles).toHaveBeenCalledWith(
+      component.page,
+      component.size,
+      component.sortBy,
+      component.sortDirection,
+      'Article 1',  
+      '',           
+      ''            
+    );
+  });
+  
+  it('should set searchByCategory when searchBy includes "CATEGORY"', () => {
+    component.searchBy = ['CATEGORY'];
+    component.searchValue = 'Category 1';
+  
+    jest.spyOn(articleService, 'getArticles').mockReturnValue(of(mockArticlesResponse));
+    
+    component.search();
+  
+    expect(articleService.getArticles).toHaveBeenCalledWith(
+      component.page,
+      component.size,
+      component.sortBy,
+      component.sortDirection,
+      '',           
+      'Category 1',  
+      ''             
+    );
+  });
+  
+  it('should set searchByBrand when searchBy includes "BRAND"', () => {
+    component.searchBy = ['BRAND'];
+    component.searchValue = 'Brand 1';
+  
+    jest.spyOn(articleService, 'getArticles').mockReturnValue(of(mockArticlesResponse));
+    
+    component.search();
+  
+    expect(articleService.getArticles).toHaveBeenCalledWith(
+      component.page,
+      component.size,
+      component.sortBy,
+      component.sortDirection,
+      '',        
+      '',        
+      'Brand 1' 
+    );
+  });
+  
+
 });

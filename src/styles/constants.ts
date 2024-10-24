@@ -9,6 +9,7 @@ export const APP_CONSTANTS = {
     ID: 'Id',
     NAME: 'name',
     DESCRIPTION: 'description',
+    lOGIN: 'login',
     HOME: 'home',
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
@@ -46,7 +47,8 @@ export const APP_CONSTANTS = {
         PRICE: 'El precio mínimo permitido es de 1000 pesos.',
         MAX: 'Excede el número máximo de caracteres.',
         MIN: 'El campo no cumple con la longitud mínima requerida.',
-        PATTERN: 'El formato del campo no es correcto.'
+        NUMBER: 'El campo debe ser un número.',
+        PATTERN: 'El teléfono debe empezar con "+" y tener de 7 a 13 dígitos.'
     },
 
     ERRORS: {
@@ -55,7 +57,7 @@ export const APP_CONSTANTS = {
         SAVED: 'Saved Category:',
         ANSWER: 'Respuesta de la API:',
         USE: 'Nombre ya en uso, elige otro.',
-        DATA: 'Error en los datos ingresados.',
+        DATA: 'Ususario no autorizado.',
         ERROR: 'Error al guardar la categoría:',
         ERROR_MARCA: 'Error al guardar la marca:',
         OCCURRED: 'Ocurrió un error al guardar.',
@@ -78,10 +80,12 @@ export const APP_CONSTANTS = {
     },
 
     API: {
+        USER_URL: environment.apiUserUrl,
         BASE_URL: environment.apiBaseUrl,
         CATEGORIES_ENDPOINT: '/categories',
         BRANDS_ENDPOINT: '/brands',
         ARTICLE_ENDPOINT: '/articles',
+        LOGIN_ENDPOINT: '/auth/login',
 
     },
 

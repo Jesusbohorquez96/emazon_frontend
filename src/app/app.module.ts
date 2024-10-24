@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './components/organisms/footer/footer.component';
 import { NavbarComponent } from './components/organisms/navbar/navbar.component';
 
-import { HomeComponent } from './pages/home-page/home/home.component';
+import { HomeComponent } from './modules/home/home.component';
+import { AtomsModule } from "./components/atoms/atoms.module";
 
 @NgModule({
   declarations: [
@@ -31,9 +32,9 @@ import { HomeComponent } from './pages/home-page/home/home.component';
       positionClass: 'toast-top-right',
       timeOut: 3000,
       progressBar: true,
-    }
-    ),
+    }),
     AppRoutingModule,
+    AtomsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

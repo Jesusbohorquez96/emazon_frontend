@@ -7,5 +7,7 @@
     <small *ngIf="control?.hasError('minlength')">{{ minLengthMessage }}</small>
 
     <small *ngIf="control?.hasError('pattern')">{{ patternMessage }}</small>
+
+    <small *ngIf="control?.hasError('number')">{{ numberMessage }}</small>
   </div>
   

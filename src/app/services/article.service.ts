@@ -14,6 +14,10 @@ export class ArticleService {
 
   constructor(private readonly http: HttpClient,) { }
 
+  private getAuthToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
   getArticles(page: number, size: number, sortBy: string, sortDirection: string, name?: string, category?: string, brand?: string): Observable<any> {
     let params = new HttpParams()
       .set(APP_CONSTANTS.PAGINATION.PAGE, page.toString())
@@ -35,8 +39,10 @@ export class ArticleService {
   }
 
   saveArticle(article: Article): Observable<Article> {
+    const token = this.getAuthToken();
     const headers = new HttpHeaders({
-      [APP_CONSTANTS.SAVE.TYPE]: [APP_CONSTANTS.SAVE.JSON],
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '' 
     });
 
     return this.http.post<Article>(this.apiUrl, article, { headers });

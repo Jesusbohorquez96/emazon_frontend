@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrandCreateComponent } from './brand-create/brand-create.component';
 import { BrandListComponent } from './brand-list/brand-list.component';
 import { BrandModalComponent } from './brand-modal/brand-modal.component';
-import { BrandComponent } from '@/app/pages/brand-page/brand/brand.component';
+import { BrandComponent } from '@/app/modules/brand/brand.component';
 import { AtomsModule } from '@/app/components/atoms/atoms.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

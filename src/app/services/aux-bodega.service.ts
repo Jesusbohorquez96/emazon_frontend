@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { APP_CONSTANTS } from '@/styles/constants';
 import { Users } from '../models/aux-bodega.model';
 
 @Injectable({
@@ -13,13 +12,17 @@ export class auxBodegaService {
 
   constructor(private readonly http: HttpClient) { }
 
-  saveUsers(users: Users, _lastName: any, _password: any, _email: any, _idDocument: any, _phone: any, _birthdate: any, _rol: any): Observable<Users> {
-    const headers = new HttpHeaders({
-      [APP_CONSTANTS.SAVE.TYPE]: [APP_CONSTANTS.SAVE.JSON],
+   private getAuthToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
 
+  saveUsers(users: Users): Observable<any> {
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '' 
     });
 
     return this.http.post<Users>(this.apiUrl, users, { headers });
   }
-
 }

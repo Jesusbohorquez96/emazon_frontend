@@ -13,6 +13,10 @@ export class BrandService {
 
   constructor(private readonly http: HttpClient) { }
 
+  private getAuthToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
   getBrands(page: number, size: number, sortBy: string, sortDirection: string, name: string): Observable<any> {
     let params = new HttpParams()
       .set(APP_CONSTANTS.PAGINATION.PAGE, page.toString())
@@ -28,9 +32,10 @@ export class BrandService {
   }
 
   saveBrand(brand: Brand): Observable<Brand> {
-    let headers = new HttpHeaders({
-      [APP_CONSTANTS.SAVE.TYPE]: [APP_CONSTANTS.SAVE.JSON],
-      // 'Authorization': '••••••' 
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : '' 
     });
     return this.http.post<Brand>(this.baseUrl, brand, { headers });
   }

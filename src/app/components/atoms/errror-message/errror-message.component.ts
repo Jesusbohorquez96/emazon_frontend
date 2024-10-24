@@ -11,6 +11,7 @@ import { APP_CONSTANTS } from '@/styles/constants';
       <small *ngIf="control?.hasError('min')">{{ minMessage }}</small>
       <small *ngIf="control?.hasError('minlength')">{{ minLengthMessage }}</small>
       <small *ngIf="control?.hasError('pattern')">{{ patternMessage }}</small>
+      <small *ngIf="control?.hasError('number')">{{ numberMessage }}</small>
     </div>
   `
 })
@@ -22,5 +23,6 @@ export class ErrorMessageComponent {
   @Input() maxLengthMessage: string = APP_CONSTANTS.MESSAGE.MAX; 
   @Input() minLengthMessage: string = APP_CONSTANTS.MESSAGE.MIN; 
   @Input() patternMessage: string = APP_CONSTANTS.MESSAGE.PATTERN; 
+  @Input() numberMessage: string = APP_CONSTANTS.MESSAGE.NUMBER;
 
 }

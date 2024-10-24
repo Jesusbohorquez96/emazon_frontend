@@ -152,4 +152,17 @@ describe('BrandCreateComponent', () => {
     expect(toastrService.error).toHaveBeenCalledWith(APP_CONSTANTS.ERRORS.OCCURRED);
   });
 
+  it('should reset status after timeout and clear any existing timeout', (() => {
+    component.statusTimeout = setTimeout(() => {}, 1000);
+    jest.spyOn(window, 'clearTimeout');  
+    jest.useFakeTimers();  
+  
+    component.resetStatusAfterTimeout();
+    expect(clearTimeout);
+
+    jest.advanceTimersByTime(APP_CONSTANTS.NUMBER.TIMEOUT_MS);
+    expect(component.status).toBe('');
+    jest.useRealTimers(); 
+  }));
+
 });
