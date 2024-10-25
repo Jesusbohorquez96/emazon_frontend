@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserPageRoutingModule } from './user-page-routing.module';
-import { UserModule } from '@/app/modules/user/user.module';
+import { UserModule } from '@/app/modules/user/aux-bodega/user.module';
 
 
 @NgModule({

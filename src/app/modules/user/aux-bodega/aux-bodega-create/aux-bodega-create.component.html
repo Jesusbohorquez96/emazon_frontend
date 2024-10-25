@@ -38,14 +38,6 @@
     <input type="date" id="birthdate" formControlName="birthdate">
     <app-error-message class="error-message" [control]="registerForm.get('birthdate')" requiredMessage="Debes ser mayor de 18 años."></app-error-message>
 
-    <label for="rol">Rol</label>
-    <select id="rol" formControlName="rol">
-      <option value="1">Admin</option>
-      <option value="2">Aux bodega</option>
-      <option value="3">clientes</option>
-      <app-error-message class="error-message" [control]="registerForm.get('rol')" requiredMessage="El rol es requerido."></app-error-message>
-    </select>
-
     <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
 
     <button type="button" (click)="goToLogin()">¿Ya tienes cuenta? Inicia sesión</button>

@@ -1,3 +1,4 @@
+import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,14 +11,17 @@ export class DashboardComponent implements OnInit {
 
   token: string | null = '';
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    public roleService: RoleService
+  ) { }
 
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
-    
+
     if (!this.token) {
       console.log('No token found. Redirecting to login.');
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
     } else {
       console.log('Token:', this.token);
     }

@@ -15,7 +15,7 @@ import { VisibilityService } from '@/app/services/visibility.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
   loginForm!: FormGroup;
   status: string = '';
   statusTimeout: any;
@@ -106,6 +106,11 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate(['/auxbodega']);
+    this.router.navigate(['cliente']);
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 }

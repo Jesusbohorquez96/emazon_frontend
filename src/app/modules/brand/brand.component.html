@@ -1,4 +1,4 @@
 <div class="create-brand">
-  <app-brand-create></app-brand-create>
-  <app-brand-list></app-brand-list>
+  <app-brand-create *ngIf="roleService.isComponentVisible('createForm')"></app-brand-create>
+  <app-brand-list *ngIf="roleService.isComponentVisible('listForm')"></app-brand-list>
 </div>

@@ -1,28 +1,40 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
+import { RoleService } from '@/app/services/role.service';
+import { LoginService } from '../../auth/service/login.service';
 import { of } from 'rxjs';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-  let routerMock = {
-    events: of(new NavigationEnd(0, '/', '/')),
-    url: '/',
-    navigate: jest.fn()
-  };
+  let mockRouter: any;
+  let mockLoginService: any;
+  let roleService: RoleService;
 
   beforeEach(async () => {
+    mockRouter = {
+      events: of(new NavigationEnd(0, '/other-page', '/other-page')),
+      url: '/other-page',
+      navigate: jest.fn(),
+    };
+
+    mockLoginService = {
+      logout: jest.fn(),
+    };
+
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ],
+      declarations: [NavbarComponent],
       providers: [
-        { provide: Router, useValue: routerMock }
-      ]
-    })
-    .compileComponents();
+        { provide: Router, useValue: mockRouter },
+        { provide: LoginService, useValue: mockLoginService },
+        RoleService
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
+    roleService = TestBed.inject(RoleService);
     fixture.detectChanges();
   });
 
@@ -30,51 +42,29 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show the navbar on non-excluded routes', () => {
-    routerMock.url = '/home'; 
+  it('should hide navbar on specific routes', () => {
+    // Simula el evento de navegación a una ruta sin barra de navegación
+    mockRouter.url = '/login';
     component.ngOnInit();
-    
-    expect(component.showNavbar).toBe(true);
-  });
-
-  it('should hide the navbar on excluded routes', () => {
-    routerMock.url = '/login';
-    component.ngOnInit();
-
     expect(component.showNavbar).toBe(false);
-  });
 
-  it('should hide the navbar on another excluded route', () => {
-    routerMock.url = '/signup';
-    component.ngOnInit();
-
-    expect(component.showNavbar).toBe(false);
-  });
-
-  it('should toggle navbar visibility on navigation end', () => {
-    const noNavbarRoutes = ['/other-page', '/login', '/signup'];
-
-    noNavbarRoutes.forEach(route => {
-      routerMock.url = route;
-      component.ngOnInit();
-      expect(component.showNavbar).toBe(false);
-    });
-
-    routerMock.url = '/home';
+    // Cambia la ruta a una que sí muestra la barra de navegación
+    mockRouter.url = '/dashboard';
     component.ngOnInit();
     expect(component.showNavbar).toBe(true);
   });
 
-  it('should toggle menuOpen state', () => {
-    component.menuOpen = false;
-  
-    component.oggleMenu();
-  
+  it('should toggle menuOpen when toggleMenu is called', () => {
+    expect(component.menuOpen).toBe(false);
+    component.toggleMenu();
     expect(component.menuOpen).toBe(true);
-  
-    component.oggleMenu();
-  
+    component.toggleMenu();
     expect(component.menuOpen).toBe(false);
   });
-  
+
+  it('should call logout on LoginService and navigate to login on logout', () => {
+    component.logout();
+    expect(mockLoginService.logout).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+  });
 });

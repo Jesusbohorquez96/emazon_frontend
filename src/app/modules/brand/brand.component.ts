@@ -1,3 +1,4 @@
+import { RoleService } from '@/app/services/role.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './brand.component.html',  
   styleUrls: ['./brand.component.scss']  
 })
-export class BrandComponent { }
+export class BrandComponent { 
+
+  constructor(public roleService: RoleService) { }
+}

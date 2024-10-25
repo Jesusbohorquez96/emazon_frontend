@@ -11,6 +11,7 @@ export const APP_CONSTANTS = {
     DESCRIPTION: 'description',
     lOGIN: 'login',
     HOME: 'home',
+    CUSTOMER: 'cliente',
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
     ARTICLES: 'articulos',
@@ -86,7 +87,7 @@ export const APP_CONSTANTS = {
         BRANDS_ENDPOINT: '/brands',
         ARTICLE_ENDPOINT: '/articles',
         LOGIN_ENDPOINT: '/auth/login',
-
+        CUSTOMER_ENPOINT:  '/auth/register_customer',
     },
 
     APP_ROOT: {

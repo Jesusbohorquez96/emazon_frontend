@@ -3,22 +3,27 @@
     <a [routerLink]="['/home']" class="logo">
       <img src="/assets/logo.png" alt="logo Emazon" />
     </a>
-    <a [routerLink]="['/']" class="navbar-title">Emazon</a>
+    <a [routerLink]="['/home']" class="navbar-title">Emazon</a>
+  </div>
+
+  <div class="navbar-hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
   <nav class="navbar-menu" [class.show]="menuOpen">
-    <ul>
+    <ul class="menu-items">
       <li class="a"><a [routerLink]="['/home']">¡Emazon</a></li>
       <li class="b"><a [routerLink]="['/categorias']">Categorias</a></li>
       <li class="c"><a [routerLink]="['/marcas']">Marcas</a></li>
       <li class="d"><a [routerLink]="['/articulos']">Articulos</a></li>
-      
+      <li *ngIf="roleService.isComponentVisible('registroForm')" class="e">
+        <a [routerLink]="['/auxbodega']">Registro</a>
+      </li>
+    </ul> 
+    <ul class="salir">
+      <li><a [class.show]="menuOpen" [routerLink]="['/login']" (click)="logout()">Salir</a></li>
     </ul>
-  </nav>
-  <nav class="navbar-menu" [class.show]="menuOpen">
-    <ul>
-      <li><a [routerLink]="['/login']">Login</a></li>
-    </ul>
-  </nav>
-
+  
 </nav>

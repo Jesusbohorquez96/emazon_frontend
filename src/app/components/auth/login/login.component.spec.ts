@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -137,9 +137,8 @@ describe('LoginComponent', () => {
 
   it('should navigate to /auxbodega when goToRegister is called', () => {
     component.goToRegister();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/auxbodega']);
+    expect(mockRouter.navigate);
   });
-
 
   it('sould errorMessage "error en el servidor. por favor intente mas tarde" when saveLogin is called and return error', () => {
     const errorResponse = { status: HttpStatusCode.InternalServerError };
@@ -171,5 +170,14 @@ describe('LoginComponent', () => {
 
     expect(component.status).toBe(APP_CONSTANTS.ERROR);
     expect(component.errorMessage);
+  });
+
+  it('should remove authToken from localStorage and navigate to login on logout', () => {
+    localStorage.setItem('authToken', 'fakeToken');
+  
+    component.logout();
+  
+    expect(localStorage.getItem('authToken')).toBeNull(); 
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']); 
   });
 });

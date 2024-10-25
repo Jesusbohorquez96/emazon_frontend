@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { auxBodegaService } from '@/app/services/aux-bodega.service';
+import { CustomerService } from '@/app/services/customer.service';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of, tap } from 'rxjs';
 import { HttpStatusCode } from '@angular/common/http';
@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 import { APP_CONSTANTS } from '@/styles/constants';
 
 @Component({
-  selector: 'app-aux-bodega-create',
-  templateUrl: './aux-bodega-create.component.html',
-  styleUrls: ['./aux-bodega-create.component.scss']
+  selector: 'app-customer-create',
+  templateUrl: './customer-create.component.html',
+  styleUrls: ['./customer-create.component.scss']
 })
-export class AuxBodegaCreateComponent implements OnInit {
+export class CustomerCreateComponent implements OnInit {
 
   registerForm!: FormGroup;
   status: string = '';
@@ -24,9 +24,9 @@ export class AuxBodegaCreateComponent implements OnInit {
   numberMessage: any;
 
   constructor(
-    public toastr: ToastrService,
-    private readonly auxBodegaService: auxBodegaService,
-    public router: Router
+    private readonly toastr: ToastrService,
+    private readonly customerService: CustomerService,
+    private readonly router: Router
   ) { }
 
   ngOnInit() {
@@ -45,7 +45,8 @@ export class AuxBodegaCreateComponent implements OnInit {
       ]),
       email: new FormControl('', [
         Validators.required,
-        Validators.email]),
+        Validators.email
+      ]),
       idDocument: new FormControl('', [
         Validators.required,
         Validators.pattern(/^\d{7,12}$/),
@@ -57,8 +58,7 @@ export class AuxBodegaCreateComponent implements OnInit {
       birthdate: new FormControl('', [
         Validators.required,
         this.dateValidator
-      ]),
-      rol: new FormControl('', [Validators.required])
+      ]), 
     });
   }
 
@@ -71,13 +71,7 @@ export class AuxBodegaCreateComponent implements OnInit {
 
   allowOnlyNumbers(event: KeyboardEvent): boolean {
     const charCode = event.charCode;
-
-    if ((charCode >= 48 && charCode <= 57) || charCode === 43) {
-      return true;
-    } else {
-      event.preventDefault();
-      return false;
-    }
+    return (charCode >= 48 && charCode <= 57) || charCode === 43;
   }
 
   dateValidator(control: any) {
@@ -88,8 +82,8 @@ export class AuxBodegaCreateComponent implements OnInit {
     return isAdult ? null : { notAdult: true };
   }
 
-  saveUsers() {
-    if (this.registerForm && this.registerForm.invalid) {
+  saveCustomer() {
+    if (this.registerForm.invalid) {
       this.status = 'error';
       this.errorMessage = 'Corrige los errores del formulario.';
       this.toastr.error(this.errorMessage);
@@ -97,31 +91,27 @@ export class AuxBodegaCreateComponent implements OnInit {
       return;
     }
 
-    const UsersData = this.registerForm ? this.registerForm.value : {};
+    const customerData = this.registerForm.value;
 
-    this.auxBodegaService.saveUsers(UsersData).pipe(
+    this.customerService.saveUsers(customerData).pipe(
       tap((response) => {
-        console.log('Saved aux bodega:', response);
+        console.log('Customer saved:', response);
         this.status = 'success';
-        this.toastr.success('aux bodega creada con éxito.');
+        this.toastr.success('Cliente registrado con éxito.');
 
         this.resetForm();
         this.resetStatusAfterTimeout();
 
-        this.router.navigate([APP_CONSTANTS.lOGIN]);
+        this.router.navigate([APP_CONSTANTS.lOGIN]);  
       }),
       catchError((error) => {
-        console.error('Error al guardar la aux bodega:', error);
-        let errorMessage = 'Ocurrió un error al guardar.';
+        console.error('Error al registrar el cliente:', error);
+        let errorMessage = 'Ocurrió un error al registrar el cliente.';
 
         if (error.status === HttpStatusCode.InternalServerError) {
-          if (error.error && error.error.message) {
-            errorMessage = 'Ususario no autorizado.';
-          }
-        }
-
-        if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'Nombre ya en uso, elige otro.';
+          errorMessage = 'Error interno del servidor.';
+        } else if (error.status === HttpStatusCode.Conflict) {
+          errorMessage = 'El nombre de usuario ya está en uso.';
         }
 
         this.status = 'error';

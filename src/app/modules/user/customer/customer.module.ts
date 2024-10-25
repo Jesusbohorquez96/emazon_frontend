@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuxBodegaComponent } from '@/app/modules/user/aux-bodega.component';
-
+import { CustomerComponent } from './customer.component';
+import { CustomerCreateComponent } from './customer-create/customer-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AtomsModule } from '@/app/components/atoms/atoms.module';
-import { AuxBodegaCreateComponent } from '@/app/modules/user/aux-bodega-create/aux-bodega-create.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
-    AuxBodegaComponent,
-    AuxBodegaCreateComponent
+    CustomerComponent,
+    CustomerCreateComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     AtomsModule,
     ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
-    AuxBodegaComponent,
-    AuxBodegaCreateComponent
+    CustomerComponent,
+    CustomerCreateComponent,
   ]
 })
-export class UserModule { }
+export class CustomerModule { }

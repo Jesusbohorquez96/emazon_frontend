@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter  } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,6 +14,7 @@ export class ButtonComponent {
   @Input() label: string = 'Guardar';
   @Input() status: string = '';
   @Input() buttonForm!: FormGroup;
+  @Output() action = new EventEmitter<void>();
 
   constructor( private readonly toastr: ToastrService ) { }
 
@@ -33,5 +34,6 @@ export class ButtonComponent {
         positionClass: 'toast-top-right'
       });
     }
+    this.action.emit();
   }
 }

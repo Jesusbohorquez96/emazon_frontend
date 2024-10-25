@@ -1,3 +1,4 @@
+import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleComponent implements OnInit {
 
-  constructor() { }
+  constructor(public roleService: RoleService) { }
 
   ngOnInit(): void {
   }

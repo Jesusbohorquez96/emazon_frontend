@@ -161,4 +161,14 @@ describe('CategoryListComponent', () => {
     expect(component.search).toHaveBeenCalled();
   });
 
+  it('should load categories and set them from response content', () => {
+    const mockCategories = [{ id: 1, name: 'Category 1' }, { id: 2, name: 'Category 2' }];
+    const mockResponse = { content: mockCategories };
+    jest.spyOn(categoryService, 'getCategories').mockReturnValue(of(mockResponse));
+  
+    component.loadCategories();
+  
+    expect(categoryService.getCategories).toHaveBeenCalledWith(0, 0, 'NAME', 'ASC'); 
+    expect(component.categories).toEqual(mockCategories);
+  });
 });

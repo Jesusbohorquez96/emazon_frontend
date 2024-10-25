@@ -1,5 +1,7 @@
+import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { LoginService } from '../../auth/service/login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,11 @@ export class NavbarComponent implements OnInit {
   showNavbar = true;
   menuOpen = false;
 
-  constructor(private readonly router: Router) { }
+  constructor(
+    private readonly router: Router,
+    public roleService: RoleService,
+    private readonly loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -21,7 +27,12 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  oggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;  
+  }
+ 
+  logout() {
+    this.loginService.logout(); 
+    this.router.navigate(['/login']); 
   }
 }
