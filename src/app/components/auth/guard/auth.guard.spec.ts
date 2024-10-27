@@ -1,52 +1,46 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { Router } from '@angular/router';
 import { LoginService } from '../service/login.service';
 
 describe('AuthGuard', () => {
-  let guard: AuthGuard;
-  let mockLoginService: any;
-  let mockRouter: any;
+  let authGuard: AuthGuard;
+  let mockRouter: jest.Mocked<Router>;
+  let mockLoginService: jest.Mocked<LoginService>;
 
   beforeEach(() => {
-    mockLoginService = {
-      isAuthenticated: jest.fn(),
+    const routerMock = {
+      navigate: jest.fn()
     };
 
-    mockRouter = {
-      navigate: jest.fn(),
+    const loginServiceMock = {
+      isAuthenticated: jest.fn()
     };
 
     TestBed.configureTestingModule({
       providers: [
         AuthGuard,
-        { provide: LoginService, useValue: mockLoginService },
-        { provide: Router, useValue: mockRouter },
-      ],
+        { provide: Router, useValue: routerMock },
+        { provide: LoginService, useValue: loginServiceMock }
+      ]
     });
 
-    guard = TestBed.inject(AuthGuard);
+    authGuard = TestBed.inject(AuthGuard);
+    mockRouter = TestBed.inject(Router) as jest.Mocked<Router>;
+    mockLoginService = TestBed.inject(LoginService) as jest.Mocked<LoginService>;
   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
-
-  it('should allow activation if the user is authenticated', () => {
+  it('should allow activation if user is authenticated', () => {
     mockLoginService.isAuthenticated.mockReturnValue(true);
-
-    const canActivate = guard.canActivate();
-
-    expect(canActivate).toBe(true);
+    const result = authGuard.canActivate();
+    expect(result).toBe(true);
     expect(mockRouter.navigate).not.toHaveBeenCalled();
   });
 
-  it('should block activation and navigate to login if the user is not authenticated', () => {
+  it('should redirect to /login if user is not authenticated', () => {
     mockLoginService.isAuthenticated.mockReturnValue(false);
-
-    const canActivate = guard.canActivate();
-
-    expect(canActivate).toBe(false);
+    const result = authGuard.canActivate();
+    expect(result).toBe(false);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
   });
 });

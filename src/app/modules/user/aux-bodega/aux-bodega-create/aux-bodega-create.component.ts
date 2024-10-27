@@ -148,6 +148,6 @@ export class AuxBodegaCreateComponent implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auxbodega']);
   }
 }

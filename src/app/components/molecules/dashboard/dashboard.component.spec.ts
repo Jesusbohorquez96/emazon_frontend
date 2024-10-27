@@ -1,45 +1,65 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { Router } from '@angular/router';
+import { RoleService } from '@/app/services/role.service';
+import { LoginService } from '../../auth/service/login.service';
+import { of, Subscription } from 'rxjs';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
-  let mockRouter: Router;
+  let mockRouter: jest.Mocked<Router>;
+  let mockLoginService: jest.Mocked<LoginService>;
 
   beforeEach(async () => {
+    const loginServiceMock = {
+      getAuthStatus: jest.fn()
+    };
+
     await TestBed.configureTestingModule({
       declarations: [DashboardComponent],
+      providers: [
+        { provide: RoleService, useValue: {} },
+        { provide: LoginService, useValue: loginServiceMock }
+      ],
       imports: [RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    mockRouter = TestBed.inject(Router);
-    fixture.detectChanges();
+    mockRouter = TestBed.inject(Router) as jest.Mocked<Router>;
+    mockLoginService = TestBed.inject(LoginService) as jest.Mocked<LoginService>;
   });
 
-  it('should create', () => {
+  it('debería crear el componente', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should log token to console if token is found', () => {
-    const consoleLogSpy = jest.spyOn(console, 'log');
-    localStorage.setItem('authToken', 'fakeToken123');
-    
+  it('debería llamar a checkAuthentication en ngOnInit', () => {
+    jest.spyOn<any, any>(component, 'checkAuthentication');
     component.ngOnInit();
-
-    expect(consoleLogSpy).toHaveBeenCalledWith('Token:', 'fakeToken123');
-    consoleLogSpy.mockRestore();
+    expect(component['checkAuthentication']).toHaveBeenCalled();
   });
 
-  it('should redirect to login if no token is found', () => {
-    const routerSpy = jest.spyOn(mockRouter, 'navigate');
-    localStorage.removeItem('authToken');  
+  it('debería redirigir a /login si no hay token en checkAuthentication', () => {
+    jest.spyOn(localStorage, 'getItem');
+    const navigateSpy = jest.spyOn(mockRouter, 'navigate');
+    component['checkAuthentication']();
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
+  });
 
+  it('debería redirigir a /login si getAuthStatus emite false', () => {
+    mockLoginService.getAuthStatus.mockReturnValue(of(false));
+    const navigateSpy = jest.spyOn(mockRouter, 'navigate');
     component.ngOnInit();
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
+  });
 
-    expect(routerSpy).toHaveBeenCalledWith(['/login']);
+  it('debería desuscribirse de authSubscription en ngOnDestroy', () => {
+    component.authSubscription = new Subscription();
+    const unsubscribeSpy = jest.spyOn(component.authSubscription, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(unsubscribeSpy).toHaveBeenCalled();
   });
 });

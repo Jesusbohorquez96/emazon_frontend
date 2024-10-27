@@ -68,10 +68,13 @@ export class LoginComponent implements OnInit {
         this.resetForm();
         this.resetStatusAfterTimeout();
 
-        this.router.navigate([APP_CONSTANTS.HOME]);
+        this.loginService.setAuthStatus(true);
+        this.router.navigate([APP_CONSTANTS.HOME]).then(() => {
+          window.location.reload();
+        });
       }),
       catchError((error: any) => {
-        let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED;
+        let errorMessage = APP_CONSTANTS.ERRORS.INCOME;
 
         if (error.status === HttpStatusCode.Unauthorized) {
           errorMessage = 'Error en el servidor. Por favor, intenta más tarde.';
@@ -106,7 +109,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate(['cliente']);
+    this.router.navigate(['/cliente']);
   }
 
   logout(): void {

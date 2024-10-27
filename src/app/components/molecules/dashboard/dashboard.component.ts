@@ -1,6 +1,8 @@
 import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from '../../auth/service/login.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,21 +11,37 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  token: string | null = '';
+  public authSubscription!: Subscription;
 
   constructor(
     private readonly router: Router,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private readonly loginService: LoginService
   ) { }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('authToken');
+    this.checkAuthentication();
+    this.authSubscription = this.loginService.getAuthStatus().subscribe(isAuthenticated => {
+      if (!isAuthenticated) {
+        console.log('Usuario no autenticado. Redirigiendo a login.');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 
-    if (!this.token) {
-      console.log('No token found. Redirecting to login.');
+  private checkAuthentication() {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.log('No se encontró token. Redirigiendo a login.');
       this.router.navigate(['/login']);
     } else {
-      console.log('Token:', this.token);
+      console.log('Token encontrado:', token);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 }

@@ -56,4 +56,22 @@ describe('LoginService', () => {
     service.logout();
     expect(localStorage.getItem('authToken')).toBeNull();
   });
+
+  it('should emit the initial authentication status from getAuthStatus', (done) => {
+    const initialAuthStatus = service.isAuthenticated();
+    
+    service.getAuthStatus().subscribe(status => {
+      expect(status).toBe(initialAuthStatus);
+      done();
+    });
+  });
+
+  it('should emit the updated authentication status when setAuthStatus is called', (done) => {
+    service.setAuthStatus(true);
+    
+    service.getAuthStatus().subscribe(status => {
+      expect(status).toBe(true);
+      done();
+    });
+  });
 });

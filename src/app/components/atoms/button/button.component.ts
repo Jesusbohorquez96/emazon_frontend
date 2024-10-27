@@ -14,6 +14,7 @@ export class ButtonComponent {
   @Input() label: string = 'Guardar';
   @Input() status: string = '';
   @Input() buttonForm!: FormGroup;
+  @Input() buttonType: 'primary' | 'secondary' = 'primary';
   @Output() action = new EventEmitter<void>();
 
   constructor( private readonly toastr: ToastrService ) { }

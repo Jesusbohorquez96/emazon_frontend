@@ -89,12 +89,10 @@ describe('AuxBodegaCreateComponent', () => {
     expect(clearTimeout).toHaveBeenCalledWith(mockTimeout);
   });
 
-  it('should navigate to /login when goToLogin is called', () => {
+  it('should navigate to /auxbodega when goToLogin is called', () => {
     component.goToLogin();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/auxbodega']);
   });
-
-
 
   it('should reset status and errorMessage after timeout', (() => {
     jest.useFakeTimers();

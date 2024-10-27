@@ -62,6 +62,7 @@ export const APP_CONSTANTS = {
         ERROR: 'Error al guardar la categoría:',
         ERROR_MARCA: 'Error al guardar la marca:',
         OCCURRED: 'Ocurrió un error al guardar.',
+        INCOME: 'Error interno del servidor.',
         OBTAIN: 'Error al obtener las categorías:',
         OBTAIN_BRAND: 'Error al obtener las marcas:',
         CORRECT: 'Corrige los errores del formulario.',

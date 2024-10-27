@@ -1,5 +1,9 @@
 <div class="button-container">
-    <button type="submit" [disabled]="buttonForm.invalid || isDisabled" (click)="onClick()">
-      {{ label }}
-    </button>
-  </div>
+  <button 
+  type="submit" 
+  [disabled]="buttonForm.invalid || isDisabled" 
+  (click)="onClick()"
+  [ngClass]="buttonType === 'primary' ? 'primary-button' : 'secondary-button'">
+  {{ label }}
+  </button>
+</div>
