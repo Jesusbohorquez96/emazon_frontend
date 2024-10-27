@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../../../services/login.service';
 import { of, throwError } from 'rxjs';
 import { HttpStatusCode } from '@angular/common/http';
 import { APP_CONSTANTS } from '@/styles/constants';
@@ -72,7 +72,7 @@ describe('LoginComponent', () => {
     expect(component.status).toBe(APP_CONSTANTS.ERROR);
     expect(component.errorMessage).toBe(APP_CONSTANTS.ERRORS.CORRECT);
     expect(mockToastr.error).toHaveBeenCalledWith(APP_CONSTANTS.ERRORS.CORRECT);
-    expect(mockLoginService.saveLogin).not.toHaveBeenCalled();  
+    expect(mockLoginService.saveLogin).not.toHaveBeenCalled();
   });
 
   it('should handle login successfully and navigate to home', () => {
@@ -81,7 +81,7 @@ describe('LoginComponent', () => {
 
     component.loginForm.controls['email'].setValue('test@example.com');
     component.loginForm.controls['password'].setValue('Password@123');
-    
+
     component.saveLogin();
 
     expect(mockLoginService.saveLogin).toHaveBeenCalledWith('test@example.com', 'Password@123');
@@ -119,19 +119,19 @@ describe('LoginComponent', () => {
     jest.useFakeTimers();
     const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
     const setTimeoutSpy = jest.spyOn(window, 'setTimeout');
-  
+
     component.status = 'some status';
     component.errorMessage = 'some error';
-    component.statusTimeout = setTimeout(() => {}, 1000);  
+    component.statusTimeout = setTimeout(() => { }, 1000);
 
     component.resetStatusAfterTimeout();
-  
+
     expect(clearTimeoutSpy);
     expect(setTimeoutSpy);
 
-    jest.runAllTimers(); 
+    jest.runAllTimers();
 
-    expect(component.status).toBe('');  
+    expect(component.status).toBe('');
     expect(component.errorMessage).toBe('');
   }));
 
@@ -174,10 +174,10 @@ describe('LoginComponent', () => {
 
   it('should remove authToken from localStorage and navigate to login on logout', () => {
     localStorage.setItem('authToken', 'fakeToken');
-  
+
     component.logout();
-  
-    expect(localStorage.getItem('authToken')).toBeNull(); 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']); 
+
+    expect(localStorage.getItem('authToken')).toBeNull();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
   });
 });

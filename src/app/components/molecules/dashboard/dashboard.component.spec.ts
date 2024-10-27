@@ -1,7 +1,7 @@
 import { DashboardComponent } from './dashboard.component';
 import { Router } from '@angular/router';
 import { RoleService } from '@/app/services/role.service';
-import { LoginService } from '../../auth/service/login.service';
+import { LoginService } from '../../../services/login.service';
 import { of, Subscription } from 'rxjs';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';

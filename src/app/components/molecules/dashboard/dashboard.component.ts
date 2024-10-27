@@ -1,7 +1,7 @@
 import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../../auth/service/login.service';
+import { LoginService } from '../../../services/login.service';
 import { Subscription } from 'rxjs';
 
 @Component({

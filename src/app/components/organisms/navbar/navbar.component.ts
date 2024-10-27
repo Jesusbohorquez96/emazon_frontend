@@ -1,7 +1,7 @@
 import { RoleService } from '@/app/services/role.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { LoginService } from '../../auth/service/login.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,18 +21,18 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const noNavbarRoutes = ['/other-page', '/login', '/signup']; 
+        const noNavbarRoutes = ['/other-page', '/login', '/signup'];
         this.showNavbar = !noNavbarRoutes.includes(this.router.url);
       }
     });
   }
 
   toggleMenu() {
-    this.menuOpen = !this.menuOpen;  
+    this.menuOpen = !this.menuOpen;
   }
- 
+
   logout() {
-    this.loginService.logout(); 
-    this.router.navigate(['/login']); 
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }

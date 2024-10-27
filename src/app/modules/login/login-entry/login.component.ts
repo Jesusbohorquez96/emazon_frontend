@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../../../services/login.service';
 import { HttpStatusCode } from '@angular/common/http';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { tap, catchError } from 'rxjs/operators';
@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit {
     this.visibilityService.hideFooter();
 
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@(gmail|hotmail|yahoo|outlook)\.com|co|go$/)]],
       password: ['', [
         Validators.required,
         Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+#-])[A-Za-z\d@$!%*#?&+-]{8,}$/)

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { RoleService } from '@/app/services/role.service';
-import { LoginService } from '../../auth/service/login.service';
+import { LoginService } from '../../../services/login.service';
 import { of } from 'rxjs';
 
 describe('NavbarComponent', () => {

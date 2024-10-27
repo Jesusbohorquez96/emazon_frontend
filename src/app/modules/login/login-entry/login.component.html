@@ -6,7 +6,7 @@
             <input id="email" type="email" formControlName="email" required>
             <div class="error-message">
                 <app-error-message [control]="loginForm.get('email')" requiredMessage="El email es requerido."
-                    emailMessage="El email no es válido."></app-error-message>
+                    patternMessage="El email no es válido."></app-error-message>
             </div>
         </div>
         <div>

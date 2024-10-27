@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoginPageRoutingModule } from './login-page-routing.module';
-import { LoginModule } from '@/app/components/auth/login.module';
+import { LoginModule } from '@/app/modules/login/login.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +11,6 @@ import { LoginModule } from '@/app/components/auth/login.module';
     CommonModule,
     LoginPageRoutingModule,
     LoginModule
-]
+  ]
 })
 export class LoginPageModule { }
