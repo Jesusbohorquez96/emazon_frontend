@@ -14,7 +14,7 @@ import { APP_CONSTANTS } from '@/styles/constants';
 })
 export class CustomerCreateComponent implements OnInit {
 
-  registerForm!: FormGroup;
+  registerForm!: FormGroup | any;
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';

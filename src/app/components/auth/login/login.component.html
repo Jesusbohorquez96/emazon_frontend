@@ -2,25 +2,29 @@
     <h2>Login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="saveLogin()">
         <div>
-        <label class="label" for="email">Email:</label>
-        <input id="email" type="email" formControlName="email" required>
-        <div class="error-message">
-            <app-error-message [control]="loginForm.get('email')" requiredMessage="El email es requerido." emailMessage="El email no es válido."></app-error-message>
-        </div>
+            <label class="label" for="email">Email:</label>
+            <input id="email" type="email" formControlName="email" required>
+            <div class="error-message">
+                <app-error-message [control]="loginForm.get('email')" requiredMessage="El email es requerido."
+                    emailMessage="El email no es válido."></app-error-message>
+            </div>
         </div>
         <div>
-        <label class="label" for="password">Contraseña:</label>
-        <input id="password" type="" formControlName="password" required>
-        <div class="error-message">
-            <app-error-message [control]="loginForm.get('password')" requiredMessage="La contraseña es requerida." patternMessage="Contraseña con mayúscula, minúscula, número y símbolo."></app-error-message>
-        </div>
-        </div>
-        <app-button [buttonForm]="loginForm" [isDisabled]="false" [label]="'Login'" [status]="status" [errorMessage]="messageError"></app-button>
+            <app-password
+              [control]="loginForm.get('password')" 
+              class="label" label="Contraseña:">
+            </app-password>
+            <div class="error-message">
+                <app-error-message [control]="loginForm.get('password')" requiredMessage="La contraseña es requerida." patternMessage="Contraseña con mayúscula, minúscula, número y símbolo."></app-error-message>
+            </div>
+          </div>
+        <app-button [buttonForm]="loginForm" [isDisabled]="false" [label]="'Login'" [status]="status"
+            [errorMessage]="messageError"></app-button>
 
         ¿No tienes cuenta?
         <button type="button" class="link-button">
             <a (click)="goToRegister()" class="highlight">Regístrate</a>
-          </button>
+        </button>
     </form>
 
 </div>

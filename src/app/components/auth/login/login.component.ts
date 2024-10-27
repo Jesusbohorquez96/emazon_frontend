@@ -16,7 +16,7 @@ import { VisibilityService } from '@/app/services/visibility.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm!: FormGroup;
+  loginForm!: FormGroup | any;
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';

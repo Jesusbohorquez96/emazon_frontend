@@ -24,7 +24,6 @@ import { UserModule } from "./modules/user/aux-bodega/user.module";
 
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

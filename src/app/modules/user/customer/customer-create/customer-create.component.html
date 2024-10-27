@@ -15,11 +15,14 @@
       requiredMessage="El apellido es requerido."
       maxLengthMessage="El apellido no puede exeder los 50 catacteres"></app-error-message>
 
-    <label for="password">Contraseña</label>
-    <input type="" id="password" formControlName="password">
+      <app-password
+      class="label"
+      [control]="registerForm.get('password')" 
+      label="Contraseña">
+    </app-password>
     <app-error-message class="error-message" [control]="registerForm.get('password')"
-      requiredMessage="Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo."
-      patternMessage="Contraseña con mayúscula, minúscula, número y símbolo."></app-error-message>
+      requiredMessage="Contraseña es requerida."
+      patternMessage="Mínimo 8 caracteres, con mayúscula, minúscula, número y símbolo."></app-error-message>
 
     <label for="email">Correo electrónico</label>
     <input type="email" id="email" formControlName="email">
