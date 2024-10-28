@@ -16,8 +16,16 @@
 
         <ng-container *ngFor="let column of columns">
           <td>
-            {{ row[column.field] }}
+            <ng-container *ngIf="column.field === 'articleStock'; else defaultCell">
+              <a [routerLink]="['/stock']" class="stock-link">
+                {{ row[column.field] }}
+              </a>
+            </ng-container>
+            <ng-template #defaultCell>
+              {{ row[column.field] }}
+            </ng-template>
           </td>
+
         </ng-container>
       </tr>
 

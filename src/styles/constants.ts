@@ -9,6 +9,7 @@ export const APP_CONSTANTS = {
     ID: 'Id',
     NAME: 'name',
     DESCRIPTION: 'description',
+    STOCK: 'stock',
     lOGIN: 'login',
     HOME: 'home',
     CUSTOMER: 'cliente',
@@ -84,6 +85,8 @@ export const APP_CONSTANTS = {
     API: {
         USER_URL: environment.apiUserUrl,
         BASE_URL: environment.apiBaseUrl,
+        SUPPLIES_URL: environment.apiSuppliesUrl,
+        SUPPLIES_ENDPOINT: '/supplies',
         CATEGORIES_ENDPOINT: '/categories',
         BRANDS_ENDPOINT: '/brands',
         ARTICLE_ENDPOINT: '/articles',

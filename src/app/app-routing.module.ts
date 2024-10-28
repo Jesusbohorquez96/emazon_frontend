@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: APP_CONSTANTS.STOCK,
+    loadChildren: () => import('./pages/stock-page/stock-page.module').then(m => m.StockPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: APP_CONSTANTS.CUSTOMER,
     loadChildren: () => import('./pages/user-page/customer-page/customer-page.module').then(m => m.CustomerPageModule)
   },

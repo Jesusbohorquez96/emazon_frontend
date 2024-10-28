@@ -14,6 +14,7 @@ export class ArticleListComponent implements OnInit {
   @Input() selectedArticles: ArticleResponse[] = [];
   @Output() articlesSelected = new EventEmitter<ArticleResponse[]>();
   @Input() columns: { field: string, header: string }[] = [
+    { field: 'articleId', header: 'id' },
     { field: 'articleName', header: 'Nombre' },
     { field: 'articleDescription', header: 'Descripción' },
     { field: 'articleStock', header: 'Stock' },

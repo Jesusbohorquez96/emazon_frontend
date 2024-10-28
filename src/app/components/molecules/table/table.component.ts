@@ -1,5 +1,7 @@
+import { RoleService } from '@/app/services/role.service';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -7,15 +9,20 @@ import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent<T> implements OnChanges {
-  
+
   @Input() selectedEnabled: boolean = false;
   @Input() columns: { field: string, header: string }[] = [];
   @Input() data: any[] = [];
   @Input() selectedItems: any[] = [];
   @Output() selectedChangue = new EventEmitter<any[]>();
-  dataSelected: any[] = [];
+  @Input() dataSelected: boolean[] = [];
 
   columnCheckbox = { field: APP_CONSTANTS.CHECKBOX.FIELD, header: APP_CONSTANTS.CHECKBOX.HEADER };
+  
+  constructor(
+    private readonly router: Router,
+    public roleService: RoleService
+  ) {}
 
   ngOnInit(): void {
     if (this.selectedEnabled) {
@@ -64,4 +71,8 @@ export class TableComponent<T> implements OnChanges {
       this.selectedChangue.emit(this.selectedItems); 
     }
   }
+
+  redirectToStock(articleId: number): void {
+    this.router.navigate(['/stock', articleId]);
+  }  
 }

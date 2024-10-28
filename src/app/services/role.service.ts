@@ -8,8 +8,8 @@ export class RoleService {
   private role: string = '';
 
   private readonly roleComponentVisibilityMap: { [role: string]: string[] } = {
-    'admin': ['createForm', 'listForm', 'registroForm'],
-    'aux_bodega': ['createForm', 'listForm', ],
+    'admin': ['createForm', 'listForm', 'registroForm', 'updateForm', 'stockLink'],
+    'aux_bodega': ['createForm', 'listForm', 'updateForm'],
     'customer': ['listForm',]
   };
 

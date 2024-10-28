@@ -18,7 +18,9 @@
       <li class="b"><a [routerLink]="['/categorias']">Categorias</a></li>
       <li class="c"><a [routerLink]="['/marcas']">Marcas</a></li>
       <li class="d"><a [routerLink]="['/articulos']">Articulos</a></li>
-      <li *ngIf="roleService.isComponentVisible('registroForm')" class="e">
+      <li *ngIf="roleService.isComponentVisible('updateForm')" class="e">
+        <a [routerLink]="['/stock']">Stock</a>
+      <li *ngIf="roleService.isComponentVisible('registroForm')" class="f">
         <a [routerLink]="['/auxbodega']">Registro</a>
       </li>
     </ul> 

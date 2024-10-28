@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/organisms/navbar/navbar.component'
 import { HomeComponent } from './modules/home/home.component';
 import { AtomsModule } from "./components/atoms/atoms.module";
 import { UserModule } from "./modules/user/aux-bodega/user.module";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
