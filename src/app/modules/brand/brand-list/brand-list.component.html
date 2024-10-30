@@ -1,19 +1,22 @@
 <div class="brand-list">
     <h2 *ngIf="showTitle">Lista de Marca</h2>
 
-    <label class="label" *ngIf="showLabel" for="size">Mostrar por página:</label>
-    <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
-        placeholder="Número de elementos por página" *ngIf="showPageSizeControl">
+    <div class="row">
+
+        <label class="label" *ngIf="showLabel" for="size">Mostrar por página:</label>
+        <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
+            placeholder="Número de elementos por página" *ngIf="showPageSizeControl">
 
         <label class="label" for="name">Buscar por nombre:</label>
-    <div class="duble">
-        <button (click)="toggleSort()">
-            {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
-        </button>
+        <div class="duble">
+            <button (click)="toggleSort()">
+                {{ sortDirection === 'ASC' ? 'Ascendente' : 'Descendente' }}
+            </button>
+        </div>
     </div>
     <div class="table-background">
-    <app-table [columns]="columns" [data]="brands" [selectedEnabled]="selectedEnabled"
-        (selectedChangue)="handleBrandChange($event)" [selectedItems]="selectedBrands"></app-table>
+        <app-table [columns]="columns" [data]="brands" [selectedEnabled]="selectedEnabled"
+            (selectedChangue)="handleBrandChange($event)" [selectedItems]="selectedBrands"></app-table>
     </div>
 
     <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">

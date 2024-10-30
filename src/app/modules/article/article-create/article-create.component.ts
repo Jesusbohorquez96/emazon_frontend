@@ -22,10 +22,12 @@ export class ArticleCreateComponent implements OnInit {
   selectedCategories: CategoryResponse[] = [];
   selectedBrand: BrandResponse | null = null;
 
+  showMainModal = false;
   showCategoryModal = false;
   showBrandModal = false;
   status: string = '';
   errorMessage!: string;
+  show: boolean = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -73,22 +75,34 @@ export class ArticleCreateComponent implements OnInit {
     });
   }
 
+  openMainModal(): void {
+    this.showMainModal = true;
+  }
+
+  closeMainModal(): void {
+    this.showMainModal = false;
+  }
+
   openCategoryModal(): void {
+    this.closeMainModal();
     this.showCategoryModal = true;
   }
 
   closeCategoryModal(): void {
     this.showCategoryModal = false;
     this.articleForm.patchValue({ categories: this.selectedCategories });
+    this.openMainModal();
   }
 
   openBrandModal(): void {
+    this.closeMainModal();
     this.showBrandModal = true;
   }
 
   closeBrandModal(): void {
     this.showBrandModal = false;
     this.articleForm.patchValue({ brand: this.selectedBrand });
+    this.openMainModal();
   }
 
   handleCategoryChange(selectedCategories: CategoryResponse[]): void {
@@ -100,7 +114,7 @@ export class ArticleCreateComponent implements OnInit {
     this.brands = selectedBrands;
     this.selectedBrand = this.brands[0];
   }
-  
+
   getCategoryName(categoryId: number): string {
     const category = this.categories.find(cat => cat.categoryId === categoryId);
     return category ? category.categoryName : 'Categoría ';
@@ -115,45 +129,45 @@ export class ArticleCreateComponent implements OnInit {
 
     if (this.articleForm && this.articleForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
-      this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT; 
+      this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
       this.toastr.error(this.errorMessage);
       this.resetStatusAfterTimeout();
       return;
     }
-  
+
     const articleData = {
       ...this.articleForm.value,
       categories: this.selectedCategories.map(category => category.categoryId),
       brand: this.selectedBrand?.brandId
     };
-  
+
     this.articleService.saveArticle(articleData).subscribe({
       next: (response) => {
         console.log(APP_CONSTANTS.ERRORS.SAVED, response);
-        this.status = APP_CONSTANTS.ERRORS.SUCCESS; 
+        this.status = APP_CONSTANTS.ERRORS.SUCCESS;
         this.toastr.success('Article creada con éxito.');
-        this.resetForm(); 
-        this.resetStatusAfterTimeout(); 
+        this.resetForm();
+        this.resetStatusAfterTimeout();
       },
       error: (error) => {
         console.error(APP_CONSTANTS.ERRORS.ERROR, error);
-        let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED; 
-  
+        let errorMessage = APP_CONSTANTS.ERRORS.OCCURRED;
+
         if (error.status === HttpStatusCode.InternalServerError) {
           if (error.error && error.error.message) {
             errorMessage = APP_CONSTANTS.ERRORS.DATA;
           }
         }
-  
+
         if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = APP_CONSTANTS.ERRORS.USE; 
+          errorMessage = APP_CONSTANTS.ERRORS.USE;
         }
-  
-       
+
+
         this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
         this.toastr.error(this.errorMessage);
-        this.resetStatusAfterTimeout(); 
+        this.resetStatusAfterTimeout();
       }
     });
   }
@@ -173,8 +187,8 @@ export class ArticleCreateComponent implements OnInit {
 
   resetStatusAfterTimeout() {
     setTimeout(() => {
-      this.status = ''; 
-      this.errorMessage = ''; 
+      this.status = '';
+      this.errorMessage = '';
     }, 5000);
   }
 }

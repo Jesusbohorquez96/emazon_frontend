@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Brand, BrandResponse } from '@/app/models/brand.model';
 import { BrandService } from '../../../services/brand.service';
 import { APP_CONSTANTS } from '@/styles/constants';
+import { RoleService } from '@/app/services/role.service';
 
 @Component({
   selector: 'app-brand-list',
@@ -31,7 +32,9 @@ export class BrandListComponent implements OnInit {
   totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;
   searchName: string = '';
 
-  constructor(private readonly brandService: BrandService) { }
+  constructor(private readonly brandService: BrandService,
+    public roleService: RoleService
+  ) { }
 
   ngOnInit(): void {
     this.loadBrands();

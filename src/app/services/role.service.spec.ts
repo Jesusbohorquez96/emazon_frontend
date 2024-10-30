@@ -15,7 +15,7 @@ describe('RoleService', () => {
 
   describe('getUserRoleFromToken', () => {
     afterEach(() => {
-      localStorage.removeItem('authToken'); // Limpia el token después de cada prueba
+      localStorage.removeItem('authToken'); 
     });
 
     it('should return the correct role when token is valid', () => {
@@ -28,7 +28,7 @@ describe('RoleService', () => {
     });
 
     it('should return an empty string if no token is present', () => {
-      localStorage.removeItem('authToken'); // Asegura que no haya token en el almacenamiento
+      localStorage.removeItem('authToken'); 
       const role = service.getUserRoleFromToken();
       expect(role).toBe('');
     });

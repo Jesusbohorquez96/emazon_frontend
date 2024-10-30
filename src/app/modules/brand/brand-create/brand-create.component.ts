@@ -16,6 +16,7 @@ export class BrandCreateComponent implements OnInit {
   status: string = '';
   statusTimeout: any;
   errorMessage: string = '';
+  show: boolean = false;
 
   constructor(
     private readonly brandService: BrandService,
@@ -47,6 +48,7 @@ export class BrandCreateComponent implements OnInit {
         this.toastr.success('Marca creada con éxito.');
         this.resetForm();
         this.resetStatusAfterTimeout();
+        this.show = false;
       },
       (error) => {
         console.error(APP_CONSTANTS.ERRORS.ERROR_MARCA, error);
@@ -81,5 +83,13 @@ export class BrandCreateComponent implements OnInit {
     this.statusTimeout = setTimeout(() => {
       this.status = '';
     }, APP_CONSTANTS.NUMBER.TIMEOUT_MS);
+  }
+
+  openModal() {
+    this.show = true;
+  }
+
+  closeModal() {
+    this.show = false;
   }
 }

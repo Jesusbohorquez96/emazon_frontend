@@ -2,11 +2,10 @@
 @import '/src/styles/button.scss';
 
 .article-create-container {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 380px;
     padding: 20px;
     border: 1px solid $border;
-    border-radius: 8px;
+    border-radius: 32px;
     background-color: $bg-light-grey;
 
     form {
@@ -24,14 +23,13 @@
         textarea {
             width: 100%;
             max-width: 390px;
-            max-height: 240px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid $border;
+            max-height: 200px;
+            padding: 5px;
+            border-radius: 9px;
+            border: 1px solid #aba7af;
             font-size: 1rem;
             box-sizing: border-box;
             resize: vertical;
-            margin-bottom: 10px;
 
             &:focus {
                 border-color: $purple;
@@ -89,12 +87,11 @@ h2 {
 
 .modal-content {
     background-color: $white;
-    margin: 15% auto;
-    padding: 20px;
+    margin: 1% auto;
     border: 1px solid $border;
-    width: 80%;
+    width: 30%;
     max-width: 400px;
-    border-radius: 8px;
+    border-radius: 30px;
 }
 
 ul {
@@ -117,7 +114,7 @@ ul {
 
     .modal-content {
         width: 95%;
-        max-width: none;
+
     }
 
     ul {

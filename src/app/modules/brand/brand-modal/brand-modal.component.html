@@ -1,29 +1,23 @@
 <div class="modal" [class.show]="show" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <h2>Selecciona una Marca</h2>
-  
-      <app-brand-list 
-      [selectedBrands]="selectedBrands" 
-      [selectedEnabled]="true"
-      [columns]="[{ field: 'brandName', header: 'Nombre' }]"
-      [showTitle]="false"
-      [showLabel]="false"
-      [showPageSizeControl]="false"
-      (brandsSelected)="handleBrandChange($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Selecciona una Marca</h2>
+
+    <app-brand-list [selectedBrands]="selectedBrands" [selectedEnabled]="true"
+      [columns]="[{ field: 'brandName', header: 'Nombre' }]" [showTitle]="false" [showLabel]="false"
+      [showPageSizeControl]="false" (brandsSelected)="handleBrandChange($event)">
     </app-brand-list>
-  
-      <div *ngIf="errorMessageB" class="error-message-modal">
-        {{ errorMessageB }}
-      </div>
-  
-      <div class="selec" *ngIf="selectedBrands.length === 1">
-        <h3>Marca seleccionada:</h3>
-        <ul>
-          <li *ngFor="let brand of selectedBrands">{{ getBrandName(brand.brandId) }}</li>
-        </ul>
-  
-        <button type="button" (click)="acceptSelection()">Aceptar</button>
-      </div>
+
+    <div *ngIf="errorMessageB" class="error-message-modal">
+      {{ errorMessageB }}
+    </div>
+
+    <div class="selec" *ngIf="selectedBrands.length === 1">
+      <h3>Marca seleccionada:</h3>
+      <ul>
+        <li *ngFor="let brand of selectedBrands">{{ getBrandName(brand.brandId) }}</li>
+      </ul>
+
+      <button type="button" (click)="acceptSelection()">Aceptar</button>
     </div>
   </div>
-  
+</div>

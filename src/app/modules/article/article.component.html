@@ -1,6 +1,6 @@
 <div>
-    <app-article-create *ngIf="roleService.isComponentVisible('createForm')"></app-article-create>
-
-<header class="lista"> <h1>Lista de Artículos</h1> </header>
+    <header class="lista">
+        <h1>Lista de Artículos</h1>
+    </header>
     <app-article-list *ngIf="roleService.isComponentVisible('listForm')"></app-article-list>
 </div>

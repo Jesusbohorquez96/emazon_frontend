@@ -8,8 +8,8 @@ export class RoleService {
   private role: string = '';
 
   private readonly roleComponentVisibilityMap: { [role: string]: string[] } = {
-    'admin': ['createForm', 'listForm', 'registroForm', 'updateForm', 'stockLink'],
-    'aux_bodega': ['createForm', 'listForm', 'updateForm'],
+    'admin': ['createForm', 'listForm', 'registroForm'],
+    'aux_bodega': ['createForm', 'listForm', 'updateForm', 'updateForm'],
     'customer': ['listForm',]
   };
 
@@ -42,5 +42,9 @@ export class RoleService {
   isComponentVisible(componentName: string): boolean {
     const visibleComponents = this.roleComponentVisibilityMap[this.role];
     return visibleComponents ? visibleComponents.includes(componentName) : false;
+  }
+
+  updateUserRole(): void {
+    this.setUserRole(this.getUserRoleFromToken());
   }
 }

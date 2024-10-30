@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AtomsModule } from "../../components/atoms/atoms.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StockIncrementModalComponent } from './stock-increment.modal/stock-increment.modal.component';
+import { StockIncrementComponent } from './stock-increment/stock-increment.component';
 import { StockComponent } from './stock.component';
 
 @NgModule({
   declarations: [
     StockComponent,
-    StockIncrementModalComponent
+    StockIncrementComponent,
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { StockComponent } from './stock.component';
   ],
   exports: [
     StockComponent,
-    StockIncrementModalComponent,
+    StockIncrementComponent,
   ]
 })
 export class StockModule { }

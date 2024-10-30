@@ -18,7 +18,7 @@ describe('CustomerService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Verifica que no haya solicitudes pendientes
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -38,7 +38,7 @@ describe('CustomerService', () => {
       id: 0
     };
     const authToken = 'mockAuthToken';
-    localStorage.setItem('authToken', authToken); // Guarda el token de autenticación simulado
+    localStorage.setItem('authToken', authToken); 
 
     service.saveUsers(mockUser).subscribe(response => {
       expect(response).toEqual(mockUser);
@@ -48,7 +48,7 @@ describe('CustomerService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.headers.get('Authorization')).toBe(`Bearer ${authToken}`);
     expect(req.request.headers.get('Content-Type')).toBe('application/json');
-    req.flush(mockUser); // Devuelve la respuesta simulada
+    req.flush(mockUser);
   });
 
   it('should set empty Authorization header if no authToken is found', () => {

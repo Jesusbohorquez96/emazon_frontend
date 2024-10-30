@@ -1,37 +1,36 @@
-<div class="create-category">
-    <h2>Crear categoría</h2>
+<button (click)="openModal()">+ Crear</button>
+<div class="modal" [class.show]="show" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
 
-    <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
-        <div>
-            <label class="label" for="name">Nombre:</label>
-            <input id="name" type="text" formControlName="name" required>
-            <div class="error-message">
-                <app-error-message 
-                [control]="categoryForm.get('name')" 
-                requiredMessage="El nombre es requerido."
-                maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
-                </app-error-message>
-            </div>
+        <div class="create-category">
+            <h2>Crear categoría</h2>
+
+            <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+                <div>
+                    <label class="label" for="name">Nombre:</label>
+                    <input id="name" type="text" formControlName="name" required>
+                    <div class="error-message">
+                        <app-error-message [control]="categoryForm.get('name')"
+                            requiredMessage="El nombre es requerido."
+                            maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
+                        </app-error-message>
+                    </div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="label" for="description">Descripción:</label>
+                    <textarea id="description" formControlName="description" required></textarea>
+                    <div class="error-message">
+                        <app-error-message [control]="categoryForm.get('description')"
+                            requiredMessage="La descripción es requerida."
+                            maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
+                        </app-error-message>
+                    </div>
+                </div>
+
+                <app-button [buttonForm]="categoryForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
+                    [errorMessage]="messageError">
+                </app-button>
+
+            </form>
         </div>
-
-        <div class="textarea-container">
-            <label class="label" for="description">Descripción:</label>
-            <textarea id="description" formControlName="description" required></textarea>
-            <div class="error-message">
-                <app-error-message 
-                [control]="categoryForm.get('description')"
-                requiredMessage="La descripción es requerida."
-                maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
-                </app-error-message>
-            </div>
-        </div>
-
-        <app-button 
-        [buttonForm]="categoryForm" 
-        [isDisabled]="false" [label]="'Guardar'" 
-        [status]="status"
-        [errorMessage]="messageError">
-        </app-button>
-
-    </form>
-</div>

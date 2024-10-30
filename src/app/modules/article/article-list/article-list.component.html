@@ -1,32 +1,43 @@
 <div class="article-list">
 
-  <label for="size">Mostrar por página:</label>
-  <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
-    placeholder="Número de elementos por página">
+  <div class="row">
+    <app-article-create *ngIf="roleService.isComponentVisible('createForm')"></app-article-create>
 
-  <label for="searchBy">Ordenar por:</label>
-  <select class="input" id="searchBy" [(ngModel)]="sortBy">
-    <option value="NAME">Nombre</option>
-    <option value="CATEGORY">Categoría</option>
-    <option value="BRAND">Marca</option>
-  </select>
+    <label for="size">Mostrar por página:</label>
+    <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
+      placeholder="Número de elementos por página">
 
-  <label for="sortOrder">Ordenar:</label>
-  <select class="input" id="sortOrder" [(ngModel)]="sortDirection">
-    <option value="ASC">Ascendente</option>
-    <option value="DESC">Descendente</option>
-  </select>
+    <label for="searchBy">Ordenar por:</label>
+    <select class="input" id="searchBy" [(ngModel)]="sortBy">
+      <option value="NAME">Nombre</option>
+      <option value="CATEGORY">Categoría</option>
+      <option value="BRAND">Marca</option>
+    </select>
 
-  <div class="button-container">
-    <button (click)="search()">Buscar</button>
+    <label for="sortOrder">Ordenar:</label>
+    <select class="input" id="sortOrder" [(ngModel)]="sortDirection">
+      <option value="ASC">Ascendente</option>
+      <option value="DESC">Descendente</option>
+    </select>
+
+    <div class="button-container">
+      <button (click)="search()">Buscar</button>
+    </div>
   </div>
-
 </div>
 <div class="table-background">
   <app-table [columns]="columns" [data]="articles" [selectedEnabled]="selectedEnabled"
-      (selectedChangue)="handleArticleChange($event)" [selectedItems]="selectedArticles">
-    </app-table>
+    (selectedChangue)="handleArticleChange($event)" [selectedItems]="selectedArticles"
+    [optionsEnabled]="roleService.isComponentVisible('updateForm')"
+    [actions]="[{ label: '🎁 Agregar', action: 'edit' }]" (actionClicked)="onTableAction($event)">
+  </app-table>
 </div>
 
 <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
 </app-pagination>
+
+<div class="modal" [class.show]="show" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <app-stock-increment [articleId]="selectedArticleId"></app-stock-increment>
+  </div>
+</div>

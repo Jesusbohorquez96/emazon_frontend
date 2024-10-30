@@ -6,6 +6,7 @@
           {{ columnCheckbox.header }}
         </th>
         <th *ngFor="let column of columns">{{ column.header }}</th>
+        <th *ngIf="optionsEnabled">Opciones</th> 
       </tr>
     </thead>
     <tbody>
@@ -13,22 +14,19 @@
         <td *ngIf="selectedEnabled">
           <input type="checkbox" [checked]="dataSelected[index]" (change)="onRowSelectionChange(row, $event)">
         </td>
-
         <ng-container *ngFor="let column of columns">
           <td>
-            <ng-container *ngIf="column.field === 'articleStock'; else defaultCell">
-              <a [routerLink]="['/stock']" class="stock-link">
-                {{ row[column.field] }}
-              </a>
-            </ng-container>
-            <ng-template #defaultCell>
-              {{ row[column.field] }}
-            </ng-template>
+            {{ row[column.field] }}
           </td>
-
         </ng-container>
+        <td *ngIf="optionsEnabled"> 
+          <ng-container *ngFor="let action of actions">
+            <button (click)="onActionClick(action.action, row)">
+              {{ action.label }}
+            </button>
+          </ng-container>
+        </td>
       </tr>
-
     </tbody>
   </table>
 </div>

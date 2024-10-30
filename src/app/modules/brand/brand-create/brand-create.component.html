@@ -1,35 +1,37 @@
-<div class="create-brand">
-    <h2>Crear Marca</h2>
+<button (click)="openModal()">+ Crear</button>
+<div class="modal" [class.show]="show" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
 
-    <form [formGroup]="brandForm" (ngSubmit)="saveBrand()">
-        <div>
-            <label class="label" for="name">Nombre:</label>
-            <input id="name" type="text" formControlName="name" required>
-            <div class="error-message">
-                <app-error-message [control]="brandForm.get('name')" 
-                    requiredMessage="El nombre es requerido."
-                    maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
-                </app-error-message>
-            </div>
+        <div class="create-brand">
+            <h2>Crear Marca</h2>
+
+            <form [formGroup]="brandForm" (ngSubmit)="saveBrand()">
+                <div>
+                    <label class="label" for="name">Nombre:</label>
+                    <input id="name" type="text" formControlName="name" required>
+                    <div class="error-message">
+                        <app-error-message [control]="brandForm.get('name')" requiredMessage="El nombre es requerido."
+                            maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
+                        </app-error-message>
+                    </div>
+                </div>
+
+                <div class="textarea-container">
+                    <label class="label" for="description">Descripción:</label>
+                    <textarea id="description" formControlName="description" required></textarea>
+                    <div class="error-message">
+                        <app-error-message [control]="brandForm.get('description')"
+                            requiredMessage="La descripción es requerida."
+                            maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
+                        </app-error-message>
+                    </div>
+                </div>
+
+                <app-button [buttonForm]="brandForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
+                    [errorMessage]="errorMessage">
+                </app-button>
+            </form>
         </div>
 
-        <div class="textarea-container">
-            <label class="label" for="description">Descripción:</label>
-            <textarea id="description" formControlName="description" required></textarea>
-            <div class="error-message">
-                <app-error-message [control]="brandForm.get('description')"
-                    requiredMessage="La descripción es requerida."
-                    maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
-                </app-error-message>
-            </div>
-        </div>
-
-        <app-button 
-        [buttonForm]="brandForm" 
-        [isDisabled]="false" 
-        [label]="'Guardar'" 
-        [status]="status"
-        [errorMessage]="errorMessage">
-        </app-button>
-    </form>
+    </div>
 </div>

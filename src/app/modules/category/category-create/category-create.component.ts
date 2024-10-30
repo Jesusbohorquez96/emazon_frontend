@@ -19,6 +19,7 @@ export class CategoryCreateComponent implements OnInit {
   statusTimeout: any;
   errorMessage: string = '';
   messageError?: string;
+  show: boolean = false;
 
   constructor(
     private readonly categoryService: CategoryService,
@@ -87,5 +88,13 @@ export class CategoryCreateComponent implements OnInit {
       this.status = '';
       this.errorMessage = '';
     }, APP_CONSTANTS.NUMBER.TIMEOUT_MS);
+  }
+
+  openModal() {
+    this.show = true;
+  }
+
+  closeModal() {
+    this.show = false;
   }
 }

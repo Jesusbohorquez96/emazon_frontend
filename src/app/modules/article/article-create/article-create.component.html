@@ -1,73 +1,74 @@
-<div class="article-create-container">
-  <h2>Crear Artículo</h2>
+<button (click)="openMainModal()">+ Crear </button>
 
-  <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+<div class="modal" [class.show]="showMainModal" (click)="closeMainModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="article-create-container">
+      <h2>Crear Artículo</h2>
 
-    <label for="name">Nombre</label>
-    <input id="name" type="text" formControlName="name" required>
-    <div class="error-message">
-      <app-error-message [control]="articleForm.get('name')" requiredMessage="El nombre es requerido."
-        maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
-      </app-error-message>
+      <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+
+        <label for="name">Nombre</label>
+        <input id="name" type="text" formControlName="name" required>
+        <div class="error-message">
+          <app-error-message [control]="articleForm.get('name')" requiredMessage="El nombre es requerido."
+            maxLengthMessage="El nombre no debe exceder los 50 caracteres.">
+          </app-error-message>
+        </div>
+
+        <div class="textarea-container">
+          <label for="description">Descripción:</label>
+          <textarea id="description" formControlName="description" required></textarea>
+          <div class="error-message">
+            <app-error-message [control]="articleForm.get('description')" requiredMessage="La descripción es requerida."
+              maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
+            </app-error-message>
+          </div>
+        </div>
+
+        <label for="stock">Cantidad en Stock</label>
+        <input id="stock" formControlName="stock" type="number" placeholder="Cantidad en stock" />
+        <div class="error-message">
+          <app-error-message [control]="articleForm.get('stock')" requiredMessage="La cantidad en stock es requerida."
+            minMessage="La cantidad en stock debe ser positiva.">
+          </app-error-message>
+        </div>
+
+        <label for="price">Precio</label>
+        <input id="price" formControlName="price" type="number" placeholder="Precio del artículo" />
+        <div class="error-message">
+          <app-error-message [control]="articleForm.get('price')" requiredMessage="El precio es obligatorio."
+            minMessage="El precio mínimo permitido es de 1.000 pesos.">">
+          </app-error-message>
+        </div>
+
+        <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
+
+        <div *ngIf="selectedCategories">
+          <h3>Categorias seleccionada:</h3>
+          <p *ngFor="let category of selectedCategories"> <span class="large-symbol">&#8226;</span> {{
+            getCategoryName(category.categoryId) }}</p>
+        </div>
+
+        <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
+
+        <div *ngIf="selectedBrand">
+          <h3>Marca seleccionada:</h3>
+          <p> <span class="large-symbol">&#8226;</span> {{ getBrandName(selectedBrand.brandId) }}</p>
+        </div>
+
+        <app-button [buttonForm]="articleForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
+          [errorMessage]="errorMessage">
+        </app-button>
+
+      </form>
     </div>
-
-    <div class="textarea-container">
-      <label for="description">Descripción:</label>
-      <textarea id="description" formControlName="description" required></textarea>
-      <div class="error-message">
-        <app-error-message [control]="articleForm.get('description')" requiredMessage="La descripción es requerida."
-          maxLengthMessage="La descripción no debe exceder los 90 caracteres.">
-        </app-error-message>
-      </div>
-    </div>
-
-    <label for="stock">Cantidad en Stock</label>
-    <input id="stock" formControlName="stock" type="number" placeholder="Cantidad en stock" />
-    <div class="error-message">
-      <app-error-message [control]="articleForm.get('stock')" requiredMessage="La cantidad en stock es requerida."
-        minMessage="La cantidad en stock debe ser positiva.">
-      </app-error-message>
-    </div>
-
-    <label for="price">Precio</label>
-    <input id="price" formControlName="price" type="number" placeholder="Precio del artículo" />
-    <div class="error-message">
-      <app-error-message [control]="articleForm.get('price')" requiredMessage="El precio es obligatorio."
-      minMessage="El precio mínimo permitido es de 1.000 pesos.">">
-      </app-error-message>
-    </div>
-
-    <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
-
-    <div *ngIf="selectedCategories">
-      <h3>Categorias seleccionada:</h3>
-        <p *ngFor="let category of selectedCategories"> <span class="large-symbol">&#8226;</span> {{ getCategoryName(category.categoryId) }}</p>
-    </div>
-
-    <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
-
-    <div *ngIf="selectedBrand">
-      <h3>Marca seleccionada:</h3>
-      <p> <span class="large-symbol">&#8226;</span> {{ getBrandName(selectedBrand.brandId) }}</p>
-    </div>
-
-    <app-button [buttonForm]="articleForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
-      [errorMessage]="errorMessage">
-    </app-button>
-
-  </form>
+  </div>
 </div>
 
-<app-brand-modal 
-  [show]="showBrandModal" 
-  [selectedBrands]="brands"
-  (closeModalEvent)="closeBrandModal()"
+<app-brand-modal [show]="showBrandModal" [selectedBrands]="brands" (closeModalEvent)="closeBrandModal()"
   (brandSelectedEvent)="handleBrandChange($event)">
 </app-brand-modal>
 
-<app-category-modal 
-  [show]="showCategoryModal" 
-  [selectedCategories]="selectedCategories"
-  (closeModalEvent)="closeCategoryModal()"
-  (categorySelectedEvent)="handleCategoryChange($event)">
+<app-category-modal [show]="showCategoryModal" [selectedCategories]="selectedCategories"
+  (closeModalEvent)="closeCategoryModal()" (categorySelectedEvent)="handleCategoryChange($event)">
 </app-category-modal>

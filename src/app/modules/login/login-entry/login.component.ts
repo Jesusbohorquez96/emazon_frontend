@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../../services/login.service';
@@ -8,6 +8,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { VisibilityService } from '@/app/services/visibility.service';
+import { RoleService } from '@/app/services/role.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ import { VisibilityService } from '@/app/services/visibility.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  @Input() articleId!: number;
 
   loginForm!: FormGroup | any;
   status: string = '';
@@ -28,13 +31,14 @@ export class LoginComponent implements OnInit {
     private readonly loginService: LoginService,
     public readonly toastr: ToastrService,
     public readonly router: Router,
-    private readonly visibilityService: VisibilityService
+    private readonly visibilityService: VisibilityService,
+    private readonly roleService: RoleService
   ) { }
 
   ngOnInit(): void {
     this.visibilityService.hideNavbar();
     this.visibilityService.hideFooter();
-
+    console.log('Artículo ID recibido:', this.articleId);
     this.loginForm = this.fb.group({
       email: ['', [Validators.required,
       Validators.pattern(/^[a-zA-Z0-9._%+-]+@(gmail|hotmail|yahoo|outlook)\.com|co|go$/)]],
@@ -63,7 +67,7 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('authToken', token);
         localStorage.setItem('user', JSON.stringify(user));
-
+        this.roleService.updateUserRole();
         this.status = APP_CONSTANTS.ERRORS.SUCCESS;
         this.toastr.success('Has iniciado sesión correctamente.');
         this.resetForm();
@@ -71,7 +75,7 @@ export class LoginComponent implements OnInit {
 
         this.loginService.setAuthStatus(true);
         this.router.navigate([APP_CONSTANTS.HOME]).then(() => {
-          window.location.reload();
+          // window.location.reload();
         });
       }),
       catchError((error: any) => {

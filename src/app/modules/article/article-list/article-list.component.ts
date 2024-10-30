@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ArticleService } from '@/app/services/article.service';
 import { ArticleResponse } from '@/app/models/article.model';
 import { APP_CONSTANTS } from '@/styles/constants';
+import { RoleService } from '@/app/services/role.service';
 
 @Component({
   selector: 'app-article-list',
@@ -20,10 +21,11 @@ export class ArticleListComponent implements OnInit {
     { field: 'articleStock', header: 'Stock' },
     { field: 'articlePrice', header: 'Precio' },
     { field: 'brandNames', header: 'Marca' },
-    { field: 'categoryNames', header: 'Categorías' }
+    { field: 'categoryNames', header: 'Categorías' },
   ];
 
   articles: ArticleResponse[] = [];
+  selectedArticleId!: number;
 
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.THREE;
@@ -33,8 +35,23 @@ export class ArticleListComponent implements OnInit {
 
   searchBy: string[] = ['NAME', 'CATEGORY', 'BRAND'];
   searchValue: string = '';
+  show: boolean = false;
+  editArticle: ArticleResponse = {
+    articleId: 0,
+    articleName: '',
+    articleDescription: '',
+    articleStock: 0,
+    articlePrice: 0,
+    articleBrand: {
+      brandName: '',
+      brandId: 0
+    },
+    articleCategories: []
+  };
 
-  constructor(private readonly articleService: ArticleService) { }
+  constructor(private readonly articleService: ArticleService,
+    public readonly roleService: RoleService
+  ) { }
 
   ngOnInit(): void {
     this.search();
@@ -79,9 +96,9 @@ export class ArticleListComponent implements OnInit {
 
   updatePageSize(): void {
     if (this.size < 1) {
-      this.size = 1; 
+      this.size = 1;
     } else if (this.size > 10) {
-      this.size = 10;  
+      this.size = 10;
     }
     this.page = 0;
     this.search();
@@ -90,5 +107,24 @@ export class ArticleListComponent implements OnInit {
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.search();
+  }
+
+  editRow(row: any): void {
+    console.log('Editando artículo:', row);
+    this.editArticle = row;
+    this.selectedArticleId = row.articleId || row.id;
+  }
+
+  onTableAction(event: { action: string, row: any }): void {
+    if (event.action === 'edit') {
+      this.selectedArticleId = event.row.articleId || event.row.id;
+      this.editRow(event.row);
+      this.show = true;
+    }
+  }
+
+  closeModal(): void {
+    this.show = false;
+    this.selectedArticleId = 0;
   }
 }

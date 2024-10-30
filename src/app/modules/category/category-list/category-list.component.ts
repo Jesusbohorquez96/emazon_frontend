@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category, CategoryResponse } from '@/app/models/category.model';
 import { CategoryService } from '../../../services/category.service';
 import { APP_CONSTANTS } from '@/styles/constants';
+import { RoleService } from '@/app/services/role.service';
 
 @Component({
   selector: 'app-category-list',
@@ -32,7 +33,8 @@ export class CategoryListComponent implements OnInit {
   totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;
   searchName: string = '';
 
-  constructor(private readonly categoryService: CategoryService) { }
+  constructor(private readonly categoryService: CategoryService,
+    public roleService: RoleService) { }
 
   ngOnInit(): void {
     this.loadCategories();

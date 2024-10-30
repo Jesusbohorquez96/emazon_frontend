@@ -1,7 +1,27 @@
-<div class="modal-overlay">
-  <div class="modal-content stock-update-container">
+<div class="overlay">
+  <div class="content stock-update-container">
     <h2>Actualizar Stock</h2>
     <form [formGroup]="stockForm" (ngSubmit)="updateStock()">
+
+      <div class="form-group">
+        <label for="articleId">ID del Artículo:</label>
+        <input
+          id="articleId"
+          type="number"
+          class="form-control"
+          formControlName="articleId"
+          min="1"
+          required
+        />
+        
+        <div class="error-message">
+          <app-error-message 
+            [control]="stockForm.get('articleId')" 
+            requiredMessage="El ID del artículo es requerido."
+            minMessage="El ID debe ser al menos 1.">
+          </app-error-message>
+        </div>
+      </div>
       
       <div class="form-group">
         <label for="name">Nombre:</label>
@@ -46,25 +66,6 @@
           <option value="nuevo">Nuevo</option>
           <option value="usado">Usado</option>
         </select>
-      </div>
-
-      <div class="form-group">
-        <label for="articleId">ID del Artículo:</label>
-        <input
-          id="articleId"
-          type="number"
-          class="form-control"
-          formControlName="articleId"
-          min="1"
-          required
-        />
-        <div class="error-message">
-          <app-error-message 
-            [control]="stockForm.get('articleId')" 
-            requiredMessage="El ID del artículo es requerido."
-            minMessage="El ID debe ser al menos 1.">
-          </app-error-message>
-        </div>
       </div>
 
       <app-button 

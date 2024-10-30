@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SuppliesService } from '@/app/services/supplies.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,11 +8,12 @@ import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock-increment',
-  templateUrl: './stock-increment.modal.component.html',
-  styleUrls: ['./stock-increment.modal.component.scss']
+  templateUrl: './stock-increment.component.html',
+  styleUrls: ['./stock-increment.component.scss']
 })
-export class StockIncrementModalComponent {
+export class StockIncrementComponent {
 
+  @Input() articleId!: number;
   stockForm!: FormGroup;
   responseMessage: string = '';
 
@@ -23,10 +24,10 @@ export class StockIncrementModalComponent {
 
   ngOnInit(): void {
     this.stockForm = new FormGroup({
+      articleId: new FormControl(this.articleId, [Validators.required, Validators.min(1)]),
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       quantity: new FormControl('', [Validators.required, Validators.min(1)]),
       status: new FormControl('nuevo', [Validators.required]),
-      articleId: new FormControl('', [Validators.required, Validators.min(1)])
     });
   }
 
@@ -66,7 +67,7 @@ export class StockIncrementModalComponent {
       name: '',
       quantity: 0,
       status: 'nuevo',
-      articleId: null
+      articleId: this.articleId
     });
   }
 }

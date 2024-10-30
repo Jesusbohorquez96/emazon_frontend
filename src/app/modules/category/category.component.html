@@ -1,6 +1,7 @@
-<div class="category">
-  
+<div class="create">
   <app-category-create *ngIf="roleService.isComponentVisible('createForm')"></app-category-create>
+</div>
+<div class="category">
 
   <app-category-list *ngIf="roleService.isComponentVisible('listForm')"></app-category-list>
 </div>

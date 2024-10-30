@@ -26,15 +26,13 @@ export class CategoryModalComponent {
 
     if (selectedCategories.length > 3) {
       this.selectedCategories = selectedCategories.slice(0, 3);
-
       this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
-      return;
+    } else {
+      this.errorMessage = '';
+      this.selectedCategories = selectedCategories;
     }
-
-    this.errorMessage = '';
-    this.selectedCategories = selectedCategories; 
-    this.categorySelectedEvent.emit(this.selectedCategories); 
-}
+    this.categorySelectedEvent.emit(this.selectedCategories);
+  }
 
   acceptSelection(): void {
     if (this.selectedCategories.length >= 1 && this.selectedCategories.length <= 3) {

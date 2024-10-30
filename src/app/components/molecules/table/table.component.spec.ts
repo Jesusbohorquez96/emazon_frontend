@@ -3,8 +3,8 @@ import { TableComponent } from './table.component';
 import { SimpleChange } from '@angular/core';
 
 describe('TableComponent', () => {
-  let component: TableComponent<any>;
-  let fixture: ComponentFixture<TableComponent<any>>;
+  let component: TableComponent
+  let fixture: ComponentFixture<TableComponent>;
 
   const mockData = [
     { id: 1, name: 'Item 1' },

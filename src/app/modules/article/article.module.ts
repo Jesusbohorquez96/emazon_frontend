@@ -7,6 +7,7 @@ import { AtomsModule } from '@/app/components/atoms/atoms.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryModule } from '../category/category.module';
 import { BrandModule } from '../brand/brand.module';
+import { StockModule } from "../stock/stock.module";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BrandModule } from '../brand/brand.module';
         FormsModule,
         ReactiveFormsModule,
         CategoryModule,
-        BrandModule
+        BrandModule,
+        StockModule
     ],
     exports: [
         ArticleListComponent,

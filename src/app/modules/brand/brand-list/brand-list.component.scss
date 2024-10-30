@@ -20,7 +20,6 @@ h2 {
 }
 
 .label {
-  font-weight: bold;
   color: $black;
   margin-bottom: 5px;
 }
@@ -51,4 +50,13 @@ input[type="number"] {
   display: flex;
   justify-content: center;
   gap: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 }
