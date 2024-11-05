@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock.component.scss']
 })
 export class StockComponent implements OnInit {
-
+  
   constructor(public roleService: RoleService) { }
 
   ngOnInit(): void {

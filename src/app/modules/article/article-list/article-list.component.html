@@ -38,6 +38,9 @@
 
 <div class="modal" [class.show]="show" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <app-stock-increment [articleId]="selectedArticleId"></app-stock-increment>
+    <app-stock-increment 
+    [articleId]="editArticle.articleId" 
+    [articleName]="editArticle.articleName" 
+    ></app-stock-increment>
   </div>
 </div>

@@ -65,10 +65,16 @@
   </div>
 </div>
 
-<app-brand-modal [show]="showBrandModal" [selectedBrands]="brands" (closeModalEvent)="closeBrandModal()"
-  (brandSelectedEvent)="handleBrandChange($event)">
+<app-brand-modal 
+[show]="showBrandModal" 
+[selectedBrands]="brands" 
+(closeModalEvent)="closeBrandModal()"
+(brandSelectedEvent)="handleBrandChange($event)">
 </app-brand-modal>
 
-<app-category-modal [show]="showCategoryModal" [selectedCategories]="selectedCategories"
-  (closeModalEvent)="closeCategoryModal()" (categorySelectedEvent)="handleCategoryChange($event)">
+<app-category-modal 
+[show]="showCategoryModal" 
+[selectedCategories]="selectedCategories"
+(closeModalEvent)="closeCategoryModal()" 
+(categorySelectedEvent)="handleCategoryChange($event)">
 </app-category-modal>

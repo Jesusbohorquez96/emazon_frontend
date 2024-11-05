@@ -149,4 +149,14 @@ describe('CategoryCreateComponent', () => {
     expect(clearTimeout);
   });
 
+  it('should openModal show true', () => {
+    component.openModal();
+    expect(component.show).toBe(true);
+  });
+
+  it('should closeModal show false', () => {
+    component.closeModal();
+    expect(component.show).toBe(false);
+  });
+  
 });

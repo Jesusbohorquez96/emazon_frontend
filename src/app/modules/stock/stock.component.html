@@ -1,3 +1,4 @@
 <div class="stock">
-  <app-stock-increment *ngIf="roleService.isComponentVisible('updateForm')"></app-stock-increment>
+  <app-stock-increment *ngIf="roleService.isComponentVisible('updateForm')"  [allowEdit]="false"
+  ></app-stock-increment>
 </div>

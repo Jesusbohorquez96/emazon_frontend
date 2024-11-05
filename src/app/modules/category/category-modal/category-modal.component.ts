@@ -1,7 +1,5 @@
-// import { ButtonComponent } from '@/app/components/atoms/button/button.component';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CategoryResponse } from 'src/app/models/category.model';
-// import { CategoryListComponent } from '../category-list/category-list.component';
 
 @Component({
   selector: 'app-category-modal',
@@ -26,13 +24,15 @@ export class CategoryModalComponent {
 
     if (selectedCategories.length > 3) {
       this.selectedCategories = selectedCategories.slice(0, 3);
+
       this.errorMessage = 'Solo puedes seleccionar hasta 3 categorías';
-    } else {
-      this.errorMessage = '';
-      this.selectedCategories = selectedCategories;
+      return;
     }
-    this.categorySelectedEvent.emit(this.selectedCategories);
-  }
+
+    this.errorMessage = '';
+    this.selectedCategories = selectedCategories; 
+    this.categorySelectedEvent.emit(this.selectedCategories); 
+}
 
   acceptSelection(): void {
     if (this.selectedCategories.length >= 1 && this.selectedCategories.length <= 3) {

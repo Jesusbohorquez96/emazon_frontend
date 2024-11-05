@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SuppliesService } from '@/app/services/supplies.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,9 +11,12 @@ import { catchError, tap } from 'rxjs/operators';
   templateUrl: './stock-increment.component.html',
   styleUrls: ['./stock-increment.component.scss']
 })
-export class StockIncrementComponent {
+export class StockIncrementComponent implements OnInit, OnChanges {
 
   @Input() articleId!: number;
+  @Input() articleName!: string;
+  @Input() allowEdit: boolean = true;
+
   stockForm!: FormGroup;
   responseMessage: string = '';
 
@@ -23,51 +26,71 @@ export class StockIncrementComponent {
   ) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateFormValuesOnChanges(changes);
+  }
+
+  private initializeForm(): void {
     this.stockForm = new FormGroup({
       articleId: new FormControl(this.articleId, [Validators.required, Validators.min(1)]),
-      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      name: new FormControl(this.articleName, [Validators.required]),
       quantity: new FormControl('', [Validators.required, Validators.min(1)]),
-      status: new FormControl('nuevo', [Validators.required]),
+      status: new FormControl('nuevo', [Validators.required])
     });
   }
 
-  updateStock() {
+  private updateFormValuesOnChanges(changes: SimpleChanges): void {
+    if (changes['articleId'] && !changes['articleId'].isFirstChange()) {
+      this.stockForm.get('articleId')?.setValue(this.articleId);
+    }
+    if (changes['articleName'] && !changes['articleName'].isFirstChange()) {
+      this.stockForm.get('name')?.setValue(this.articleName);
+    }
+  }
+
+  updateStock(): void {
     if (this.stockForm.invalid) {
-      this.toastr.error('Por favor completa todos los campos requeridos correctamente.');
       return;
     }
 
-    const stockData = this.stockForm.value;
-
+    const stockData = this.stockForm.getRawValue();
     this.supplyService.updateStock(stockData).pipe(
-      tap(response => {
-        this.responseMessage = 'Stock actualizado correctamente';
-        this.toastr.success(this.responseMessage);
-        this.resetForm();
-      }),
-      catchError(error => {
-        console.error('Error al actualizar el stock:', error);
-        let errorMessage = 'Ocurrió un error al actualizar el stock.';
-
-        if (error.status === HttpStatusCode.InternalServerError) {
-          errorMessage = 'Hubo un problema en el servidor. Intenta de nuevo más tarde.';
-        } else if (error.status === HttpStatusCode.Conflict) {
-          errorMessage = 'El stock ya existe o hay un conflicto en la operación.';
-        }
-
-        this.responseMessage = errorMessage;
-        this.toastr.error(this.responseMessage);
-        return of(null);
-      })
+      tap(() => this.handleSuccessResponse()),
+      catchError(error => this.handleErrorResponse(error))
     ).subscribe();
   }
 
-  resetForm() {
+  private handleSuccessResponse(): void {
+    this.responseMessage = 'Stock actualizado correctamente';
+    this.toastr.success(this.responseMessage);
+    this.resetForm();
+  }
+
+  private handleErrorResponse(error: any) {
+    const errorMessage = this.getErrorMessage(error);
+    this.responseMessage = errorMessage;
+    this.toastr.error(this.responseMessage);
+    return of(null);
+  }
+
+  private getErrorMessage(error: any): string {
+    if (error.status === HttpStatusCode.InternalServerError) {
+      return 'Hubo un problema en el servidor. Intenta de nuevo más tarde.';
+    } else if (error.status === HttpStatusCode.Conflict) {
+      return 'El stock ya existe o hay un conflicto en la operación.';
+    }
+    return 'Ocurrió un error al actualizar el stock.';
+  }
+
+  private resetForm(): void {
     this.stockForm.reset({
-      name: '',
-      quantity: 0,
-      status: 'nuevo',
-      articleId: this.articleId
+      articleId: this.articleId,
+      name: this.articleName,
+      quantity: null,
+      status: 'nuevo'
     });
   }
 }

@@ -162,5 +162,22 @@ describe('ArticleListComponent', () => {
     );
   });
   
+  it('should closeModal set show to false', () => {
+    component.show = true;
+    component.closeModal();
+    expect(component.show).toBe(false);
+  });
 
+  it('should editrow set show to true, console "editando article', () => {
+    jest.spyOn(console, 'log').mockReturnValue();
+    component.editRow({ articleId: 1, articleName: 'Article 1', articleDescription: 'Description 1', articleStock: 10, articlePrice: 100, articleCategories: [{ categoryId: 1, categoryName: 'Category 1' }], articleBrand: { brandId: 1, brandName: 'Brand 1' } });
+    expect(component.show);
+    expect(console.log);
+  });
+
+  it('should ontableAction selectetArticle id show true', () => {
+    component.articles  = [{ articleId: 1, articleName: 'Article 1', articleDescription: 'Description 1', articleStock: 10, articlePrice: 100, articleCategories: [{ categoryId: 1, categoryName: 'Category 1' }], articleBrand: { brandId: 1, brandName: 'Brand 1' } }];
+    component.onTableAction({ action: 'edit', row: { articleId: 1, articleName: 'Article 1', articleDescription: 'Description 1', articleStock: 10, articlePrice: 100, articleCategories: [{ categoryId: 1, categoryName: 'Category 1' }], articleBrand: { brandId: 1, brandName: 'Brand 1' } } });
+    expect(component.editArticle );
+  }); 
 });

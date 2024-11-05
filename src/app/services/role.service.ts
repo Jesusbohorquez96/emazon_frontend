@@ -9,7 +9,7 @@ export class RoleService {
 
   private readonly roleComponentVisibilityMap: { [role: string]: string[] } = {
     'admin': ['createForm', 'listForm', 'registroForm'],
-    'aux_bodega': ['createForm', 'listForm', 'updateForm', 'updateForm'],
+    'aux_bodega': [ 'listForm', 'updateForm', 'updateForm'],
     'customer': ['listForm',]
   };
 

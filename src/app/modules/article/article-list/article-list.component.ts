@@ -25,7 +25,6 @@ export class ArticleListComponent implements OnInit {
   ];
 
   articles: ArticleResponse[] = [];
-  selectedArticleId!: number;
 
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.THREE;
@@ -112,12 +111,10 @@ export class ArticleListComponent implements OnInit {
   editRow(row: any): void {
     console.log('Editando artículo:', row);
     this.editArticle = row;
-    this.selectedArticleId = row.articleId || row.id;
   }
 
   onTableAction(event: { action: string, row: any }): void {
     if (event.action === 'edit') {
-      this.selectedArticleId = event.row.articleId || event.row.id;
       this.editRow(event.row);
       this.show = true;
     }
@@ -125,6 +122,6 @@ export class ArticleListComponent implements OnInit {
 
   closeModal(): void {
     this.show = false;
-    this.selectedArticleId = 0;
+    this.search();
   }
 }
