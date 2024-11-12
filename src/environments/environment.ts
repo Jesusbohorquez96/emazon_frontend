@@ -3,4 +3,5 @@ export const environment = {
   apiBaseUrl: 'http://localhost:8080',
   apiUserUrl: 'http://localhost:8081',
   apiSuppliesUrl: 'http://localhost:8082',
+  apiCartUrl: 'http://localhost:8084',
 };

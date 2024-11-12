@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Users } from '../models/aux-bodega.model';
+import { APP_CONSTANTS } from '@/styles/constants';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Users } from '../models/aux-bodega.model';
 })
 export class CustomerService {
 
-  private readonly apiUrl = 'http://localhost:8081/users/register_customer';  
+  private readonly apiUrl = `${APP_CONSTANTS.API.USER_URL}${APP_CONSTANTS.API.CUSTOMER_ENPOINT}`;  
 
   constructor(private readonly http: HttpClient) { }
 

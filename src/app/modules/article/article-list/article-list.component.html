@@ -25,11 +25,12 @@
     </div>
   </div>
 </div>
+
 <div class="table-background">
   <app-table [columns]="columns" [data]="articles" [selectedEnabled]="selectedEnabled"
     (selectedChangue)="handleArticleChange($event)" [selectedItems]="selectedArticles"
-    [optionsEnabled]="roleService.isComponentVisible('updateForm')"
-    [actions]="[{ label: '🎁 Agregar', action: 'edit' }]" (actionClicked)="onTableAction($event)">
+    [optionsEnabled]="roleService.isComponentVisible('cartFrom')"
+    [actions]="actions" (actionClicked)="onTableAction($event)">
   </app-table>
 </div>
 
@@ -38,9 +39,14 @@
 
 <div class="modal" [class.show]="show" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Modal para incrementar el stock, visible solo si isCartVisible es falso -->
     <app-stock-increment 
-    [articleId]="editArticle.articleId" 
-    [articleName]="editArticle.articleName" 
-    ></app-stock-increment>
+      *ngIf="!isCartVisible"
+      [articleId]="editArticle.articleId" 
+      [articleName]="editArticle.articleName">
+    </app-stock-increment>
+
+    <!-- Modal para añadir al carrito, visible solo si isCartVisible es verdadero -->
+    <app-cart *ngIf="isCartVisible"></app-cart>
   </div>
 </div>

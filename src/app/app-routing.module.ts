@@ -39,6 +39,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/user-page/customer-page/customer-page.module').then(m => m.CustomerPageModule)
   },
   {
+    path: APP_CONSTANTS.CART,
+    loadChildren: () => import('./pages/cart-page/cart-page.module').then(m => m.CartPageModule),
+  },
+  {
     path: APP_CONSTANTS.DEFAULT,
     loadChildren: () => import('./pages/login-page/login-page.module').then(m => m.LoginPageModule)
   },

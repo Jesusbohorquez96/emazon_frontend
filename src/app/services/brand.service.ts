@@ -13,7 +13,7 @@ export class BrandService {
 
   constructor(private readonly http: HttpClient) { }
 
-  private getAuthToken(): string | null {
+  private getAuthToken(): string | null { 
     return localStorage.getItem('authToken');
   }
 

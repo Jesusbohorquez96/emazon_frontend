@@ -9,15 +9,15 @@ export class RoleService {
 
   private readonly roleComponentVisibilityMap: { [role: string]: string[] } = {
     'admin': ['createForm', 'listForm', 'registroForm'],
-    'aux_bodega': [ 'listForm', 'updateForm', 'updateForm'],
-    'customer': ['listForm',]
+    'aux_bodega': [ 'listForm', 'updateForm', 'cartFrom'],
+    'customer': ['listForm', 'cartFrom']
   };
 
   constructor() {
     this.setUserRole(this.getUserRoleFromToken());
   }
 
-  getUserRoleFromToken(): string {
+  private getUserRoleFromToken(): string {
     const token = localStorage.getItem('authToken');
     if (!token) {
       return '';
@@ -35,8 +35,12 @@ export class RoleService {
     }
   }
 
-  setUserRole(role: string): void {
+  private setUserRole(role: string): void {
     this.role = role;
+  }
+
+  getUserRole(): string {
+    return this.role;
   }
 
   isComponentVisible(componentName: string): boolean {

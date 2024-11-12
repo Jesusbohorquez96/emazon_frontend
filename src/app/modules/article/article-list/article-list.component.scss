@@ -8,6 +8,7 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
+  overflow-x: auto;
 }
 
 .article-list input,
@@ -30,8 +31,10 @@
 }
 
 .table-background {
-  border: 1px solid $border;
-  border-radius: 6px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 8px;
   background-color: $white;
 }
 

@@ -25,6 +25,8 @@ export class ArticleListComponent implements OnInit {
   ];
 
   articles: ArticleResponse[] = [];
+  actions: { label: string, action: string }[] = [];
+  isCartVisible: boolean = false; 
 
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.THREE;
@@ -35,6 +37,7 @@ export class ArticleListComponent implements OnInit {
   searchBy: string[] = ['NAME', 'CATEGORY', 'BRAND'];
   searchValue: string = '';
   show: boolean = false;
+  showAddTo: boolean = false;
   editArticle: ArticleResponse = {
     articleId: 0,
     articleName: '',
@@ -47,6 +50,7 @@ export class ArticleListComponent implements OnInit {
     },
     articleCategories: []
   };
+showAdd: any;
 
   constructor(private readonly articleService: ArticleService,
     public readonly roleService: RoleService
@@ -54,6 +58,19 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.search();
+    this.setupActionsBasedOnRole(); 
+  }
+
+  setupActionsBasedOnRole(): void {
+    const userRole = this.roleService.getUserRole();
+
+    if (userRole === 'aux_bodega') {
+      this.actions = [{ label: '🎁 Agregar', action: 'edit' }];
+    } else if (userRole === 'customer') {
+      this.actions = [{ label: 'Añadir 🛒', action: 'añadir' }];
+    } else {
+      this.actions = []; 
+    }
   }
 
   search(): void {
@@ -112,11 +129,21 @@ export class ArticleListComponent implements OnInit {
     console.log('Editando artículo:', row);
     this.editArticle = row;
   }
+  
+  addtoCart(row: any): void {
+    console.log('Añadiendo artículo al carrito:', row);
+    this.editArticle = row;
+  }
 
-  onTableAction(event: { action: string, row: any }): void {
+  onTableAction(event: { action: string; row: any }): void {
     if (event.action === 'edit') {
-      this.editRow(event.row);
-      this.show = true;
+      this.editRow(event.row); 
+      this.show = true;   
+      this.isCartVisible = false;
+    } else if (event.action === 'añadir') {
+      this.addtoCart(event.row); 
+      this.show = true;          
+      this.isCartVisible = true; 
     }
   }
 

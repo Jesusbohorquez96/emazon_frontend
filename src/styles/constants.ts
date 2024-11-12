@@ -12,6 +12,7 @@ export const APP_CONSTANTS = {
     STOCK: 'stock',
     lOGIN: 'login',
     HOME: 'home',
+    CART: 'carrito',
     CUSTOMER: 'cliente',
     CATEGORIES: 'categorias',
     BRANDS: 'marcas',
@@ -83,15 +84,18 @@ export const APP_CONSTANTS = {
     },
 
     API: {
-        USER_URL: environment.apiUserUrl,
         BASE_URL: environment.apiBaseUrl,
+        USER_URL: environment.apiUserUrl,
         SUPPLIES_URL: environment.apiSuppliesUrl,
+        CART_URL: environment.apiCartUrl,
         SUPPLIES_ENDPOINT: '/supplies',
         CATEGORIES_ENDPOINT: '/categories',
         BRANDS_ENDPOINT: '/brands',
         ARTICLE_ENDPOINT: '/articles',
         LOGIN_ENDPOINT: '/auth/login',
-        CUSTOMER_ENPOINT:  '/auth/register_customer',
+        CUSTOMER_ENPOINT:  '/users/register_customer',
+        AUX_BODEGA_ENDPOINT: '/users/register_aux_bodega',
+        CART_ENDPOINT: '/carts/',
     },
 
     APP_ROOT: {
