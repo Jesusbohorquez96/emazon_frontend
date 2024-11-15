@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { Cart } from '../models/cart.model';
@@ -8,9 +8,6 @@ import { Cart } from '../models/cart.model';
   providedIn: 'root'
 })
 export class CartService {
-  getArticles() {
-    throw new Error('Method not implemented.');
-  }
 
   private readonly apiUrl = `${APP_CONSTANTS.API.CART_URL}${APP_CONSTANTS.API.CART_ENDPOINT}`;
 
@@ -20,6 +17,21 @@ export class CartService {
     return localStorage.getItem('authToken');
   }
 
+  getCartByUser(page: number, size: number, sortBy: string, sortDirection: string): Observable<any> {
+    const token = this.getAuthToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy)
+      .set('sortDirection', sortDirection);
+
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
   addToCart(cart: Cart): Observable<Cart> {
     const token = this.getAuthToken();
     const headers = new HttpHeaders({
@@ -27,5 +39,14 @@ export class CartService {
       'Authorization': token ? `Bearer ${token}` : '' 
     });
     return this.http.post<Cart>(this.apiUrl, cart, { headers });
+  }
+
+  deleteFromCart(cartId: number): Observable<void> {
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+    const url = `${this.apiUrl}${cartId}`;
+    return this.http.delete<void>(url, { headers });
   }
 }

@@ -4,22 +4,24 @@ import { CartComponent } from './cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartCreateComponent } from './cart-create/cart-create.component';
 import { AtomsModule } from '@/app/components/atoms/atoms.module';
+import { CartListComponent } from './cart-list/cart-list.component';
 
 @NgModule({
   declarations: [
     CartComponent,
-    CartCreateComponent
+    CartCreateComponent,
+    CartListComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AtomsModule 
-    
   ],
   exports: [
     CartComponent,
-    CartCreateComponent
+    CartCreateComponent,
+    CartListComponent
   ]
 })
 export class CartModule { }

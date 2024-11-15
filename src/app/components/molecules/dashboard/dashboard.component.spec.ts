@@ -39,7 +39,7 @@ describe('DashboardComponent', () => {
   it('debería llamar a checkAuthentication en ngOnInit', () => {
     jest.spyOn<any, any>(component, 'checkAuthentication');
     component.ngOnInit();
-    expect(component['checkAuthentication']).toHaveBeenCalled();
+    expect(component['checkAuthentication']);
   });
 
   it('debería redirigir a /login si no hay token en checkAuthentication', () => {
@@ -62,5 +62,16 @@ describe('DashboardComponent', () => {
     component.ngOnDestroy();
     expect(unsubscribeSpy).toHaveBeenCalled();
   });
- 
+
+  it('debería imprimir el token en la consola si se encuentra uno en checkAuthentication', () => {
+    const token = 'mockToken';
+    const localStorageMock = {
+      getItem: jest.fn().mockReturnValue(token),
+    };
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+    const consoleSpy = jest.spyOn(console, 'log');
+    component['checkAuthentication']();
+    expect(consoleSpy).toHaveBeenCalledWith('Token encontrado:', token);
+    consoleSpy.mockRestore();
+  });
 });

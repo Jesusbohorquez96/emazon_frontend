@@ -21,7 +21,6 @@ import { UserModule } from "./modules/user/aux-bodega/user.module";
     FooterComponent,
     NavbarComponent,
   ],
-
   imports: [
     BrowserModule,
     FormsModule,

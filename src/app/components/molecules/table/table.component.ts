@@ -16,11 +16,10 @@ export class TableComponent implements OnChanges {
   @Input() selectedItems: any[] = [];
   @Input() actions: { label: string, action: string }[] = [];
   @Output() selectedChangue = new EventEmitter<any[]>();
-  @Output() actionClicked = new EventEmitter<{ action: string, row: any, rowAdd: any }>(); 
+  @Output() actionClicked = new EventEmitter<{ action: string, row: any }>();
   @Input() dataSelected: boolean[] = [];
 
   columnCheckbox = { field: APP_CONSTANTS.CHECKBOX.FIELD, header: APP_CONSTANTS.CHECKBOX.HEADER };
-rowAdd: any;
   
   constructor(
     public roleService: RoleService
@@ -74,7 +73,7 @@ rowAdd: any;
     }
   }
 
-  onActionClick(action: string, row: any, rowAdd: any): void {
-    this.actionClicked.emit({ action, row, rowAdd});
+  onActionClick(action: string, row: any): void {
+    this.actionClicked.emit({ action, row });
   }
 }

@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,24 +12,36 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CartCreateComponent {
 
-  articleId!: number;
+  @Input() articleId!: number;
+
+  cartItems: any[] = [];
+  cartForm!: FormGroup;
   quantity: number = 1;
   successMessage: string = '';
   errorMessage: string = '';
   articleStocks: { [articleId: number]: number } = {};
-
-  cartForm!: FormGroup;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly cartService: CartService,
     private readonly toastr: ToastrService) { }
 
+  private updateFormValuesOnChanges(changes: SimpleChanges): void {
+    if (changes['articleId'] && !changes['articleId'].isFirstChange()) {
+      this.cartForm.get('articleId')?.setValue(this.articleId);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateFormValuesOnChanges(changes);
+  }
+
   ngOnInit(): void {
     this.cartForm = this.fb.group({
-      articleId: ['', [Validators.required, Validators.min(1)]],
+      articleId: [this.articleId, [Validators.required, Validators.min(1)]],
       quantity: [1, [Validators.required, Validators.min(1)]]
     });
+
   }
 
   addItemToCart() {
@@ -42,17 +54,19 @@ export class CartCreateComponent {
 
     this.cartService.addToCart(cart).subscribe({
       next: () => {
-        this.toastr.success('Artículo agregado al carrito exitosamente.');
-        this.cartForm.reset({ quantity: 1 }); 
+        this.cartItems.push(cart);
+        this.toastr.success(`Artículo agregado al carrito exitosamente.`);
+        this.resetForm();
       },
       error: (error) => {
         if (error.status === 409) {
-          this.toastr.error('No puedes agregar más de 3 artículos de esta categoría al carrito.');
+
+          this.toastr.error(`No puedes agregar más de 3 artículos de esta categoría al carrito.`);
         } else if (error.status === 500) {
           this.toastr.error('Error: Ya existe un artículo con el mismo ID en el carrito.');
         } else if (error.status === 404) {
           const restockDate = this.calculateRestockDate(7);
-          this.toastr.error(`Stock insuficiente para el artículo. Fecha estimada de reabastecimiento: ${restockDate}`);
+          this.toastr.error(`Stock insuficiente. Fecha de abastecimiento: ${restockDate}`);
         } else {
           this.toastr.error('Error al agregar el artículo al carrito.');
         }
@@ -66,6 +80,14 @@ export class CartCreateComponent {
     return today.toLocaleDateString('es-ES', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
+  }
+
+  public resetForm(): void {
+    this.cartForm.reset({
+      articleId: '',
+      quantity: 1
+    });
+    console.log('Formulario reseteado:', this.cartForm.value);
   }
 }
 

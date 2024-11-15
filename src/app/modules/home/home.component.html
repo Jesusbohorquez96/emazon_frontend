@@ -8,7 +8,7 @@
             <button [routerLink]="['/marcas']">Ir a Marcas</button>
             <button [routerLink]="['/articulos']">Ir a articulos</button>
             <button *ngIf="roleService.isComponentVisible('registroForm')"  [routerLink]="['/auxbodega']">Registro</button>
-           
+            <button *ngIf="roleService.isComponentVisible('cartListFrom')"  [routerLink]="['/carrito']">Carrito</button>
         </div>
     </div>
 </div>

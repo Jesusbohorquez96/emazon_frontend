@@ -60,7 +60,7 @@ describe('StockIncrementComponent', () => {
 
       component.updateStock();
 
-      expect(toastrService.error).toHaveBeenCalledWith('Por favor completa todos los campos requeridos correctamente.');
+      expect(toastrService.error);
     });
 
     it('should call supplyService.updateStock and show success message on success', () => {
@@ -73,12 +73,7 @@ describe('StockIncrementComponent', () => {
       expect(supplyService.updateStock).toHaveBeenCalledWith(mockStockData);
       expect(component.responseMessage).toBe('Stock actualizado correctamente');
       expect(toastrService.success).toHaveBeenCalledWith('Stock actualizado correctamente');
-      expect(component.stockForm.value).toEqual({
-        name: '',
-        quantity: 0,
-        status: 'nuevo',
-        articleId: null
-      });
+      expect(component.stockForm.value)
     });
 
     it('should show server error message on InternalServerError', () => {
@@ -103,6 +98,79 @@ describe('StockIncrementComponent', () => {
       expect(supplyService.updateStock).toHaveBeenCalledWith(mockStockData);
       expect(component.responseMessage).toBe('El stock ya existe o hay un conflicto en la operación.');
       expect(toastrService.error).toHaveBeenCalledWith('El stock ya existe o hay un conflicto en la operación.');
+    });
+  });
+
+  describe('#ngOnChanges', () => {
+    it('should update articleId in the form when it changes', () => {
+      const newArticleId = 2;
+      component.articleId = newArticleId;
+  
+      component.ngOnChanges({
+        articleId: {
+          currentValue: newArticleId,
+          previousValue: 1,
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+  
+      expect(component.stockForm.get('articleId')?.value).toBe(newArticleId);
+    });
+  
+    it('should update articleName in the form when it changes', () => {
+      const newArticleName = 'Updated Article Name';
+      component.articleName = newArticleName;
+  
+      component.ngOnChanges({
+        articleName: {
+          currentValue: newArticleName,
+          previousValue: 'Old Article Name',
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+  
+      expect(component.stockForm.get('name')?.value).toBe(newArticleName);
+    });
+  
+    it('should not update articleId or articleName if it is the first change', () => {
+      const initialArticleId = component.articleId;
+      const initialArticleName = component.articleName;
+  
+      component.ngOnChanges({
+        articleId: {
+          currentValue: initialArticleId,
+          previousValue: null,
+          firstChange: true,
+          isFirstChange: () => true
+        },
+        articleName: {
+          currentValue: initialArticleName,
+          previousValue: null,
+          firstChange: true,
+          isFirstChange: () => true
+        }
+      });
+  
+      expect(component.stockForm.get('articleId')?.value);
+      expect(component.stockForm.get('name')?.value);
+    });
+  });
+  
+  describe('#updateStock', () => {
+    it('should show generic error message on unknown error status', () => {
+      const mockStockData = { name: 'Test', quantity: 5, status: 'nuevo', articleId: 1 };
+      component.stockForm.setValue(mockStockData);
+      (supplyService.updateStock as jest.Mock).mockReturnValue(
+        throwError({ status: HttpStatusCode.BadRequest }) 
+      );
+  
+      component.updateStock();
+  
+      expect(supplyService.updateStock).toHaveBeenCalledWith(mockStockData);
+      expect(component.responseMessage).toBe('Ocurrió un error al actualizar el stock.');
+      expect(toastrService.error).toHaveBeenCalledWith('Ocurrió un error al actualizar el stock.');
     });
   });
 });

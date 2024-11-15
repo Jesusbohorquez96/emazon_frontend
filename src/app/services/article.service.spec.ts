@@ -41,7 +41,7 @@ describe('ArticleService', () => {
   });
 
   it('should save an article', () => {
-    const dummyArticle: Article = { id: 1, name: 'Test Article', description: 'A test article', price: 100, stock: 10, categories: [], brand: 1};
+    const dummyArticle: Article = { id: 1, name: 'Test Article', description: 'A test article', price: 100, stock: 10, categories: [], brand: 1, articleName: 'Test Article', articlePrice: 100 };
 
     service.saveArticle(dummyArticle).subscribe(article => {
       expect(article).toEqual(dummyArticle);

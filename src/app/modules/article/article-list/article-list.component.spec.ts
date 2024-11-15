@@ -180,4 +180,44 @@ describe('ArticleListComponent', () => {
     component.onTableAction({ action: 'edit', row: { articleId: 1, articleName: 'Article 1', articleDescription: 'Description 1', articleStock: 10, articlePrice: 100, articleCategories: [{ categoryId: 1, categoryName: 'Category 1' }], articleBrand: { brandId: 1, brandName: 'Brand 1' } } });
     expect(component.editArticle );
   }); 
+
+  it('should set editArticle and log message when addtoCart is called', () => {
+    const article = {
+      articleId: 1,
+      articleName: 'Article 1',
+      articleDescription: 'Description 1',
+      articleStock: 10,
+      articlePrice: 100,
+      articleCategories: [],
+      articleBrand: { brandId: 1, brandName: 'Brand 1' }
+    };
+  
+    jest.spyOn(console, 'log').mockImplementation(() => {}); 
+  
+    component.addtoCart(article);
+  
+    expect(console.log).toHaveBeenCalledWith('Añadiendo artículo al carrito:', article);
+    expect(component.editArticle).toBe(article);
+  });
+  
+  it('should call addtoCart, set show to true, and set isCartVisible to true when event.action is "añadir"', () => {
+    const article = {
+      articleId: 1,
+      articleName: 'Article 1',
+      articleDescription: 'Description 1',
+      articleStock: 10,
+      articlePrice: 100,
+      articleCategories: [],
+      articleBrand: { brandId: 1, brandName: 'Brand 1' },
+    };
+  
+    jest.spyOn(component, 'addtoCart');
+  
+    component.onTableAction({ action: 'añadir', row: article });
+  
+    expect(component.addtoCart).toHaveBeenCalledWith(article);
+    expect(component.show).toBe(true);
+    expect(component.isCartVisible).toBe(true);
+  });
+  
 });

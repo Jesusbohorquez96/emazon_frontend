@@ -1,0 +1,41 @@
+<div *ngIf="isEmpty; else cartContent" class="empty-message">
+  <p>Tu carrito está vacío. Agrega artículos para verlos aquí.</p>
+</div>
+
+<ng-template #cartContent>
+
+  <header class="lista">
+    <h1>Tu Carrito</h1>
+  </header>
+
+  <div class="last-update">
+    <p *ngIf="getLastAction().date">
+      {{ getLastAction().message }}: {{ getLastAction().date }}
+    </p>
+  </div>
+  <section>
+    <div class="cart-list">
+      <div *ngIf="size > 3">
+        <label for="size">Mostrar por página:</label>
+
+        <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10">
+      </div>
+      <div class="button-container">
+        <button (click)="loadCartItems()">Buscar</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="table-background">
+    <app-table [columns]="columns" [data]="cartItems" [selectedEnabled]="false" [optionsEnabled]="true"
+      [actions]="actions" (actionClicked)="handleAction($event)">
+    </app-table>
+  </div>
+
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </div>
+
+</ng-template>

@@ -1,4 +1,6 @@
 export interface Article {
+    articleName: any;
+    articlePrice: any;
     id: number;
     name: string;
     description: string;

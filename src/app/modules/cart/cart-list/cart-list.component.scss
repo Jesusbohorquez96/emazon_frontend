@@ -1,0 +1,70 @@
+@import '/src/styles/variables.scss';
+@import '/src/styles/button.scss';
+
+.cart-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.cart-list input,
+.cart-list select {
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid $border;
+    border-radius: 8px;
+    width: 80px;
+    text-align: center;
+}
+
+.button-container {
+    height: 30px;
+}
+
+.table-background {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background-color: $white;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.lista {
+    color: $purple;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.empty-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: #555;
+
+    p {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+}
+
+.last-update {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

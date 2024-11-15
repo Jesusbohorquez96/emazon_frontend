@@ -21,7 +21,7 @@
         </ng-container>
         <td *ngIf="optionsEnabled"> 
           <ng-container *ngFor="let action of actions">
-            <button (click)="onActionClick(action.action, row, rowAdd )">
+            <button (click)="onActionClick(action.action, row )">
               {{ action.label }}
             </button>
           </ng-container>

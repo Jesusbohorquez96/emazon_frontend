@@ -75,6 +75,7 @@ export const APP_CONSTANTS = {
         ONE: 1,
         TWO: 2,
         THREE: 3,
+        FOUR: 4,
         MAX_RETRIES: 5,
         NAME_LENGTH: 50,
         DESCRIPTION_LENGTH: 90,
@@ -113,6 +114,8 @@ export const APP_CONSTANTS = {
 
     PAGINATION: {
         SPACE: '',
+        ID: 'id',
+        NAME_CLIENTE: 'articleName',
         ZERO: 0,
         NAME: 'NAME',
         TOTAL_PAGES: 10,

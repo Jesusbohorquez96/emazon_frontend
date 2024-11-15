@@ -50,7 +50,6 @@ export class ArticleListComponent implements OnInit {
     },
     articleCategories: []
   };
-showAdd: any;
 
   constructor(private readonly articleService: ArticleService,
     public readonly roleService: RoleService

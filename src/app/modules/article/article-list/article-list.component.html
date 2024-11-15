@@ -39,14 +39,14 @@
 
 <div class="modal" [class.show]="show" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <!-- Modal para incrementar el stock, visible solo si isCartVisible es falso -->
     <app-stock-increment 
       *ngIf="!isCartVisible"
       [articleId]="editArticle.articleId" 
       [articleName]="editArticle.articleName">
     </app-stock-increment>
-
-    <!-- Modal para añadir al carrito, visible solo si isCartVisible es verdadero -->
-    <app-cart *ngIf="isCartVisible"></app-cart>
+    <app-cart-create 
+    *ngIf="isCartVisible"
+    [articleId]="editArticle.articleId" 
+    ></app-cart-create>
   </div>
 </div>
