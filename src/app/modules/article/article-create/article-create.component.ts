@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '@/app/services/category.service';
 import { ArticleService } from 'src/app/services/article.service';
@@ -34,7 +34,8 @@ export class ArticleCreateComponent implements OnInit {
     private readonly articleService: ArticleService,
     private readonly categoryService: CategoryService,
     private readonly brandService: BrandService,
-    private readonly toastr: ToastrService
+    private readonly toastr: ToastrService,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.articleForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -112,7 +113,7 @@ export class ArticleCreateComponent implements OnInit {
 
   handleBrandChange(selectedBrands: BrandResponse[]): void {
     this.brands = selectedBrands;
-    this.selectedBrand = this.brands[0];
+    this.selectedBrand = selectedBrands.length > 0 ? selectedBrands[0] : null; 
   }
 
   getCategoryName(categoryId: number): string {
@@ -126,7 +127,6 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   createArticle(): void {
-
     if (this.articleForm && this.articleForm.invalid) {
       this.status = APP_CONSTANTS.ERROR;
       this.errorMessage = APP_CONSTANTS.ERRORS.CORRECT;
@@ -163,7 +163,6 @@ export class ArticleCreateComponent implements OnInit {
           errorMessage = APP_CONSTANTS.ERRORS.USE;
         }
 
-
         this.status = APP_CONSTANTS.ERROR;
         this.errorMessage = errorMessage;
         this.toastr.error(this.errorMessage);
@@ -179,7 +178,7 @@ export class ArticleCreateComponent implements OnInit {
       stock: null,
       price: null,
       categories: [],
-      brand: ''
+      brand: '' 
     });
     this.selectedCategories = [];
     this.selectedBrand = null;
@@ -190,5 +189,27 @@ export class ArticleCreateComponent implements OnInit {
       this.status = '';
       this.errorMessage = '';
     }, 5000);
+  }
+
+  removeItem(type: 'category' | 'brand', itemToRemove?: CategoryResponse | BrandResponse): void {
+    if (type === 'category' && itemToRemove) {
+      this.selectedCategories = this.selectedCategories.filter(
+        (category) => category.categoryId !== (itemToRemove as CategoryResponse).categoryId
+      );
+      this.articleForm.patchValue({ categories: this.selectedCategories });
+      console.log('Categoría eliminada. Estado actual:', this.selectedCategories);
+    } else if (type === 'brand') {
+      console.log('Eliminando marca seleccionada:', this.selectedBrand);
+      this.selectedBrand = null;
+      this.articleForm.patchValue({ brand: null });
+  
+      if (this.showBrandModal) {
+        this.showBrandModal = false;
+        setTimeout(() => {
+          this.showBrandModal = true;
+        });
+      }
+      console.log('Marca eliminada. Estado actual:', this.selectedBrand);
+    }
   }
 }

@@ -220,4 +220,31 @@ describe('ArticleListComponent', () => {
     expect(component.isCartVisible).toBe(true);
   });
   
+
+  describe('setupActionsBasedOnRole', () => {
+    it('should set actions to "🎁 Agregar" with action "edit" for role "aux_bodega"', () => {
+      jest.spyOn(component.roleService, 'getUserRole').mockReturnValue('aux_bodega');
+  
+      component.setupActionsBasedOnRole();
+  
+      expect(component.actions).toEqual([{ label: '🎁 Agregar', action: 'edit' }]);
+    });
+  
+    it('should set actions to "Añadir 🛒" with action "añadir" for role "customer"', () => {
+      jest.spyOn(component.roleService, 'getUserRole').mockReturnValue('customer');
+  
+      component.setupActionsBasedOnRole();
+  
+      expect(component.actions).toEqual([{ label: 'Añadir 🛒', action: 'añadir' }]);
+    });
+  
+    it('should set actions to an empty array for any other role', () => {
+      jest.spyOn(component.roleService, 'getUserRole').mockReturnValue('admin');
+  
+      component.setupActionsBasedOnRole();
+  
+      expect(component.actions).toEqual([]);
+    });
+  });
+  
 });

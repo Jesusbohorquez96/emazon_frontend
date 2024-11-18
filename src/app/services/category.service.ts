@@ -33,10 +33,12 @@ export class CategoryService {
 
   saveCategory(category: Category): Observable<Category> {
     const token = this.getAuthToken();
-    const headers = new HttpHeaders({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': token ? `Bearer ${token}` : '' 
     });
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
     
     return this.http.post<Category>(this.apiUrl, category, { headers });
   }

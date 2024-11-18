@@ -14,7 +14,7 @@ describe('CartListComponent', () => {
 
   beforeEach(async () => {
     mockCartService = {
-      getCartByUser: jest.fn().mockReturnValue(of({
+      getFilteredArticles: jest.fn().mockReturnValue(of({
         content: [],
         totalPages: 1,
       })),
@@ -24,6 +24,7 @@ describe('CartListComponent', () => {
     mockToastr = {
       success: jest.fn(),
       error: jest.fn(),
+      info: jest.fn(),
     };
 
     await TestBed.configureTestingModule({
@@ -43,7 +44,19 @@ describe('CartListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('loadCartItems', () => {
+  describe('ngOnInit', () => {
+    it('should call loadFilteredArticles and checkScreenSize on initialization', () => {
+      jest.spyOn(component, 'loadFilteredArticles');
+      jest.spyOn(component, 'checkScreenSize');
+
+      component.ngOnInit();
+
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
+      expect(component.checkScreenSize).toHaveBeenCalled();
+    });
+  });
+
+  describe('loadFilteredArticles', () => {
     it('should load cart items successfully', () => {
       const mockResponse = {
         content: [
@@ -60,15 +73,17 @@ describe('CartListComponent', () => {
         totalPages: 1,
       };
 
-      mockCartService.getCartByUser.mockReturnValue(of(mockResponse));
+      mockCartService.getFilteredArticles.mockReturnValue(of(mockResponse));
 
-      component.loadCartItems();
+      component.loadFilteredArticles();
 
-      expect(mockCartService.getCartByUser).toHaveBeenCalledWith(
+      expect(mockCartService.getFilteredArticles).toHaveBeenCalledWith(
         component.page,
         component.size,
         component.sortBy,
-        component.sortDirection
+        component.sortDirection,
+        component.selectedCategory,
+        component.selectedBrand
       );
 
       expect(component.cartItems.length).toBe(1);
@@ -77,12 +92,13 @@ describe('CartListComponent', () => {
     });
 
     it('should handle error when loading cart items', () => {
-      mockCartService.getCartByUser.mockReturnValue(throwError(() => new Error('Error fetching cart')));
+      mockCartService.getFilteredArticles.mockReturnValue(throwError(() => new Error('Error fetching cart')));
 
-      component.loadCartItems();
+      component.loadFilteredArticles();
 
-      expect(mockCartService.getCartByUser).toHaveBeenCalled();
+      expect(mockCartService.getFilteredArticles).toHaveBeenCalled();
       expect(component.isEmpty).toBe(true);
+      expect(mockToastr.error);
     });
   });
 
@@ -94,17 +110,17 @@ describe('CartListComponent', () => {
         articleName: 'Test Article',
         quantity: 1,
         articlePrice: 100,
+        articleCategories: [],
+        articleBrand: { brandId: 1, brandName: 'Brand1' },
+        categoryNames: 'Category1',
+        brandName: 'Brand1',
+        total: 100,
         id: 1,
         userId: 1,
         creationDate: new Date().toISOString(),
         updateDate: new Date().toISOString(),
-        articleCategories: [],
-        articleBrand: { brandId: 1, brandName: 'Brand1' },
-        total: 100,
         articleDescription: 'Test Description',
-        categoryNames: '',
-        brandName: 'Brand1',
-        articleStock: 10
+        articleStock: 10,
       }];
       mockCartService.deleteFromCart.mockReturnValue(of(null));
 
@@ -125,8 +141,47 @@ describe('CartListComponent', () => {
     });
   });
 
+  describe('onResize', () => {
+    it('should update isMobileView when the window is resized', () => {
+      jest.spyOn(component, 'checkScreenSize');
+
+      window.dispatchEvent(new Event('resize'));
+
+      expect(component.checkScreenSize).toHaveBeenCalled();
+    });
+  });
+
+  describe('checkScreenSize', () => {
+    it('should set isMobileView to true if window width is <= 768', () => {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 768 });
+      component.checkScreenSize();
+      expect(component.isMobileView).toBe(true);
+    });
+
+    it('should set isMobileView to false if window width is > 768', () => {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1024 });
+      component.checkScreenSize();
+      expect(component.isMobileView).toBe(false);
+    });
+  });
+
   describe('getLastAction', () => {
-    it('should return no recent activity when no dates exist', () => {
+    it('should return the most recent add/update date if it is after the delete date', () => {
+      component.cartItems = [
+        { updateDate: '2024-11-10T10:00:00Z' },
+        { updateDate: '2024-11-12T15:00:00Z' },
+      ] as any;
+      component.lastDeleteDate = '2024-11-11T00:00:00Z';
+
+      const result = component.getLastAction();
+
+      expect(result).toEqual({
+        message: 'Última actualización',
+        date: new Date('2024-11-12T15:00:00Z').toLocaleString('es-ES'),
+      });
+    });
+
+    it('should return "Sin actividad reciente" if no activity is found', () => {
       component.cartItems = [];
       component.lastDeleteDate = null;
 
@@ -136,139 +191,92 @@ describe('CartListComponent', () => {
     });
   });
 
-  describe('onPageChange', () => {
-    it('should update the page number and reload cart items', () => {
-      jest.spyOn(component, 'loadCartItems');
-
-      const newPage = 2;
-
-      component.onPageChange(newPage);
-
-      expect(component.page).toBe(newPage);
-      expect(component.loadCartItems).toHaveBeenCalled();
-    });
-  });
-
   describe('updatePageSize', () => {
     it('should set the size to 1 if the current size is less than 1', () => {
-      jest.spyOn(component, 'loadCartItems');
-
+      jest.spyOn(component, 'loadFilteredArticles');
       component.size = 0;
       component.updatePageSize();
-
       expect(component.size).toBe(1);
       expect(component.page).toBe(0);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
-
+  
     it('should set the size to 10 if the current size is greater than 10', () => {
-      jest.spyOn(component, 'loadCartItems');
-
+      jest.spyOn(component, 'loadFilteredArticles');
       component.size = 15;
       component.updatePageSize();
-
       expect(component.size).toBe(10);
       expect(component.page).toBe(0);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
-
-    it('should keep the current size if it is within valid range', () => {
-      jest.spyOn(component, 'loadCartItems');
-
+  
+    it('should keep the size as is if it is within the valid range', () => {
+      jest.spyOn(component, 'loadFilteredArticles');
       component.size = 5;
       component.updatePageSize();
-
       expect(component.size).toBe(5);
       expect(component.page).toBe(0);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
-
-    it('should reset the page to 0', () => {
-      jest.spyOn(component, 'loadCartItems');
-
+  
+    it('should reset the page to 0 regardless of the size value', () => {
+      jest.spyOn(component, 'loadFilteredArticles');
       component.page = 3;
       component.size = 5;
       component.updatePageSize();
-
       expect(component.page).toBe(0);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
   });
-
-  describe('getLastDeleteDate', () => {
-    it('should return the lastDeleteDate if it exists', () => {
-      const mockDate = '2024-11-15T00:00:00Z';
-      component.lastDeleteDate = mockDate;
-
-      const result = component.getLastDeleteDate();
-
-      expect(result).toBe(mockDate);
-    });
-
-    it('should return null if lastDeleteDate is not set', () => {
-      component.lastDeleteDate = null;
-
-      const result = component.getLastDeleteDate();
-
-      expect(result).toBeNull();
-    });
-  });
-
+  
   describe('toggleSortDirection', () => {
-    it('should toggle sortDirection from ASC to DESC', () => {
+    it('should toggle sortDirection from ASC to DESC and reload filtered articles', () => {
       component.sortDirection = APP_CONSTANTS.PAGINATION.ASC;
-      jest.spyOn(component, 'loadCartItems');
-
+      jest.spyOn(component, 'loadFilteredArticles');
+  
       component.toggleSortDirection();
-
+  
       expect(component.sortDirection).toBe(APP_CONSTANTS.PAGINATION.DESC);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
-
-    it('should toggle sortDirection from DESC to ASC', () => {
+  
+    it('should toggle sortDirection from DESC to ASC and reload filtered articles', () => {
       component.sortDirection = APP_CONSTANTS.PAGINATION.DESC;
-      jest.spyOn(component, 'loadCartItems');
-
+      jest.spyOn(component, 'loadFilteredArticles');
+  
       component.toggleSortDirection();
-
+  
       expect(component.sortDirection).toBe(APP_CONSTANTS.PAGINATION.ASC);
-      expect(component.loadCartItems).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
-
-    it('should call loadCartItems after toggling sortDirection', () => {
-      component.sortDirection = APP_CONSTANTS.PAGINATION.ASC;
-      const loadItemsSpy = jest.spyOn(component, 'loadCartItems');
-
+  
+    it('should call loadFilteredArticles after toggling sortDirection', () => {
+      jest.spyOn(component, 'loadFilteredArticles');
       component.toggleSortDirection();
-
-      expect(loadItemsSpy).toHaveBeenCalled();
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
   });
-
-  describe('ngOnInit', () => {
-    it('should call loadCartItems on initialization', () => {
-      jest.spyOn(component, 'loadCartItems');
-
-      component.ngOnInit();
-
-      expect(component.loadCartItems).toHaveBeenCalled();
+  
+  describe('onPageChange', () => {
+    it('should update the page number and reload filtered articles', () => {
+      const newPage = 2;
+      jest.spyOn(component, 'loadFilteredArticles');
+  
+      component.onPageChange(newPage);
+  
+      expect(component.page).toBe(newPage);
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
+    });
+  
+    it('should call loadFilteredArticles when the page changes', () => {
+      jest.spyOn(component, 'loadFilteredArticles');
+      component.onPageChange(1);
+      expect(component.loadFilteredArticles).toHaveBeenCalled();
     });
   });
 
   describe('getLastAction', () => {
-    it('should return the most recent add/update date if it is after the delete date', () => {
-      component.cartItems = [
-        { updateDate: '2024-11-10T10:00:00Z' },
-        { updateDate: '2024-11-12T15:00:00Z' }, 
-      ] as any;
-      component.lastDeleteDate = '2024-11-11T00:00:00Z';
-  
-      const result = component.getLastAction();
-  
-      expect(result)
-    });
-  
-    it('should return the delete date if it is more recent than the add/update dates', () => {
+    it('should return the delete date if it is more recent than the add/update date', () => {
       component.cartItems = [
         { updateDate: '2024-11-10T10:00:00Z' },
         { updateDate: '2024-11-11T15:00:00Z' },
@@ -277,7 +285,37 @@ describe('CartListComponent', () => {
   
       const result = component.getLastAction();
   
-      expect(result)
+      expect(result).toEqual({
+        message: 'Última eliminacion',
+        date: new Date('2024-11-12T00:00:00Z').toLocaleString('es-ES'),
+      });
+    });
+  
+    it('should return the add/update date if it is more recent than the delete date', () => {
+      component.cartItems = [
+        { updateDate: '2024-11-10T10:00:00Z' },
+        { updateDate: '2024-11-12T15:00:00Z' },
+      ] as any;
+      component.lastDeleteDate = '2024-11-11T00:00:00Z';
+  
+      const result = component.getLastAction();
+  
+      expect(result).toEqual({
+        message: 'Última actualización',
+        date: new Date('2024-11-12T15:00:00Z').toLocaleString('es-ES'),
+      });
+    });
+  
+    it('should return the delete date if there are no cart items', () => {
+      component.cartItems = [];
+      component.lastDeleteDate = '2024-11-12T00:00:00Z';
+  
+      const result = component.getLastAction();
+  
+      expect(result).toEqual({
+        message: 'Última eliminacion',
+        date: new Date('2024-11-12T00:00:00Z').toLocaleString('es-ES'),
+      });
     });
   
     it('should return the add/update date if there is no delete date', () => {
@@ -285,27 +323,19 @@ describe('CartListComponent', () => {
         { updateDate: '2024-11-10T10:00:00Z' },
         { updateDate: '2024-11-12T15:00:00Z' },
       ] as any;
-      component.lastDeleteDate = null; 
+      component.lastDeleteDate = null;
   
       const result = component.getLastAction();
   
-      expect(result)
-      
-    });
-  
-    it('should return the delete date if there are no cart items', () => {
-      component.cartItems = []; 
-      component.lastDeleteDate = '2024-11-12T00:00:00Z';
-  
-      const result = component.getLastAction();
-  
-      expect(result)
-      
+      expect(result).toEqual({
+        message: 'Última actualización',
+        date: new Date('2024-11-12T15:00:00Z').toLocaleString('es-ES'),
+      });
     });
   
     it('should return "Sin actividad reciente" if there are no cart items or delete date', () => {
       component.cartItems = [];
-      component.lastDeleteDate = null; 
+      component.lastDeleteDate = null;
   
       const result = component.getLastAction();
   
@@ -314,18 +344,25 @@ describe('CartListComponent', () => {
         date: null,
       });
     });
-  });
-
-  describe('handleAction', () => {  
-    it('should not call deleteCartItem when the action is not "delete"', () => {
-      const deleteSpy = jest.spyOn(component, 'deleteCartItem');
-      const mockEvent = { action: 'update', row: { articleId: 1 } };
+  });  
   
-      component.handleAction(mockEvent);
+  describe('getLastDeleteDate', () => {
+    it('should return the lastDeleteDate if it exists', () => {
+      const mockDate = '2024-11-15T00:00:00Z';
+      component.lastDeleteDate = mockDate;
   
-      expect(deleteSpy).not.toHaveBeenCalled();
+      const result = component.getLastDeleteDate();
+  
+      expect(result).toBe(mockDate);
+    });
+  
+    it('should return null if lastDeleteDate is not set', () => {
+      component.lastDeleteDate = null;
+  
+      const result = component.getLastDeleteDate();
+  
+      expect(result).toBeNull();
     });
   });
-
+  
 });
-

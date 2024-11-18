@@ -1,8 +1,7 @@
 <div class="article-list">
 
   <div class="row">
-    <app-article-create *ngIf="roleService.isComponentVisible('createForm')"></app-article-create>
-
+   
     <label for="size">Mostrar por página:</label>
     <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10"
       placeholder="Número de elementos por página">

@@ -3,7 +3,6 @@
 </div>
 
 <ng-template #cartContent>
-
   <header class="lista">
     <h1>Tu Carrito</h1>
   </header>
@@ -13,29 +12,45 @@
       {{ getLastAction().message }}: {{ getLastAction().date }}
     </p>
   </div>
+
   <section>
     <div class="cart-list">
-      <div *ngIf="size > 3">
-        <label for="size">Mostrar por página:</label>
+      <label for="categorySelect">Categoría:</label>
+      <select id="categorySelect" [(ngModel)]="selectedCategory">
+        <option value="">Todas</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
 
-        <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10">
-      </div>
+      <label for="brandSelect">Marca:</label>
+      <select id="brandSelect" [(ngModel)]="selectedBrand">
+        <option value="">Todas</option>
+        <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+      </select>
+
+      <label for="sortOrder">Ordenar:</label>
+      <select id="sortOrder" [(ngModel)]="sortDirection">
+        <option value="ASC">Ascendente</option>
+        <option value="DESC">Descendente</option>
+      </select>
+
+      <label for="size">Mostrar por página:</label>
+      <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10">
+
       <div class="button-container">
-        <button (click)="loadCartItems()">Buscar</button>
+        <button (click)="loadFilteredArticles()">Buscar Artículos</button>
       </div>
     </div>
   </section>
 
-  <div class="table-background">
-    <app-table [columns]="columns" [data]="cartItems" [selectedEnabled]="false" [optionsEnabled]="true"
-      [actions]="actions" (actionClicked)="handleAction($event)">
-    </app-table>
-  </div>
+    <div class="table-background">
+      <app-table [columns]="columns" [data]="cartItems" [selectedEnabled]="false" [optionsEnabled]="true"
+        [actions]="actions" (actionClicked)="handleAction($event)">
+      </app-table>
+    </div>
 
-
-  <div class="pagination" *ngIf="totalPages > 1">
-    <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
-    </app-pagination>
-  </div>
-
+    <div class="pagination" *ngIf="totalPages > 1">
+      <app-pagination [page]="page" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+      </app-pagination>
+    </div>
+    
 </ng-template>

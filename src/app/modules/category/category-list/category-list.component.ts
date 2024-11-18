@@ -18,7 +18,6 @@ export class CategoryListComponent implements OnInit {
   @Input() showPageSizeControl: boolean = true;
   @Input() selectedCategories: CategoryResponse[] = [];
   @Input() columns: { field: string, header: string }[] = [
-    { field: APP_CONSTANTS.CATEGORY.ID, header: APP_CONSTANTS.ID },
     { field: APP_CONSTANTS.CATEGORY.NAME, header: APP_CONSTANTS.SPANISH.NAME },
     { field: APP_CONSTANTS.CATEGORY.DESCRIPTION, header: APP_CONSTANTS.SPANISH.DESCRIPTION },
   ];

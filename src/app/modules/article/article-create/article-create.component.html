@@ -43,17 +43,24 @@
 
         <button type="button" (click)="openCategoryModal()">Seleccionar Categorías</button>
 
-        <div *ngIf="selectedCategories">
-          <h3>Categorias seleccionada:</h3>
-          <p *ngFor="let category of selectedCategories"> <span class="large-symbol">&#8226;</span> {{
-            getCategoryName(category.categoryId) }}</p>
+        <div *ngIf="selectedCategories.length > 0">
+          <h3>Categorías seleccionadas:</h3>
+          <ul>
+            <li *ngFor="let category of selectedCategories">
+              <span class="large-symbol">&#8226;</span> {{ getCategoryName(category.categoryId) }}
+              <span (click)="removeItem('category', category)" class="remove" role="button" tabindex="0">❌</span>
+            </li>
+          </ul>
         </div>
 
         <button type="button" (click)="openBrandModal()">Seleccionar Marca</button>
 
         <div *ngIf="selectedBrand">
           <h3>Marca seleccionada:</h3>
-          <p> <span class="large-symbol">&#8226;</span> {{ getBrandName(selectedBrand.brandId) }}</p>
+          <p>
+            <span class="large-symbol">&#8226;</span> {{ getBrandName(selectedBrand.brandId) }}
+            <span (click)="removeItem('brand')" class="remove" role="button" tabindex="0">❌</span>
+          </p>
         </div>
 
         <app-button [buttonForm]="articleForm" [isDisabled]="false" [label]="'Guardar'" [status]="status"
@@ -65,16 +72,10 @@
   </div>
 </div>
 
-<app-brand-modal 
-[show]="showBrandModal" 
-[selectedBrands]="brands" 
-(closeModalEvent)="closeBrandModal()"
-(brandSelectedEvent)="handleBrandChange($event)">
+<app-brand-modal [show]="showBrandModal" [selectedBrands]="brands" [selectedBrand]="selectedBrand"
+  (closeModalEvent)="closeBrandModal()" (brandSelectedEvent)="handleBrandChange($event)">
 </app-brand-modal>
 
-<app-category-modal 
-[show]="showCategoryModal" 
-[selectedCategories]="selectedCategories"
-(closeModalEvent)="closeCategoryModal()" 
-(categorySelectedEvent)="handleCategoryChange($event)">
+<app-category-modal [show]="showCategoryModal" [selectedCategories]="selectedCategories"
+  (closeModalEvent)="closeCategoryModal()" (categorySelectedEvent)="handleCategoryChange($event)">
 </app-category-modal>

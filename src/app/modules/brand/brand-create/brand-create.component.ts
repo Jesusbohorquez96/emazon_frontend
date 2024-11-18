@@ -73,7 +73,10 @@ export class BrandCreateComponent implements OnInit {
   }
 
   resetForm() {
-    this.brandForm.reset();
+    this.brandForm.reset({
+      name: '',
+      description: ''
+    });
   }
 
   resetStatusAfterTimeout() {

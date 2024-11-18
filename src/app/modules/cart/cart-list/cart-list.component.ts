@@ -3,6 +3,7 @@ import { CartService } from '@/app/services/cart.service';
 import { Component, Input } from '@angular/core';
 import { APP_CONSTANTS } from '@/styles/constants';
 import { ToastrService } from 'ngx-toastr';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-cart-list',
@@ -28,14 +29,69 @@ export class CartListComponent {
   ];
 
   cartItems: CartResponse[] = [];
+  filteredArticles: any[] = [];
+  isMobileView: boolean = false;
   isEmpty: boolean = true;
   page: number = APP_CONSTANTS.PAGINATION.ZERO;
   size: number = APP_CONSTANTS.NUMBER.FOUR;
-  sortBy: string = APP_CONSTANTS.PAGINATION.ID;
+  sortBy: string = APP_CONSTANTS.NAME;
   sortDirection: string = APP_CONSTANTS.PAGINATION.ASC;
   totalPages: number = APP_CONSTANTS.PAGINATION.ZERO;
   lastAddUpdateDate: string | null = null;
   lastDeleteDate: string | null = null;
+  noResultsDueToFilters: boolean = false;
+
+  categories: string[] = [
+    '4545',
+    'Agua',
+    'Alimentos',
+    'Automotriz',
+    'Basos',
+    'Bebidas',
+    'Belleza',
+    'Calculadores',
+    'Computadoras',
+    'Deportes',
+    'Electrónica',
+    'Fotografía',
+    'Helados',
+    'Hogar',
+    'Jardinería',
+    'Juguetes',
+    'Libros',
+    'Mascotas',
+    'Oficina',
+    'Ropa',
+    'Salud',
+    'Sonidos',
+    'Tecnología',
+    'Ventiladores'
+  ];
+  brands: string[] = [
+    'Adidas',
+    'Apple',
+    'Auteco',
+    'Babaria',
+    'Bajaj',
+    'Bosch',
+    'Canon',
+    'Dell',
+    'Edgars',
+    'HP',
+    'LG',
+    'Mega',
+    'Microsoft',
+    'Nestlé',
+    'Nike',
+    'P&G',
+    'Panasonic',
+    'Postobon',
+    'Samsung',
+    'Sony',
+    'Toyota'
+  ];
+  selectedCategory: string = '';
+  selectedBrand: string = '';
 
   constructor(
     private readonly cartService: CartService,
@@ -43,38 +99,50 @@ export class CartListComponent {
   ) { }
 
   ngOnInit(): void {
-    this.loadCartItems();
+    this.loadFilteredArticles();
+    this.checkScreenSize();
   }
 
-  loadCartItems(): void {
-    this.cartService.getCartByUser(this.page, this.size, this.sortBy, this.sortDirection)
+  loadFilteredArticles(): void {
+    const category = this.selectedCategory;
+    const brand = this.selectedBrand;
+
+    this.cartService.getFilteredArticles(this.page, this.size, this.sortBy, this.sortDirection, category, brand)
       .subscribe(
         response => {
           this.cartItems = response.content || [];
-          this.isEmpty = this.cartItems.length === 0;
+
+          this.isEmpty = this.cartItems.length === 0 && category === '' && brand === '';
+
           this.totalPages = response.totalPages || 0;
           this.cartItems.forEach(cartItem => {
             cartItem.categoryNames = cartItem.articleCategories.map((category: any) => category.categoryName).join(', ');
             cartItem.brandName = cartItem.articleBrand.brandName;
             cartItem.total = cartItem.articlePrice * cartItem.quantity;
           });
+
+          if (this.isEmpty) {
+            this.toastr.info('Tu carrito está vacío.');
+          }
         },
         error => {
-          console.error('Error al cargar artículos en el carrito:', error);
+          console.error('Error al filtrar artículos:', error);
+          this.cartItems = [];
+          this.isEmpty = true;
         }
       );
   }
 
   onPageChange(newPage: number): void {
     this.page = newPage;
-    this.loadCartItems();
+    this.loadFilteredArticles();
   }
 
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === APP_CONSTANTS.PAGINATION.ASC
       ? APP_CONSTANTS.PAGINATION.DESC
       : APP_CONSTANTS.PAGINATION.ASC;
-    this.loadCartItems();
+    this.loadFilteredArticles();
   }
 
   updatePageSize(): void {
@@ -86,7 +154,7 @@ export class CartListComponent {
       this.size = 10;
     }
     this.page = 0;
-    this.loadCartItems();
+    this.loadFilteredArticles();
   }
 
   deleteCartItem(articleId: number): void {
@@ -96,7 +164,7 @@ export class CartListComponent {
         this.lastDeleteDate = now;
         const name = this.cartItems.find(cartItem => cartItem.articleId === articleId)?.articleName;
         this.toastr.success(`Artículo ${name} eliminado del carrito`);
-        this.loadCartItems();
+        this.loadFilteredArticles();
       },
       error => {
         this.toastr.error(`Error al eliminar el artículo con ID ${articleId}:`, error);
@@ -124,7 +192,7 @@ export class CartListComponent {
     if (lastAddDate && lastDeleteDate) {
       return lastAddDate > lastDeleteDate
         ? { message: 'Última actualización', date: lastAddDate.toLocaleString('es-ES') }
-        : { message: 'Última actualización', date: lastDeleteDate.toLocaleString('es-ES') };
+        : { message: 'Última eliminacion', date: lastDeleteDate.toLocaleString('es-ES') };
     }
 
     if (lastAddDate) {
@@ -132,9 +200,18 @@ export class CartListComponent {
     }
 
     if (lastDeleteDate) {
-      return { message: 'Última actualización', date: lastDeleteDate.toLocaleString('es-ES') };
+      return { message: 'Última eliminacion', date: lastDeleteDate.toLocaleString('es-ES') };
     }
 
     return { message: 'Sin actividad reciente', date: null };
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize(): void {
+    this.isMobileView = window.innerWidth <= 768;
   }
 }

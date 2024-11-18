@@ -17,7 +17,6 @@ export class BrandListComponent implements OnInit {
   @Input() showPageSizeControl: boolean = true;
   @Input() selectedBrands: BrandResponse[] = [];
   @Input() columns: { field: string, header: string }[] = [
-    { field: APP_CONSTANTS.BRAND.ID, header: APP_CONSTANTS.ID },
     { field: APP_CONSTANTS.BRAND.NAME, header: APP_CONSTANTS.SPANISH.NAME },
     { field: APP_CONSTANTS.BRAND.DESCRIPTION, header: APP_CONSTANTS.SPANISH.DESCRIPTION },
   ];

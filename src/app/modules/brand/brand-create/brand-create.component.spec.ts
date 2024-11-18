@@ -165,4 +165,18 @@ describe('BrandCreateComponent', () => {
     jest.useRealTimers(); 
   }));
 
+  describe('Modal Functionality', () => {
+    it('should set `show` to true when `openModal` is called', () => {
+      component.show = false; 
+      component.openModal();
+      expect(component.show).toBe(true);
+    });
+  
+    it('should set `show` to false when `closeModal` is called', () => {
+      component.show = true; 
+      component.closeModal();
+      expect(component.show).toBe(false);
+    });
+  });
+  
 });

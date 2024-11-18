@@ -33,10 +33,12 @@ export class BrandService {
 
   saveBrand(brand: Brand): Observable<Brand> {
     const token = this.getAuthToken();
-    const headers = new HttpHeaders({
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': token ? `Bearer ${token}` : '' 
     });
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
     return this.http.post<Brand>(this.baseUrl, brand, { headers });
   }
 }

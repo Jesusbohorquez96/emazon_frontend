@@ -145,4 +145,66 @@ describe('CartCreateComponent', () => {
       expect(component.cartForm.value)
     });
   });
+
+  describe('calculateRestockDate', () => {
+    it('should return the correct restock date when adding 0 days', () => {
+      const today = new Date();
+      const expectedDate = today.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+  
+      const result = component.calculateRestockDate(0);
+  
+      expect(result).toBe(expectedDate);
+    });
+  
+    it('should return the correct restock date when adding 5 days', () => {
+      const today = new Date();
+      today.setDate(today.getDate() + 5);
+      const expectedDate = today.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+  
+      const result = component.calculateRestockDate(5);
+  
+      expect(result).toBe(expectedDate);
+    });
+  
+    it('should handle negative days and return the past date', () => {
+      const today = new Date();
+      today.setDate(today.getDate() - 3); // Subtract 3 days
+      const expectedDate = today.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+  
+      const result = component.calculateRestockDate(-3);
+  
+      expect(result).toBe(expectedDate);
+    });
+  
+    it('should return the correct restock date for large numbers of days', () => {
+      const today = new Date();
+      today.setDate(today.getDate() + 365); // Add 1 year
+      const expectedDate = today.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+  
+      const result = component.calculateRestockDate(365);
+  
+      expect(result).toBe(expectedDate);
+    });
+  });
+  
 });

@@ -1,3 +1,7 @@
+<div class="create">
+    <app-article-create *ngIf="roleService.isComponentVisible('createForm')"></app-article-create>
+</div>
+
 <div>
     <header class="lista">
         <h1>Lista de Artículos</h1>

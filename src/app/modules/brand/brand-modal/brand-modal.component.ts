@@ -10,12 +10,17 @@ export class BrandModalComponent {
 
   @Input() show: boolean = false;
   @Input() selectedBrands: BrandResponse[] = [];
+  @Input() selectedBrand: BrandResponse | null = null;
+
   @Output() closeModalEvent = new EventEmitter<void>();
   @Output() brandSelectedEvent = new EventEmitter<BrandResponse[]>(); 
 
   errorMessageB: string = '';
 
   closeModal(): void {
+    this.selectedBrands = [];
+    this.selectedBrand = null;
+    this.errorMessageB = '';
     this.closeModalEvent.emit();
   }
 
@@ -23,9 +28,8 @@ export class BrandModalComponent {
     console.log('Marcas seleccionadas:', selectedBrands);
 
     if (selectedBrands.length > 1) {
-      this.selectedBrands = selectedBrands.slice(0, 1);
-
       this.errorMessageB = 'Solo puedes seleccionar una 1 marca';
+      this.selectedBrands = selectedBrands.slice(0, 1);
       return;
     }
 

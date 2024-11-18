@@ -1,91 +1,134 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BrandService } from 'src/app/services/brand.service';
+import { BrandService } from './brand.service';
 import { Brand } from '../models/brand.model';
-import { APP_CONSTANTS } from 'src/styles/constants';
 
 describe('BrandService', () => {
-    let service: BrandService;
-    let httpMock: HttpTestingController;
+  let service: BrandService;
+  let httpMock: HttpTestingController;
 
-    const BASE_URL = `${APP_CONSTANTS.API.BASE_URL}${APP_CONSTANTS.API.BRANDS_ENDPOINT}`;
-    const dummyBrands = {
-        content: [{ id: 1, name: 'Brand 1' }, { id: 2, name: 'Brand 2' }],
-        totalPages: 1
-    };
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [BrandService]
-        });
-
-        service = TestBed.inject(BrandService);
-        httpMock = TestBed.inject(HttpTestingController);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [BrandService],
     });
 
-    afterEach(() => {
-        httpMock.verify(); 
+    service = TestBed.inject(BrandService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+    localStorage.clear();
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('#getBrands', () => {
+    it('should fetch a list of brands with correct parameters', () => {
+      const mockBrands = {
+        content: [
+          { id: 1, name: 'Brand 1', description: 'Description 1' },
+          { id: 2, name: 'Brand 2', description: 'Description 2' },
+        ],
+        totalPages: 1,
+      };
+
+      service.getBrands(0, 10, 'name', 'asc', 'Brand').subscribe((brands) => {
+        expect(brands).toEqual(mockBrands);
+      });
+
+      const req = httpMock.expectOne((request) =>
+        request.url === service['baseUrl'] &&
+        request.params.get('page') === '0' &&
+        request.params.get('size') === '10' &&
+        request.params.get('sortBy') === 'name' &&
+        request.params.get('sortDirection') === 'asc' &&
+        request.params.get('name') === 'Brand'
+      );
+
+      expect(req.request.method).toBe('GET');
+      req.flush(mockBrands);
     });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
+    it('should exclude the name parameter when it is not provided', () => {
+      const mockBrands = {
+        content: [
+          { id: 1, name: 'Brand 1', description: 'Description 1' },
+          { id: 2, name: 'Brand 2', description: 'Description 2' },
+        ],
+        totalPages: 1,
+      };
+
+      service.getBrands(0, 10, 'name', 'asc', '').subscribe((brands) => {
+        expect(brands).toEqual(mockBrands);
+      });
+
+      const req = httpMock.expectOne((request) =>
+        request.url === service['baseUrl'] &&
+        request.params.get('page') === '0' &&
+        request.params.get('size') === '10' &&
+        request.params.get('sortBy') === 'name' &&
+        request.params.get('sortDirection') === 'asc' &&
+        !request.params.has('name')
+      );
+
+      expect(req.request.method).toBe('GET');
+      req.flush(mockBrands);
+    });
+  });
+
+  describe('#saveBrand', () => {
+    it('should include Authorization header when token is present', () => {
+      const mockBrand: Brand = { id: 1, name: 'Brand 1', description: 'Description 1' };
+      const mockToken = 'testAuthToken';
+      localStorage.setItem('authToken', mockToken);
+
+      service.saveBrand(mockBrand).subscribe((response) => {
+        expect(response).toEqual(mockBrand);
+      });
+
+      const req = httpMock.expectOne(service['baseUrl']);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual(mockBrand);
+      expect(req.request.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockBrand);
     });
 
-    describe('#getBrands', () => {
-        it('should return a list of brands from the API via GET', () => {
-            service.getBrands(0, 10, 'name', 'asc', '').subscribe(brands => {
-                expect(brands.content.length).toBe(2);
-                expect(brands).toEqual(dummyBrands);
-            });
+    it('should not include Authorization header when token is absent', () => {
+      const mockBrand: Brand = { id: 1, name: 'Brand 1', description: 'Description 1' };
+      localStorage.removeItem('authToken');
 
-            const req = httpMock.expectOne(`${BASE_URL}?page=0&size=10&sortBy=name&sortDirection=asc`);
-            expect(req.request.method).toBe('GET');
-            req.flush(dummyBrands); 
-        });
+      service.saveBrand(mockBrand).subscribe((response) => {
+        expect(response).toEqual(mockBrand);
+      });
 
-        it('should pass the name parameter when provided', () => {
-            const filteredBrands = { content: [{ id: 1, name: 'Brand 1' }], totalPages: 1 };
+      const req = httpMock.expectOne(service['baseUrl']);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual(mockBrand);
+      expect(req.request.headers.get('Authorization')).toBeNull();
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockBrand);
+    });
+  });
 
-            service.getBrands(0, 10, 'name', 'asc', 'Brand 1').subscribe(brands => {
-                expect(brands).toEqual(filteredBrands);
-            });
+  describe('#getAuthToken', () => {
+    it('should retrieve token from localStorage', () => {
+      const mockToken = 'testAuthToken';
+      localStorage.setItem('authToken', mockToken);
 
-            const req = httpMock.expectOne(`${BASE_URL}?page=0&size=10&sortBy=name&sortDirection=asc&name=Brand%201`);
-            expect(req.request.method).toBe('GET');
-            req.flush(filteredBrands);
-        });
+      const token = service['getAuthToken']();
+      expect(token).toBe(mockToken);
     });
 
-    describe('#saveBrand', () => {
-        it('should send a POST request to save a brand', () => {
-            const newBrand: Brand = { id: 3, name: 'Brand 3', description: 'A new brand' };
+    it('should return null if token is not found', () => {
+      localStorage.removeItem('authToken');
 
-            service.saveBrand(newBrand).subscribe(response => {
-                expect(response).toEqual(newBrand);
-            });
-
-            const req = httpMock.expectOne(BASE_URL);
-            expect(req.request.method).toBe('POST');
-            expect(req.request.body).toEqual(newBrand);
-            req.flush(newBrand); 
-        });
+      const token = service['getAuthToken']();
+      expect(token).toBeNull();
     });
-
-    describe('#getBrands with Authorization token', () => {
-        it('should include Authorization header with Bearer token', () => {
-            const token = 'fakeToken123'; 
-            localStorage.setItem('authToken', token);  
-    
-            service.getBrands(0, 10, 'name', 'asc', '').subscribe();
-    
-            const req = httpMock.expectOne(
-                `${BASE_URL}?page=0&size=10&sortBy=name&sortDirection=asc`
-            );
-    
-            expect(req.request.headers.get('Authorization'));
-    
-            req.flush({});  
-        });
-    });
+  });
 });
