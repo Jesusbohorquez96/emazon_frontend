@@ -1,30 +1,42 @@
-<div class="login">
-    <h2>Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="saveLogin()">
+<div class="container">
+
+    <div class="welcome-message">
         <div>
-            <label class="label" for="email">Email:</label>
-            <input id="email" type="email" formControlName="email" required>
-            <div class="error-message">
-                <app-error-message [control]="loginForm.get('email')" requiredMessage="El email es requerido."
-                    patternMessage="El email no es válido."></app-error-message>
-            </div>
+            <a class="logo">
+                <img src="/assets/logo.png" alt="logo Emazon" />
+            </a>
         </div>
-        <div>
-            <app-password
-              [control]="loginForm.get('password')" 
-              class="label" label="Contraseña:">
-            </app-password>
-            <div class="error-message">
-                <app-error-message [control]="loginForm.get('password')" requiredMessage="La contraseña es requerida." patternMessage="Contraseña con mayúscula, minúscula, número y símbolo."></app-error-message>
+        <h1>¡Bienvenido a nuestra aplicación!</h1>
+        <p>Explora nuestras funcionalidades después de iniciar sesión.</p>
+    </div>
+
+    <div class="login">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="saveLogin()">
+            <div>
+                <label class="label" for="email">Email:</label>
+                <input id="email" type="email" formControlName="email" required>
+                <div class="error-message">
+                    <app-error-message [control]="loginForm.get('email')" requiredMessage="El email es requerido."
+                        patternMessage="El email no es válido."></app-error-message>
+                </div>
             </div>
-          </div>
-        <app-button [buttonForm]="loginForm" [isDisabled]="false" [label]="'Login'" [status]="status"
-            [errorMessage]="messageError"></app-button>
+            <div>
+                <app-password [control]="loginForm.get('password')" class="label" label="Contraseña:">
+                </app-password>
+                <div class="error-message">
+                    <app-error-message [control]="loginForm.get('password')"
+                        requiredMessage="La contraseña es requerida."
+                        patternMessage="Contraseña con mayúscula, minúscula, número y símbolo."></app-error-message>
+                </div>
+            </div>
+            <app-button [buttonForm]="loginForm" [isDisabled]="false" [label]="'Login'" [status]="status"
+                [errorMessage]="messageError"></app-button>
 
-        ¿No tienes cuenta?
-        <button type="button" class="link-button">
-            <a (click)="goToRegister()" class="highlight">Regístrate</a>
-        </button>
-    </form>
-
+            ¿No tienes cuenta?
+            <button type="button" class="link-button">
+                <a (click)="goToRegister()" class="highlight">Regístrate</a>
+            </button>
+        </form>
+    </div>
 </div>

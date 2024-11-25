@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
 
         this.loginService.setAuthStatus(true);
         this.router.navigate([APP_CONSTANTS.HOME]).then(() => {
-          // window.location.reload();
         });
       }),
       catchError((error: any) => {

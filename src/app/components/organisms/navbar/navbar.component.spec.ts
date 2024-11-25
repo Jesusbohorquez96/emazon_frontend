@@ -43,12 +43,10 @@ describe('NavbarComponent', () => {
   });
 
   it('should hide navbar on specific routes', () => {
-    // Simula el evento de navegación a una ruta sin barra de navegación
     mockRouter.url = '/login';
     component.ngOnInit();
     expect(component.showNavbar).toBe(false);
 
-    // Cambia la ruta a una que sí muestra la barra de navegación
     mockRouter.url = '/dashboard';
     component.ngOnInit();
     expect(component.showNavbar).toBe(true);

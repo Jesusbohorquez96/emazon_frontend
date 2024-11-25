@@ -178,7 +178,7 @@ describe('CartCreateComponent', () => {
   
     it('should handle negative days and return the past date', () => {
       const today = new Date();
-      today.setDate(today.getDate() - 3); // Subtract 3 days
+      today.setDate(today.getDate() - 3);
       const expectedDate = today.toLocaleDateString('es-ES', {
         weekday: 'long',
         year: 'numeric',
@@ -193,7 +193,7 @@ describe('CartCreateComponent', () => {
   
     it('should return the correct restock date for large numbers of days', () => {
       const today = new Date();
-      today.setDate(today.getDate() + 365); // Add 1 year
+      today.setDate(today.getDate() + 365);
       const expectedDate = today.toLocaleDateString('es-ES', {
         weekday: 'long',
         year: 'numeric',

@@ -70,7 +70,7 @@ describe('auxBodegaService', () => {
     };
 
     const mockResponse = { success: true };
-    localStorage.removeItem('authToken'); // Ensure no token is present
+    localStorage.removeItem('authToken');
 
     service.saveUsers(mockUser).subscribe((response) => {
       expect(response).toEqual(mockResponse);

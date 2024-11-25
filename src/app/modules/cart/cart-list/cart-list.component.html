@@ -33,10 +33,10 @@
         <option value="DESC">Descendente</option>
       </select>
 
-      <label for="size">Mostrar por página:</label>
-      <input id="size" type="number" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10">
+      <label for="size" *ngIf="totalPages > 1">Mostrar por página:</label>
+      <input id="size" type="number" *ngIf="totalPages > 1" [(ngModel)]="size" (change)="updatePageSize()" min="1" max="10">
 
-      <div class="button-container">
+      <div class="button-container" >
         <button (click)="loadFilteredArticles()">Buscar Artículos</button>
       </div>
     </div>

@@ -41,7 +41,7 @@ describe('BrandModalComponent', () => {
   it('should display error message when more than one brand is selected', () => {
     component.handleBrandChange(mockBrands);
     expect(component.errorMessageB).toBe('Solo puedes seleccionar una 1 marca');
-    expect(component.selectedBrands.length).toBe(1); // Solo debe seleccionar la primera marca
+    expect(component.selectedBrands.length).toBe(1); 
   });
 
   it('should clear error message if a valid selection is made', () => {
@@ -75,7 +75,7 @@ describe('BrandModalComponent', () => {
 
   it('should return "Marca " for an invalid brandId', () => {
     component.selectedBrands = mockBrands;
-    const brandName = component.getBrandName(999); // ID no existente
+    const brandName = component.getBrandName(999); 
     expect(brandName).toBe('Marca ');
   });
 });
